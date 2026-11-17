@@ -68,4 +68,31 @@ linalg-circle/
 
 ## Deviations
 
-(filled in as work proceeds)
+1. **Quarto does not execute the notebooks.** Planned: `execute.enabled` in
+   `_quarto.yml`. Found: Quarto writes outputs and kernel metadata back into
+   an `.ipynb` it executes, and a commit picked them up. That commit was
+   rewritten before anything was pushed, so no outputs are in history. Now
+   `tools/stage_site.py` executes copies in `.build/site/` and Quarto renders
+   those; `make check` ends by re-checking that the sources are clean.
+2. **Three Quarto config files, not two.** Quarto appends a profile's lists to
+   the base lists, so `_quarto.yml` holds only shared settings and the
+   `student` (default) and `teacher` profiles each own their file list.
+3. **TinyTeX instead of the system TeX.** Planned: the installed LuaLaTeX.
+   Found: Debian's TeX Live here lacks `luaotfload-tool`, so LuaLaTeX cannot
+   load any OpenType font. TinyTeX v2026.11 goes into `.tools/`.
+4. **26 notebook cells got a blank line.** Not planned. A markdown cell that
+   starts with a `---` rule followed directly by text is read as YAML by
+   Pandoc. A blank line fixes it and looks the same in Jupyter and Colab.
+   `check_clean.py` now enforces it.
+5. **`html-table-processing: none`.** Quarto rewrote `<table>` markup inside the
+   explorer's embedded `<script>`. Found by the site smoke test.
+6. **Explorer breakpoint is a container query.** The original's `@media
+   (max-width: 820px)` would keep two cramped columns inside a notebook
+   column on a wide screen.
+7. **The notebook runner keeps TCP kernels.** IPC sockets were tried; deep
+   checkout paths exceed the 108-character socket path limit.
+
+Followed as planned: layout, tool choices and versions, Shadow DOM mount,
+mimebundle fallback, ASCII Copy-as-NumPy, no lesson gets a new
+`explore_angles` call, one config value synced into setup cells, and the
+order of work (the Colab bundle moved in with the Makefile commit).
