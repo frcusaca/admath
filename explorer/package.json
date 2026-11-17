@@ -1,0 +1,38 @@
+{
+  "name": "@linalg-circle/angle-explorer",
+  "version": "0.4.0",
+  "private": true,
+  "description": "The Angle Explorer: draggable vectors, the inner product and the signed angle.",
+  "type": "module",
+  "module": "./dist/lib/angle-explorer.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/lib/angle-explorer.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "npm run typecheck && vite build --mode standalone && vite build --mode lib && tsc -p tsconfig.types.json && node scripts/postbuild.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@fontsource/atkinson-hyperlegible": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6",
+    "@types/pngjs": "6.0.5",
+    "pixelmatch": "8.0.0",
+    "pngjs": "7.0.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vite-plugin-singlefile": "2.3.4",
+    "vitest": "5.1.0"
+  }
+}

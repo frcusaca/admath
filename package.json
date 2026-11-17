@@ -1,0 +1,16 @@
+{
+  "name": "linalg-circle",
+  "private": true,
+  "description": "Node side of the linalg-circle course: the Angle Explorer and the notebook checks.",
+  "type": "module",
+  "workspaces": [
+    "explorer"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "katex": "0.19.1",
+    "markdown-it": "15.0.3"
+  }
+}
