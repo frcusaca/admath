@@ -22,7 +22,7 @@ For the reasons behind the layout, see [`docs/PLAN.md`](docs/PLAN.md).
 ## 1. The map
 
 ```
-linalg-circle/
+admath/
 ├── Makefile                  the only entry point: `make` lists every target
 ├── course.toml               repository URL + ref; copied into every setup cell and the license
 ├── LICENSE.md                which license covers what (summary)
@@ -78,7 +78,7 @@ The first PDF render downloads a few extra LaTeX packages into `.tools/TinyTeX`.
 
 To open the notebooks locally: `.venv/bin/jupyter lab notebooks/` (install with
 `uv pip install --python .venv/bin/python jupyterlab` if you want it). Choose
-the kernel "Python 3 (linalg-circle .venv)". The setup cell finds `python/src`
+the kernel "Python 3 (admath .venv)". The setup cell finds `python/src`
 by itself.
 
 ## 3. Everyday commands
@@ -225,38 +225,33 @@ h.getVectors(); h.toNumpy(); h.destroy();
 ## 8. Publish the repository (Colab installs from it)
 
 Colab runs `pip install "vecdraw @ git+<url>@<ref>#subdirectory=python"`, so the
-repository must be on GitHub (or any public git host) and **public**. Until
-then, the setup cell stops in Colab with "The course repository URL is not set
-yet. Ask your teacher." Locally everything works without a remote.
-
-One-time steps:
+repository must be **public**. It is: <https://github.com/frcusaca/admath>,
+default branch `jia`, and `course.toml` points there. Colab can install
+`vecdraw` once the commits are pushed:
 
 ```bash
-# 1. On GitHub: create an empty PUBLIC repository, e.g. <you>/linalg-circle
-#    (no README, no license, no .gitignore: this repo has its own).
-# 2. Point this repo at it and push:
-git remote add origin git@github.com:<you>/linalg-circle.git
-git push -u origin main
-# 3. Put the URL in course.toml:  url = "https://github.com/<you>/linalg-circle"
-make sync-setup          # writes it into every setup cell
 make check
-git commit -am "course.toml: set repository URL"
-git push
+git push origin jia
 ```
 
 Then try it in Colab (see §10). For a term, pin a tag so the library can't
-change under the kids: `git tag v0.4.0 && git push --tags`, set
+change under the kids: `git tag v0.4.0 && git push origin v0.4.0`, set
 `ref = "v0.4.0"` in `course.toml`, then `make sync-setup`, commit and push.
+
+Everything in the repository is public, **including the teacher guides** in
+`notebooks/`. The website keeps them out of the student site, but anyone can
+read them on GitHub. To keep the answer keys private, move the teacher guides to
+a private repository.
+
+To move the course to another repository, change `url` (and `ref`) in
+`course.toml` and run `make sync-setup`. That rewrites every notebook's setup
+cell, the "Open in Colab" links and the license's "Source Code:" line.
 
 **Licensing.** Lessons are CC BY-NC-SA 4.0 and software is the Prosperity
 Public License 3.0.0 (see `LICENSE.md` and §13). The Prosperity license names
 the repository in its "Source Code:" line; `make sync-setup` writes the URL from
 `course.toml` there too. The explorer bundles two OFL-licensed fonts, credited
 in `explorer/THIRD_PARTY_NOTICES.md`.
-
-**This folder sits inside another repository** (`CAeHius`), which sees it as an
-untracked folder. Add `math/linalg-circle/` to that repository's `.gitignore`
-(or make it a submodule) so it is not committed twice.
 
 ## 9. Deploy the site
 
@@ -267,14 +262,14 @@ GitHub Pages from a `gh-pages` branch, by hand:
 
 ```bash
 make site
-git worktree add --orphan -b gh-pages ../linalg-circle-pages   # first time only
-# later times: git worktree add ../linalg-circle-pages gh-pages
-rsync -a --delete --exclude .git _site/ ../linalg-circle-pages/
-touch ../linalg-circle-pages/.nojekyll
-git -C ../linalg-circle-pages add -A
-git -C ../linalg-circle-pages commit -m "Publish site"
-git -C ../linalg-circle-pages push origin gh-pages
-git worktree remove ../linalg-circle-pages
+git worktree add --orphan -b gh-pages ../admath-pages   # first time only
+# later times: git worktree add ../admath-pages gh-pages
+rsync -a --delete --exclude .git _site/ ../admath-pages/
+touch ../admath-pages/.nojekyll
+git -C ../admath-pages add -A
+git -C ../admath-pages commit -m "Publish site"
+git -C ../admath-pages push origin gh-pages
+git worktree remove ../admath-pages
 ```
 
 Then, in the GitHub repository: *Settings → Pages → Deploy from branch → gh-pages*.
@@ -287,7 +282,7 @@ privately: the PDFs in `_site-teacher/notebooks/`, or a password-protected host.
 - **From GitHub (best):** the site's front page has an "Open in Colab" link per
   notebook once `course.toml` has a real GitHub URL. Each kid gets a fresh copy;
   *File → Save a copy in Drive* keeps their work.
-- **As files:** `make colab`, then share `dist/colab/linalg-circle-notebooks.zip`.
+- **As files:** `make colab`, then share `dist/colab/admath-notebooks.zip`.
   In Colab: *File → Upload notebook*.
 
 **What to try in Colab** after publishing (none of this can be tested from

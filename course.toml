@@ -8,7 +8,7 @@
 # Where Colab installs the vecdraw library from:
 #   pip install "git+<url>@<ref>#subdirectory=python"
 # The repository must be public (or Colab cannot clone it without a token).
-# Replace CHANGE-ME when the GitHub repository exists, e.g. https://github.com/<you>/linalg-circle
-url = "https://github.com/CHANGE-ME/linalg-circle"
-# Branch or tag. Pin a tag (e.g. "v0.4.0") during a term so the library cannot change under the kids.
-ref = "main"
+url = "https://github.com/frcusaca/admath"
+# Branch or tag. "jia" is the repository's default branch. Pin a tag
+# (e.g. "v0.4.0") during a term so the library cannot change under the kids.
+ref = "jia"

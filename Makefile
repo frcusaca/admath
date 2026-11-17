@@ -1,6 +1,6 @@
 # Copyright © 2026-present CAehi.us
 # SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
-# linalg-circle: one entry point for everything. `make` lists the targets.
+# admath: one entry point for everything. `make` lists the targets.
 #
 # Tools live inside the repo: .venv/ (Python), node_modules/, .tools/quarto,
 # .tools/TinyTeX. `make setup` creates them; nothing is installed system-wide.
@@ -43,7 +43,7 @@ setup-python: ## Python venv with the package (editable), Jupyter tools and a ke
 	@command -v uv >/dev/null || { echo "Install uv first: https://docs.astral.sh/uv/"; exit 1; }
 	uv venv --allow-existing .venv
 	uv pip install --python $(PY) -r requirements-dev.txt
-	$(PY) -m ipykernel install --sys-prefix --name python3 --display-name "Python 3 (linalg-circle .venv)" >/dev/null
+	$(PY) -m ipykernel install --sys-prefix --name python3 --display-name "Python 3 (admath .venv)" >/dev/null
 
 setup-node: ## npm workspaces (explorer + node tools); Chrome must be installed for the browser tests
 	$(NPM) ci

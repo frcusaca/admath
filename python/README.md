@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
 # vecdraw
 
-The drawing library for the linalg-circle course. The drawing code in
+The drawing library for the Linear Algebra Circle course in admath. The drawing code in
 `src/vecdraw/__init__.py` is written for 10-year-olds to read and change.
 
 ```python

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Bundle the student notebooks for Colab.
 
-    python tools/bundle_colab.py       -> dist/colab/*.ipynb and dist/colab/linalg-circle-notebooks.zip
+    python tools/bundle_colab.py       -> dist/colab/*.ipynb and dist/colab/admath-notebooks.zip
 
 Only student notebooks (never teacher guides), with no outputs, and each with
 its Colab title set. Kids can upload a notebook from the zip to Colab
@@ -41,7 +41,7 @@ def main():
         written.append(target)
     if not written:
         fail(["no student notebooks found"])
-    archive = OUT / "linalg-circle-notebooks.zip"
+    archive = OUT / "admath-notebooks.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
         for target in written:
             z.write(target, arcname=target.name)

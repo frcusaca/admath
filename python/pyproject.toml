@@ -7,7 +7,7 @@ build-backend = "hatchling.build"
 [project]
 name = "vecdraw"
 version = "0.4.0"
-description = "A tiny, readable helper for drawing vectors, plus the Angle Explorer, for the linalg-circle course."
+description = "A tiny, readable helper for drawing vectors, plus the Angle Explorer, for the Linear Algebra Circle course in admath."
 readme = "README.md"
 authors = [{ name = "CAehi.us" }]
 license = "LicenseRef-Prosperity-3.0.0"

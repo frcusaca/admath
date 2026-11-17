@@ -94,6 +94,12 @@ linalg-circle/
 7. **The notebook runner keeps TCP kernels.** IPC sockets were tried; deep
    checkout paths exceed the 108-character socket path limit.
 
+8. **Moved to its own repository.** The project started in
+   `CAeHius/math/linalg-circle` (a folder inside a private repository) and
+   moved to the public repository `frcusaca/admath`, with its history merged
+   in. Package names went from `linalg-circle` to `admath`; the layout below
+   keeps the old folder name as written.
+
 Followed as planned: layout, tool choices and versions, Shadow DOM mount,
 mimebundle fallback, ASCII Copy-as-NumPy, no lesson gets a new
 `explore_angles` call, one config value synced into setup cells, and the

@@ -29,7 +29,9 @@ def course(tmp_path):
     """A throwaway copy of the tools with its own notebooks/ and course.toml."""
     shutil.copytree(TOOLS, tmp_path / "tools", ignore=shutil.ignore_patterns("tests", "__pycache__"))
     (tmp_path / "notebooks").mkdir()
-    shutil.copy(ROOT / "course.toml", tmp_path / "course.toml")
+    (tmp_path / "course.toml").write_text(
+        '[repository]\nurl = "https://github.com/CHANGE-ME/example"\nref = "main"\n'
+    )
     return tmp_path
 
 

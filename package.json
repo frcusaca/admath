@@ -1,7 +1,7 @@
 {
-  "name": "linalg-circle",
+  "name": "admath",
   "private": true,
-  "description": "Node side of the linalg-circle course: the Angle Explorer and the notebook checks.",
+  "description": "Node side of admath (the Linear Algebra Circle course): the Angle Explorer and the notebook checks.",
   "author": "CAehi.us",
   "license": "LicenseRef-Prosperity-3.0.0",
   "type": "module",
