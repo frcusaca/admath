@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { describe, expect, it } from "vitest";
 import { isPythonName, pyNumber, toNumpy } from "./numpy";
 

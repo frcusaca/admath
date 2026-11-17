@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 // Check that every $...$ and $$...$$ in notebook markdown parses with KaTeX.
 //
 //   node tools/check_latex.mjs notebooks/*.ipynb               check only

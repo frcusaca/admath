@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import { LIBRARY, q, STANDALONE } from "./helpers";
@@ -13,6 +14,10 @@ test.describe("standalone page", () => {
     await expect(q(page, "#f0")).toBeChecked();
     await expect(q(page, "#s1")).toBeChecked();
     await expect(page.locator("main")).toHaveCount(1);
+  });
+
+  test("the standalone page shows the copyright notice", async ({ page }) => {
+    await expect(q(page, "footer.foot")).toHaveText("Copyright © 2026-present CAehi.us");
   });
 
   test("dragging a tip moves the vector and updates every view", async ({ page }) => {
@@ -168,6 +173,7 @@ test("the ES module mounts two independent explorers with their own vectors and 
   await expect(two.locator("#read .eq")).toContainText("⟨a, b⟩ = (0)(5) + (5)(0) = 0");
   await expect(one.locator("h1")).toHaveCount(0);
   await expect(one.locator("[role=region]")).toHaveCount(1);
+  await expect(one.locator("footer")).toHaveCount(0);   // embedded explorers carry no footer by default
   // radios in different explorers are different groups
   await two.locator("#s2").check();
   await expect(one.locator("#s1")).toBeChecked();

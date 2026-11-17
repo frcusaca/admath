@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /**
  * The two typefaces (both SIL Open Font License, see THIRD_PARTY_NOTICES.md),
  * inlined as data URLs so the explorer works offline.

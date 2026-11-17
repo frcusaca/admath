@@ -1,3 +1,4 @@
+<!-- Copyright © 2026-present CAehi.us -->
 # Third-party notices
 
 The explorer's builds (and the copy embedded in the `vecdraw` Python package)

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Bundle the student notebooks for Colab.
 
     python tools/bundle_colab.py       -> dist/colab/*.ipynb and dist/colab/linalg-circle-notebooks.zip

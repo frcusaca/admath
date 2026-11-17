@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Copyright © 2026-present CAehi.us
 # Install Quarto into .tools/quarto (no root, nothing outside the repo).
 # Skipped if .tools/quarto already has this version. Version checked 2026-11-16.
 set -eu

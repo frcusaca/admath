@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Every Mastery Coin in a student notebook has exactly one answer-key row, and the reverse.
 
     python tools/check_coins.py

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 import base64
 import json
 import re

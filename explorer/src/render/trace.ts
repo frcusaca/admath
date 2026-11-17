@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** The curve of the normalized inner product against the signed angle (drawn by Spin). */
 import { esc, fmt, fmtSignedDegrees, signClass } from "../format";
 import { RIGHT_ANGLE_TOLERANCE, type PairFacts } from "../math";

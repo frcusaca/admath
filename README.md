@@ -1,3 +1,4 @@
+<!-- Copyright © 2026-present CAehi.us -->
 # Linear Algebra Circle
 
 A linear algebra course for advanced 5th graders, taught math-circle style
@@ -25,9 +26,41 @@ make check     # every check and test, both sites rendered
 make preview   # the student site in a browser
 ```
 
-You need `uv`, Node.js 22.12 or newer (26 LTS recommended, see `.nvmrc`),
-Google Chrome (for the browser tests), `make`, `curl` and `git`.
 `make` with no target lists everything.
+
+## Requirements
+
+**To run the notebooks** (Python 3.10 or newer):
+
+```bash
+pip install -r requirements.txt
+```
+
+| Library | Why | Declared in |
+| --- | --- | --- |
+| numpy ≥ 1.24 | vectors | `requirements.txt`, `python/pyproject.toml` |
+| matplotlib ≥ 3.7 | drawing | `requirements.txt`, `python/pyproject.toml` |
+| IPython ≥ 8 | shows the Angle Explorer in a notebook | `requirements.txt`, `python/pyproject.toml` (extra `notebook`) |
+| vecdraw | the course's drawing library, in `python/` | `requirements.txt` (`-e ./python`) |
+
+In Google Colab nothing needs installing by hand: the first cell of each
+notebook installs `vecdraw`, and Colab already has the rest.
+
+**To build and test the course**:
+
+| Need | Version | Declared in |
+| --- | --- | --- |
+| Python test and notebook tools (pytest, nbclient, nbformat, ipykernel, jupyter-core, PyYAML) | see file | `requirements-dev.txt` (includes `requirements.txt`) |
+| Node.js | ≥ 22.12, 26 LTS recommended | `package.json` `engines`, `.nvmrc` |
+| TypeScript, Vite, Vitest, Playwright, fonts | exact versions | `explorer/package.json` |
+| KaTeX, markdown-it (LaTeX check) | exact versions | `package.json` |
+| Quarto | 1.11.9 | `tools/install_quarto.sh` |
+| TinyTeX (PDFs) | v2026.11 | `tools/install_tinytex.sh` |
+| uv, Google Chrome, make, curl, git | any recent | install yourself |
+
+`make setup` installs everything in the first five rows into the repository
+(`.venv/`, `node_modules/`, `.tools/`). The built explorer has no runtime
+dependencies: all npm packages are build and test tools.
 
 ## Outputs
 
@@ -37,3 +70,9 @@ Google Chrome (for the browser tests), `make`, `curl` and `git`.
 - `explorer/dist/standalone/angle-explorer.html`: the explorer as one file that works offline.
 
 Maintainers: start with [`maintainer.readme.md`](maintainer.readme.md).
+
+## Copyright
+
+Copyright © 2026-present CAehi.us. Every file carries this notice
+(`make check-copyright`); the bundled fonts are credited in
+[`explorer/THIRD_PARTY_NOTICES.md`](explorer/THIRD_PARTY_NOTICES.md).

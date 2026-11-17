@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** Number and text formatting shared by every view. Pure functions. */
 import type { Sign } from "./math";
 

@@ -1,3 +1,4 @@
+<!-- Copyright © 2026-present CAehi.us -->
 # vecdraw
 
 The drawing library for the linalg-circle course. The drawing code in

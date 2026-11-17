@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Committed notebooks carry no outputs: the kids predict before they run.
 
     python tools/check_clean.py          report problems (exit 1)

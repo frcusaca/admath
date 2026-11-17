@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** The graph paper: grid, arrows, and the arc from the first vector to the second. */
 import { esc, fmt, fmtSignedDegrees, signClass } from "../format";
 import { C, U, X, Y } from "../geometry";

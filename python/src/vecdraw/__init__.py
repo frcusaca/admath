@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """
 vecdraw - a tiny helper for drawing vectors on graph paper.
 

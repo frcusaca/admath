@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Stage the Quarto project in .build/site/ with executed notebooks.
 
     python tools/stage_site.py

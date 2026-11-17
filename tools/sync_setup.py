@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Write the setup cells of every student notebook from course.toml.
 
     python tools/sync_setup.py           rewrite the notebooks

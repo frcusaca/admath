@@ -1,3 +1,4 @@
+/* Copyright © 2026-present CAehi.us */
 /* The Angle Explorer's styles. They live inside a shadow root, so they cannot leak
    into a notebook or a web page, and the page's styles cannot leak in.
    Ported from reference/angle-explorer.original.html: `:root` and `body` became `:host`,
@@ -137,6 +138,8 @@ table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .copy { display: flex; flex-direction: column; gap: 6px; }
 .copy[hidden] { display: none; }
+/* NEW: small print at the bottom of the standalone page (the copyright notice). */
+.foot { color: var(--muted); font-size: 13px; margin: 0; text-align: center; }
 .copy textarea { width: 100%; resize: vertical; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; font-family: var(--mono); font-size: 14px; line-height: 1.5; white-space: pre; overflow-x: auto; }
 /* CHANGED: was @media (max-width: 820px); a container query also works inside a notebook column */
 @container (max-width: 820px) { .two { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 26px; } }

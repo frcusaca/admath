@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { expect, test } from "@playwright/test";

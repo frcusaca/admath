@@ -1,4 +1,5 @@
 ---
+# Copyright © 2026-present CAehi.us
 title: "Linear Algebra Circle"
 subtitle: "Vectors, inner products and the ideas under machine learning"
 format: html

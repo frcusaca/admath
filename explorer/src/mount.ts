@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /**
  * mountAngleExplorer(element, options): put an Angle Explorer inside `element`.
  *
@@ -43,6 +44,8 @@ export interface MountOptions extends StateOptions {
   header?: boolean;
   /** Use a <main> landmark. Only for a page that holds nothing else (default false). */
   landmark?: boolean;
+  /** A line of small print at the bottom, e.g. the copyright notice (default none). */
+  footer?: string;
 }
 
 export interface AngleExplorerHandle {
@@ -82,7 +85,11 @@ export function mountAngleExplorer(element: HTMLElement, options: MountOptions =
   sheet.textContent = css;
   root.replaceChildren(sheet);
   const holder = doc.createElement("div");
-  holder.innerHTML = template({ landmark: options.landmark ?? false, header: options.header ?? true });
+  holder.innerHTML = template({
+    landmark: options.landmark ?? false,
+    header: options.header ?? true,
+    footer: options.footer ?? null,
+  });
   root.append(...holder.childNodes);
 
   const $ = <T extends Element = HTMLElement>(id: string): T => {

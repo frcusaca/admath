@@ -1,10 +1,14 @@
+// Copyright © 2026-present CAehi.us
 /** The explorer's fixed markup. The dynamic parts are filled in by the render modules. */
+import { esc } from "../format";
 
 export interface TemplateOptions {
   /** Use a <main> landmark (standalone page) instead of a labelled region (embedded). */
   landmark: boolean;
   /** Show the title and the one-line introduction. */
   header: boolean;
+  /** Small print at the bottom (escaped), or null for none. */
+  footer: string | null;
 }
 
 export function template(opts: TemplateOptions): string {
@@ -90,5 +94,5 @@ export function template(opts: TemplateOptions): string {
       <p class="hint" id="gmhint"></p>
     </div>
   </section>
-${close}`;
+${opts.footer ? `  <footer class="foot">${esc(opts.footer)}</footer>\n` : ""}${close}`;
 }

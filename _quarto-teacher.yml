@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 # Profile "teacher": the teacher guides, rendered to their own folder.
 #   quarto render --profile teacher     (or: make teacher)
 # Nothing here is published with the student site.

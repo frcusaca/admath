@@ -1,3 +1,4 @@
+<!-- Copyright © 2026-present CAehi.us -->
 # Maintainer guide
 
 How to add, change, build and deploy the course. The kids never see this.
@@ -15,6 +16,7 @@ For the reasons behind the layout, see [`docs/PLAN.md`](docs/PLAN.md).
 - [10. Give notebooks to the kids](#10-give-notebooks-to-the-kids)
 - [11. Upgrade the tools](#11-upgrade-the-tools)
 - [12. When something breaks](#12-when-something-breaks)
+- [13. Copyright notices](#13-copyright-notices)
 
 ## 1. The map
 
@@ -88,9 +90,11 @@ by itself.
 | `make explorer` | Rebuild the explorer (and the copy in `python/`). |
 | `make test` | Unit and browser tests only (no notebooks, no Quarto). |
 | `make colab` | Zip the student notebooks into `dist/colab/`. |
+| `make copyright` | Add the copyright notice to any file that lacks it. |
 
 What `make check` runs, in order:
 
+1. `check-copyright`: every file carries the copyright notice (§13).
 1. `check-clean`: no outputs or execution counts in any notebook.
 2. `check-setup`: every setup cell matches `course.toml`.
 3. `check-coins`: every Mastery Coin has exactly one answer-key row, and the reverse.
@@ -310,8 +314,8 @@ Every version is pinned in one place:
 | KaTeX, markdown-it | `package.json` |
 | Quarto | `tools/install_quarto.sh` (`QUARTO_VERSION`) |
 | TinyTeX | `tools/install_tinytex.sh` (`TINYTEX_VERSION`) |
-| Python test and notebook tools | `requirements-dev.txt` |
-| vecdraw's runtime dependencies | `python/pyproject.toml` (keep the minimums low: Colab decides numpy) |
+| Python libraries for running the notebooks | `requirements.txt` **and** `python/pyproject.toml` (a test keeps them equal; keep the minimums low, since Colab decides numpy) |
+| Python test and notebook tools | `requirements-dev.txt` (starts with `-r requirements.txt`) |
 
 Check what's current with `npm outdated`, <https://quarto.org/docs/download/>,
 and <https://github.com/rstudio/tinytex-releases/releases>. Upgrade one tool at
@@ -357,3 +361,31 @@ socket paths are limited to 108 characters and deep checkouts exceed that.)
 
 **Parity test skipped.** No internet, so the original page could not load its
 Google Fonts. Run it again online.
+
+## 13. Copyright notices
+
+The notice is **Copyright © 2026-present CAehi.us**. `make check` fails if any
+file lacks it, and `make copyright` adds it in the right comment syntax:
+
+| Where | How |
+| --- | --- |
+| Python, shell, Makefile, YAML, TOML, requirements, `.gitignore` | `# Copyright …` (after a `#!` line) |
+| TypeScript, JavaScript, `tsconfig*.json` | `// Copyright …` |
+| CSS | `/* Copyright … */` |
+| HTML, Markdown | `<!-- Copyright … -->` (HTML: after the doctype) |
+| `.qmd` pages | a YAML comment in the front matter |
+| Notebooks | `metadata.copyright`, and a last cell `<small>Copyright …</small>` |
+| `package.json` | `"author": "CAehi.us"` (JSON has no comments) |
+| Built explorer files | a `/*! … */` banner added by the build (`explorer/src/copyright.ts`) |
+| Student and teacher sites | the page footer (`_quarto.yml`) |
+| PDFs | the foot of every page (`_quarto.yml`, `include-in-header`) |
+| Standalone explorer page | a footer line (the embedded explorer has none; its page does) |
+
+Only `package-lock.json` and `.nvmrc` are exempt. A new kind of file makes the
+check fail until `tools/copyright.py` has a rule for it, so nothing is
+skipped silently. To change the wording, change `NOTICE` in
+`tools/copyright.py`, `COPYRIGHT` in `explorer/src/copyright.ts`, and the two
+footers in `_quarto.yml`, then run `make copyright` (it updates notebook footers,
+but not the old comment lines: replace those with a search-and-replace).
+
+No license has been chosen. Adding one is a separate decision.

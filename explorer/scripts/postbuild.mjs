@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 // After `vite build`: give the standalone page its real name, and copy the
 // classic-script build into the Python package (python/src/vecdraw/static/),
 // which is what explore_angles() embeds in notebook outputs.

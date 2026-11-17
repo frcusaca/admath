@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { defineConfig } from "@playwright/test";
 
 // Uses the Chrome already installed on the machine (channel "chrome"),

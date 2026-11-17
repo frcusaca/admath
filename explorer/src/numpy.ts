@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /**
  * "Copy as NumPy": turn the explorer's vectors into Python a kid can paste
  * into a notebook cell. Pure, so it is unit-tested. Uses ASCII only: the

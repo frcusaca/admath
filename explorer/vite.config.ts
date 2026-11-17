@@ -1,7 +1,12 @@
+// Copyright © 2026-present CAehi.us
 /// <reference types="vitest/config" />
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
+import { COPYRIGHT } from "./src/copyright";
+
+/** Added after minification (postBanner), so every built file starts with the notice. */
+const banner = `/*! Angle Explorer. ${COPYRIGHT} */`;
 
 // Two builds from one source:
 //   vite build --mode standalone   dist/standalone/angle-explorer.html (everything inlined)
@@ -20,6 +25,7 @@ export default defineConfig(({ mode }) => {
           formats: ["es", "iife"],
           fileName: (format) => (format === "es" ? "angle-explorer.js" : "angle-explorer.iife.js"),
         },
+        rollupOptions: { output: { postBanner: banner } },
       },
     };
   }
@@ -29,7 +35,7 @@ export default defineConfig(({ mode }) => {
       outDir: "dist/standalone",
       emptyOutDir: true,
       assetsInlineLimit: Number.MAX_SAFE_INTEGER,
-      rollupOptions: { input: resolve(import.meta.dirname, "index.html") },
+      rollupOptions: { input: resolve(import.meta.dirname, "index.html"), output: { postBanner: banner } },
     },
     test: {
       include: ["src/**/*.test.ts"],

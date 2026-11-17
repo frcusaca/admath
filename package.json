@@ -2,6 +2,7 @@
   "name": "linalg-circle",
   "private": true,
   "description": "Node side of the linalg-circle course: the Angle Explorer and the notebook checks.",
+  "author": "CAehi.us",
   "type": "module",
   "workspaces": [
     "explorer"

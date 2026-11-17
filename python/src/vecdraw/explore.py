@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """
 explore_angles - show the Angle Explorer in a notebook, seeded with your vectors.
 

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 # The one place for course-wide settings.
 # After changing anything here, run `make sync-setup` to copy it into the
 # setup cell of every student notebook. `make check` fails if a notebook is out of date.

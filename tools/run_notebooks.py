@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Execute notebooks from top to bottom and fail on the first error.
 
     python tools/run_notebooks.py                     every notebook

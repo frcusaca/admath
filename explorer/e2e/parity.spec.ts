@@ -1,7 +1,9 @@
+// Copyright © 2026-present CAehi.us
 /**
  * The port must look like the original page. Both are screenshotted in light and
  * dark, wide and phone-sized, and compared pixel by pixel. The only intended
- * difference, the new "Copy as NumPy" button, is hidden for the comparison.
+ * differences, the new "Copy as NumPy" button and the copyright footer, are
+ * hidden for the comparison.
  *
  * The original page loads its fonts from Google Fonts; without a network this
  * test is skipped rather than failed.
@@ -27,7 +29,7 @@ for (const { scheme, width } of cases) {
       if (url === STANDALONE) {
         await page.evaluate(() => {
           const s = document.createElement("style");
-          s.textContent = "#copy { display: none !important; }";
+          s.textContent = "#copy, .foot { display: none !important; }";
           document.body.shadowRoot?.append(s);
         });
       } else {

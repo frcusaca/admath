@@ -1,4 +1,5 @@
 ---
+# Copyright © 2026-present CAehi.us
 title: "Teacher guides"
 format: html
 toc: false

@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "private": true,
   "description": "The Angle Explorer: draggable vectors, the inner product and the signed angle.",
+  "author": "CAehi.us",
   "type": "module",
   "module": "./dist/lib/angle-explorer.js",
   "types": "./dist/types/index.d.ts",

@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** Where things go on the plot's SVG canvas. Pure. */
 import { SIZE } from "./state";
 

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 """Each check must fail when it should. Synthetic notebooks in a temp folder."""
 import json
 import shutil
@@ -143,3 +144,52 @@ class TestQuartoYamlLookalike:
         nb = json.loads((course / "notebooks" / "01_x.ipynb").read_text())
         assert "".join(nb["cells"][0]["source"]) == "---\n\n## Part 1\ntext"
         assert "".join(nb["cells"][1]["source"]) == "---\n\n## Part 2"
+
+
+class TestCopyright:
+    """tools/copyright.py on a throwaway git repository."""
+
+    @pytest.fixture
+    def repo(self, course):
+        subprocess.run(["git", "init", "-q"], cwd=course, check=True)
+        (course / ".gitignore").write_text("# Copyright © 2026-present CAehi.us\n__pycache__/\n")
+        return course
+
+    def test_reports_and_fixes_each_kind_of_file(self, repo):
+        files = {
+            "a.py": "#!/usr/bin/env python\nprint(1)\n",
+            "b.ts": "export const x = 1;\n",
+            "c.css": "p { color: red; }\n",
+            "d.html": "<!DOCTYPE html>\n<p>hi</p>\n",
+            "e.md": "# Title\n",
+            "f.qmd": "---\ntitle: x\n---\nBody\n",
+            "Makefile": "all:\n\techo hi\n",
+            "package.json": '{\n  "name": "x",\n  "description": "y"\n}\n',
+        }
+        for name, body in files.items():
+            (repo / name).write_text(body)
+        write(repo, "01_x.ipynb", notebook(("markdown", "# Lesson")))
+        result = run(repo, "copyright.py")
+        assert result.returncode == 1
+        for name in [*files, "notebooks/01_x.ipynb"]:
+            assert name in result.stderr, name
+        assert run(repo, "copyright.py", "--fix").returncode == 0
+        assert run(repo, "copyright.py").returncode == 0
+
+        notice = "Copyright © 2026-present CAehi.us"
+        assert (repo / "a.py").read_text().splitlines()[:2] == ["#!/usr/bin/env python", f"# {notice}"]
+        assert (repo / "d.html").read_text().splitlines()[:2] == ["<!DOCTYPE html>", f"<!-- {notice} -->"]
+        assert (repo / "f.qmd").read_text().splitlines()[:2] == ["---", f"# {notice}"]
+        assert json.loads((repo / "package.json").read_text())["author"] == "CAehi.us"
+        nb = json.loads((repo / "notebooks" / "01_x.ipynb").read_text())
+        assert nb["metadata"]["copyright"] == notice
+        assert notice in "".join(nb["cells"][-1]["source"])
+        # running --fix again changes nothing
+        before = {p: p.read_bytes() for p in repo.rglob("*") if p.is_file() and ".git" not in p.parts}
+        run(repo, "copyright.py", "--fix")
+        assert before == {p: p.read_bytes() for p in repo.rglob("*") if p.is_file() and ".git" not in p.parts}
+
+    def test_unknown_file_kinds_are_not_silently_skipped(self, repo):
+        (repo / "data.csv").write_text("a,b\n")
+        result = run(repo, "copyright.py")
+        assert result.returncode == 1 and "no copyright rule" in result.stderr

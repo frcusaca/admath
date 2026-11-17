@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 // Minimal static file server for tests: node scripts/serve.mjs <dir> <port>
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";

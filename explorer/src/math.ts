@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /**
  * The vector math behind the explorer. Every function here is pure: no DOM,
  * no state, same answer for the same input. The thresholds are the ones the

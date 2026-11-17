@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** The HTML that explore_angles() puts in a notebook output really runs. */
 import { expect, test } from "@playwright/test";
 import { pythonHtml, tempPage } from "./helpers";

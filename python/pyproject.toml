@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 [build-system]
 requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
@@ -7,6 +8,7 @@ name = "vecdraw"
 version = "0.4.0"
 description = "A tiny, readable helper for drawing vectors, plus the Angle Explorer, for the linalg-circle course."
 readme = "README.md"
+authors = [{ name = "CAehi.us" }]
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.24",

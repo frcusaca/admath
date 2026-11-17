@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /**
  * The explorer's state and every change a person can make to it.
  * The functions mutate the state they are given (the views re-render from it)

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 # linalg-circle: one entry point for everything. `make` lists the targets.
 #
 # Tools live inside the repo: .venv/ (Python), node_modules/, .tools/quarto,
@@ -27,7 +28,7 @@ QUIET     := { grep -v --line-buffered "Kernel is running over TCP" || true; }
 
 .PHONY: help setup setup-python setup-node setup-quarto \
         explorer test test-python test-tools test-explorer test-e2e test-site \
-        notebooks check-static check-clean check-setup check-coins check-latex \
+        notebooks check-static check-clean check-setup check-coins check-latex check-copyright copyright \
         stage site teacher pdf preview preview-teacher colab sync-setup strip check clean distclean
 
 help: ## Show this list
@@ -93,6 +94,9 @@ check-setup: ## Every setup cell matches course.toml
 check-coins: ## Every Mastery Coin has exactly one answer-key row, and the reverse
 	cd tools && $(PY) check_coins.py
 
+check-copyright: ## Every file carries the copyright notice
+	$(PY) tools/copyright.py
+
 check-latex: ## Every $...$ and $$...$$ parses with KaTeX
 	node tools/check_latex.mjs $(NOTEBOOKS)
 
@@ -134,13 +138,16 @@ colab: ## Bundle the student notebooks for Colab into dist/colab/
 sync-setup: ## Copy course.toml into every notebook's setup cell
 	cd tools && $(PY) sync_setup.py
 
+copyright: ## Add the copyright notice to every file that lacks it
+	$(PY) tools/copyright.py --fix
+
 strip: ## Remove outputs (and fix Quarto-unsafe rules) in every notebook
 	cd tools && $(PY) check_clean.py --fix
 
 # ---- everything ----------------------------------------------------------------
 
 check: ## Everything that can fail: static checks, all tests, every notebook, both sites
-	@$(MAKE) check-clean check-setup check-coins check-latex
+	@$(MAKE) check-copyright check-clean check-setup check-coins check-latex
 	@$(MAKE) check-static
 	@$(MAKE) test-python test-tools test-explorer test-e2e
 	@$(MAKE) site teacher

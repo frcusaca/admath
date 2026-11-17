@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** Which vector is under the pointer. Pure, in paper coordinates. */
 import type { ExplorerState } from "./state";
 

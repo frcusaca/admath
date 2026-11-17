@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 # Profile "student" (the default): the student website.
 #   quarto render     (or: make site)
 project:

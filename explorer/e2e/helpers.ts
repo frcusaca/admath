@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

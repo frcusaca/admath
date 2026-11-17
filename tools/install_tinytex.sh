@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Copyright © 2026-present CAehi.us
 # Install TinyTeX (a small TeX Live) into .tools/TinyTeX for the PDF builds.
 # No root, nothing outside the repo. Quarto finds it through PATH (the Makefile
 # puts .tools/TinyTeX/bin/* first) and uses its tlmgr to fetch missing LaTeX

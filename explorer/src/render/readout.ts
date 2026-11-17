@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 /** The readout panel: the worked inner product, the chips, the numbers, and the −1…1 meter. */
 import { esc, fmt, fmtSignedDegrees, signClass } from "../format";
 import type { PairFacts, Sign } from "../math";

@@ -1,3 +1,4 @@
+# Copyright © 2026-present CAehi.us
 # Quarto project: settings shared by both sites. What each site contains is in
 # its profile, and exactly one profile is active:
 #   _quarto-student.yml  (default)  make site    -> _site/          student pages + PDFs
@@ -24,6 +25,7 @@ website:
     style: docked
     contents: auto
   page-footer:
+    left: "Copyright © 2026-present CAehi.us"
     center: "Predict, then run."
 
 format:
@@ -46,6 +48,14 @@ format:
     code-overflow: wrap
     fig-width: 5
     fig-height: 5
+    include-in-header:
+      text: |
+        % the copyright notice at the foot of every page (KOMA-Script)
+        \usepackage{scrlayer-scrpage}
+        \pagestyle{scrheadings}
+        \ifoot*{\small Copyright \textcopyright{} 2026-present CAehi.us}
+        \ofoot*{\small\pagemark}
+        \cfoot*{}
 
 execute:
   error: false        # a failing cell in a .qmd page fails the render

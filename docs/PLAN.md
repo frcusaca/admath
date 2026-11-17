@@ -1,3 +1,4 @@
+<!-- Copyright © 2026-present CAehi.us -->
 # Restructuring plan (2026-11-16)
 
 Written before the restructure so the final report can say how closely the work

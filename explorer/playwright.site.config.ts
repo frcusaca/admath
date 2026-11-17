@@ -1,3 +1,4 @@
+// Copyright © 2026-present CAehi.us
 import { defineConfig } from "@playwright/test";
 
 // Smoke tests for the rendered Quarto site (run `make site` first).
