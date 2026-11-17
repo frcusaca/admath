@@ -1,9 +1,11 @@
 """Execute notebooks from top to bottom and fail on the first error.
 
-    python tools/run_notebooks.py                 every notebook
-    python tools/run_notebooks.py notebooks/00_*  just these
+    python tools/run_notebooks.py                     every notebook
+    python tools/run_notebooks.py notebooks/00_*      just these
+    python tools/run_notebooks.py --write DIR         also save the executed copies in DIR
 
-Nothing is written back: the committed notebooks keep no outputs.
+Nothing is ever written back to notebooks/: the committed notebooks keep no
+outputs. (--write is how the site build gets executed notebooks; see stage_site.py.)
 For a teacher guide, the cell under the "Check the key" heading must also
 print "All N checks passed.".
 """
@@ -41,7 +43,7 @@ def check_the_key(nb, name):
     return f"{name}: no 'Check the key' section found"
 
 
-def run(path):
+def run(path, write_to=None):
     nb = nbformat.read(path, as_version=4)
     # The kernel talks over TCP on 127.0.0.1 only. (IPC would avoid the kernel's
     # "running over TCP" warning, but its socket file lives in the working directory
@@ -59,16 +61,27 @@ def run(path):
         first_lines = "\n".join(str(err).splitlines()[:40])
         return f"{path.name}: a cell raised an error\n{first_lines}"
     print(f"  ok   {path.name}  ({time.time() - start:.1f}s, {len(nb.cells)} cells)")
+    if write_to is not None:
+        nbformat.write(nb, str(Path(write_to) / path.name))
     if is_teacher(path):
         return check_the_key(nb, path.name)
     return None
 
 
 def main():
-    paths = [Path(p) for p in sys.argv[1:]] or all_notebooks()
+    args = sys.argv[1:]
+    write_to = None
+    if "--write" in args:
+        at = args.index("--write")
+        write_to = Path(args[at + 1]).resolve()
+        if write_to == NOTEBOOKS.resolve():
+            sys.exit("refusing to write executed notebooks over the sources in notebooks/")
+        write_to.mkdir(parents=True, exist_ok=True)
+        del args[at : at + 2]
+    paths = [Path(p).resolve() for p in args] or all_notebooks()
     failures = []
     for path in paths:
-        problem = run(path)
+        problem = run(path, write_to)
         if problem:
             print(f"  FAIL {problem}", file=sys.stderr)
             failures.append(path.name)
