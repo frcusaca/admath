@@ -1,0 +1,17 @@
+# Copyright © 2026-present CAehi.us
+#
+# Python libraries needed to run the course notebooks (Python 3.10 or newer).
+# Install from the repository root:
+#     pip install -r requirements.txt
+#
+# These are vecdraw's own dependencies (python/pyproject.toml) plus IPython,
+# which displays the Angle Explorer. Jupyter and Colab already include IPython.
+# tools/tests/test_requirements.py keeps this list and pyproject.toml in step.
+# Google Colab needs none of this: its setup cell installs vecdraw directly.
+
+numpy>=1.24
+matplotlib>=3.7
+ipython>=8
+
+# vecdraw itself, the course's drawing library (python/), editable
+-e ./python
