@@ -1,0 +1,14 @@
+# Profile "student" (the default): the student website.
+#   quarto render     (or: make site)
+project:
+  output-dir: _site
+  render:
+    - index.qmd
+    - angle-explorer.qmd
+    - "notebooks/[0-9]*_*.ipynb"
+    - "!notebooks/*teacher*.ipynb"     # never publish teacher guides with the student site
+  resources:
+    - explorer/dist/standalone/angle-explorer.html
+
+website:
+  title: "Linear Algebra Circle"

@@ -1,0 +1,33 @@
+---
+title: "Angle Explorer"
+format:
+  html: default
+  pdf: default
+---
+
+The Angle Explorer draws vectors from the origin. Pick a first and a second
+vector, drag their tips, and watch the inner product, the lengths and the angle
+change together. Blue and orange mean only the sign of the inner product.
+
+In a notebook, `explore_angles` opens it with your own vectors:
+
+```{python}
+#| column: page
+import numpy as np
+from vecdraw import explore_angles
+
+a = np.array([4, 0])
+b = np.array([3, 3])
+c = np.array([0, 5])
+d = np.array([-4, 2])
+e = np.array([-2, -4])
+
+explore_angles(a, b, c, d, e)
+```
+
+Press **Copy as NumPy** to take the vectors back into a notebook. In a PDF,
+`explore_angles` shows a still picture of the first two vectors instead.
+
+::: {.content-visible when-format="html"}
+The explorer also works on its own: [open the standalone page](explorer/dist/standalone/angle-explorer.html).
+:::

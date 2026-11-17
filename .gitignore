@@ -19,3 +19,8 @@ build/
 test-results/
 playwright-report/
 *.quarto_ipynb
+
+# quarto
+/.quarto/
+**/*.quarto_ipynb
+/.build/

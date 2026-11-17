@@ -20,7 +20,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "npm run typecheck && vite build --mode standalone && vite build --mode lib && tsc -p tsconfig.types.json && node scripts/postbuild.mjs",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:site": "playwright test -c playwright.site.config.ts"
   },
   "devDependencies": {
     "@fontsource/atkinson-hyperlegible": "5.3.0",
