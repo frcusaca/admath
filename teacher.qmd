@@ -1,0 +1,14 @@
+---
+# Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+title: "Teacher guides"
+format: html
+toc: false
+---
+
+The adult's companion to each module: lessons, the proficiency check with
+answers, teaching notes and the answer key for every Mastery Coin.
+**Do not share these with the kids.**
+
+Each guide ends with a "Check the key" cell that recomputes every number in
+its answer key; it ran when this site was built.

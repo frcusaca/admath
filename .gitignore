@@ -1,3 +1,33 @@
+# Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
+# local tooling
+.venv/
+.tools/
+node_modules/
+.remember/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# build output
+explorer/dist/
+_site/
+_site-teacher/
+.quarto/
+_freeze/
+dist/
+build/
+test-results/
+playwright-report/
+*.quarto_ipynb
+
+# quarto
+/.quarto/
+**/*.quarto_ipynb
+/.build/
+
+# ---- GitHub Python template (from the repository's initial commit) ----
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -1,0 +1,41 @@
+---
+# Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+title: "Linear Algebra Circle"
+subtitle: "Vectors, inner products and the ideas under machine learning"
+format: html
+toc: false
+execute:
+  echo: false
+---
+
+**The one rule: predict, then run.** Before you run a cell, say out loud what you think it will print or draw.
+
+```{python}
+#| output: asis
+import sys, tomllib
+from pathlib import Path
+
+sys.path.insert(0, "tools")
+from nbutil import student_notebooks, load, text, NOTEBOOKS
+
+repo = tomllib.loads(Path("course.toml").read_text())["repository"]
+url, ref = repo["url"].rstrip("/"), repo["ref"]
+github = url.startswith("https://github.com/") and "CHANGE-ME" not in url
+
+print("| Notebook | Read | Run in Colab |")
+print("| --- | --- | --- |")
+for path in student_notebooks():
+    first = text(load(path)["cells"][0]).splitlines()[0].lstrip("# ").strip()
+    page = path.relative_to(Path.cwd()).with_suffix(".html").as_posix()
+    if github:
+        colab = f"https://colab.research.google.com/github/{url.removeprefix('https://github.com/')}/blob/{ref}/notebooks/{path.name}"
+        run = f"[Open in Colab]({colab})"
+    else:
+        run = "*after the repository is published*"
+    print(f"| {first} | [web page]({page}) | {run} |")
+```
+
+Each notebook page also links a PDF version.
+
+The [Angle Explorer](angle-explorer.qmd) is the drawing tool behind `explore_angles`.

@@ -1,0 +1,15 @@
+# Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
+# Profile "teacher": the teacher guides, rendered to their own folder.
+#   quarto render --profile teacher     (or: make teacher)
+# Nothing here is published with the student site.
+project:
+  output-dir: _site-teacher
+  render:
+    - teacher.qmd
+    - "notebooks/*teacher*.ipynb"
+
+website:
+  title: "Linear Algebra Circle: teacher guides"
+  page-footer:
+    center: "Teacher guides. Do not share with the kids."

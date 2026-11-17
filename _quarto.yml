@@ -1,0 +1,63 @@
+# Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
+# Quarto project: settings shared by both sites. What each site contains is in
+# its profile, and exactly one profile is active:
+#   _quarto-student.yml  (default)  make site    -> _site/          student pages + PDFs
+#   _quarto-teacher.yml             make teacher -> _site-teacher/  teacher guides + PDFs
+# Lists in a profile are *added* to lists here, so no file list lives in this file:
+# that is what keeps the teacher guides out of the student site.
+# The .ipynb files are the source of truth and are committed without outputs.
+# Quarto must never execute them in place: it would write the outputs back into
+# notebooks/. So `make site` / `make teacher` first stage a copy in .build/site/
+# with executed notebooks (tools/stage_site.py) and render that copy.
+# A plain `quarto render` here renders the notebooks without outputs and leaves
+# them untouched. (.qmd pages always execute; they hold no committed outputs.)
+project:
+  type: website
+
+profile:
+  default: student
+  group:
+    - [student, teacher]
+
+website:
+  page-navigation: true
+  sidebar:
+    style: docked
+    contents: auto
+  page-footer:
+    left: "Copyright © 2026-present CAehi.us · Lessons: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) · Code: [Prosperity 3.0.0](https://prosperitylicense.com/versions/3.0.0)"
+    center: "Predict, then run."
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    html-math-method: katex      # the same engine tools/check_latex.mjs checks with
+    # Quarto rewrites raw HTML <table> markup, even inside the <script> that
+    # explore_angles embeds, which breaks the explorer. Markdown tables are unaffected.
+    html-table-processing: none
+    toc: true
+    code-overflow: wrap
+    other-links-position: right
+  pdf:
+    pdf-engine: lualatex
+    documentclass: scrartcl
+    papersize: letter
+    geometry: [margin=2cm]
+    code-overflow: wrap
+    fig-width: 5
+    fig-height: 5
+    include-in-header:
+      text: |
+        % the copyright notice and license at the foot of every page (KOMA-Script)
+        \usepackage{scrlayer-scrpage}
+        \pagestyle{scrheadings}
+        \ifoot*{\small Copyright \textcopyright{} 2026-present CAehi.us. CC BY-NC-SA 4.0}
+        \ofoot*{\small\pagemark}
+        \cfoot*{}
+
+execute:
+  error: false        # a failing cell in a .qmd page fails the render
+  freeze: false
