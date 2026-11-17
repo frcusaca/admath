@@ -132,3 +132,14 @@ class TestLatex:
         )
         assert result.returncode == 1
         assert "KATEX ERROR" in result.stdout or "STRAY $" in result.stdout
+
+
+class TestQuartoYamlLookalike:
+    def test_rule_followed_by_text_is_reported_and_fixed(self, course):
+        write(course, "01_x.ipynb", notebook(("markdown", "---\n## Part 1\ntext"), ("markdown", "---\n\n## Part 2")))
+        result = run(course, "check_clean.py")
+        assert result.returncode == 1 and "cell 0 starts with '---'" in result.stderr
+        assert run(course, "check_clean.py", "--fix").returncode == 0
+        nb = json.loads((course / "notebooks" / "01_x.ipynb").read_text())
+        assert "".join(nb["cells"][0]["source"]) == "---\n\n## Part 1\ntext"
+        assert "".join(nb["cells"][1]["source"]) == "---\n\n## Part 2"
