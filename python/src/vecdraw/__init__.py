@@ -162,3 +162,8 @@ def draw_digit(segments, color="#D55E00"):
 def show():
     """Show the picture."""
     plt.show()
+
+
+# explore_angles opens the Angle Explorer in your notebook. It lives in
+# its own file, explore.py, because it is not about drawing on graph paper.
+from vecdraw.explore import explore_angles

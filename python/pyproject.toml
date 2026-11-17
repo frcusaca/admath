@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vecdraw"
+version = "0.4.0"
+description = "A tiny, readable helper for drawing vectors, plus the Angle Explorer, for the linalg-circle course."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+# IPython is already present in Jupyter and Colab; it is only needed to *display* the explorer.
+notebook = ["ipython>=8"]
+dev = ["ipython>=8", "pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vecdraw"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vecdraw", "tests", "README.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
