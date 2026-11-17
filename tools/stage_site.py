@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Stage the Quarto project in .build/site/ with executed notebooks.
 
     python tools/stage_site.py

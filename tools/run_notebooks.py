@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Execute notebooks from top to bottom and fail on the first error.
 
     python tools/run_notebooks.py                     every notebook

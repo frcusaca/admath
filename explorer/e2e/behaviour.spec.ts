@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import { LIBRARY, q, STANDALONE } from "./helpers";
@@ -16,8 +17,8 @@ test.describe("standalone page", () => {
     await expect(page.locator("main")).toHaveCount(1);
   });
 
-  test("the standalone page shows the copyright notice", async ({ page }) => {
-    await expect(q(page, "footer.foot")).toHaveText("Copyright © 2026-present CAehi.us");
+  test("the standalone page shows the copyright notice and license", async ({ page }) => {
+    await expect(q(page, "footer.foot")).toHaveText("Copyright © 2026-present CAehi.us. Prosperity Public License 3.0.0.");
   });
 
   test("dragging a tip moves the vector and updates every view", async ({ page }) => {

@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /** The explorer's fixed markup. The dynamic parts are filled in by the render modules. */
 import { esc } from "../format";
 

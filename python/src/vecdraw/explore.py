@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """
 explore_angles - show the Angle Explorer in a notebook, seeded with your vectors.
 

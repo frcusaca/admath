@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /**
  * The two typefaces (both SIL Open Font License, see THIRD_PARTY_NOTICES.md),
  * inlined as data URLs so the explorer works offline.

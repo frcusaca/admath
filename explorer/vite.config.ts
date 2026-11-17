@@ -1,12 +1,13 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /// <reference types="vitest/config" />
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import { COPYRIGHT } from "./src/copyright";
+import { COPYRIGHT, LICENSE_ID, LICENSE_NAME, LICENSE_URL } from "./src/copyright";
 
 /** Added after minification (postBanner), so every built file starts with the notice. */
-const banner = `/*! Angle Explorer. ${COPYRIGHT} */`;
+const banner = `/*! Angle Explorer. ${COPYRIGHT}. SPDX-License-Identifier: ${LICENSE_ID} (${LICENSE_NAME}, ${LICENSE_URL}) */`;
 
 // Two builds from one source:
 //   vite build --mode standalone   dist/standalone/angle-explorer.html (everything inlined)

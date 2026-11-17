@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Bundle the student notebooks for Colab.
 
     python tools/bundle_colab.py       -> dist/colab/*.ipynb and dist/colab/linalg-circle-notebooks.zip

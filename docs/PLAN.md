@@ -1,4 +1,5 @@
 <!-- Copyright © 2026-present CAehi.us -->
+<!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
 # Restructuring plan (2026-11-16)
 
 Written before the restructure so the final report can say how closely the work

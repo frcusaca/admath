@@ -3,6 +3,7 @@
   "private": true,
   "description": "Node side of the linalg-circle course: the Angle Explorer and the notebook checks.",
   "author": "CAehi.us",
+  "license": "LicenseRef-Prosperity-3.0.0",
   "type": "module",
   "workspaces": [
     "explorer"

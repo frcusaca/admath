@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Small helpers shared by the notebook tools. Standard library only."""
 import json
 import re

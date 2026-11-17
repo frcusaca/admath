@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 # Quarto project: settings shared by both sites. What each site contains is in
 # its profile, and exactly one profile is active:
 #   _quarto-student.yml  (default)  make site    -> _site/          student pages + PDFs
@@ -25,7 +26,7 @@ website:
     style: docked
     contents: auto
   page-footer:
-    left: "Copyright © 2026-present CAehi.us"
+    left: "Copyright © 2026-present CAehi.us · Lessons: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) · Code: [Prosperity 3.0.0](https://prosperitylicense.com/versions/3.0.0)"
     center: "Predict, then run."
 
 format:
@@ -50,10 +51,10 @@ format:
     fig-height: 5
     include-in-header:
       text: |
-        % the copyright notice at the foot of every page (KOMA-Script)
+        % the copyright notice and license at the foot of every page (KOMA-Script)
         \usepackage{scrlayer-scrpage}
         \pagestyle{scrheadings}
-        \ifoot*{\small Copyright \textcopyright{} 2026-present CAehi.us}
+        \ifoot*{\small Copyright \textcopyright{} 2026-present CAehi.us. CC BY-NC-SA 4.0}
         \ofoot*{\small\pagemark}
         \cfoot*{}
 

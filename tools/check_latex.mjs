@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 // Check that every $...$ and $$...$$ in notebook markdown parses with KaTeX.
 //
 //   node tools/check_latex.mjs notebooks/*.ipynb               check only

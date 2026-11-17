@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 // Minimal static file server for tests: node scripts/serve.mjs <dir> <port>
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";

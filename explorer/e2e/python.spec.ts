@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /** The HTML that explore_angles() puts in a notebook output really runs. */
 import { expect, test } from "@playwright/test";
 import { pythonHtml, tempPage } from "./helpers";

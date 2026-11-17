@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Each check must fail when it should. Synthetic notebooks in a temp folder."""
 import json
 import shutil
@@ -152,7 +153,12 @@ class TestCopyright:
     @pytest.fixture
     def repo(self, course):
         subprocess.run(["git", "init", "-q"], cwd=course, check=True)
-        (course / ".gitignore").write_text("# Copyright © 2026-present CAehi.us\n__pycache__/\n")
+        (course / ".gitignore").write_text(
+            "# Copyright © 2026-present CAehi.us\n# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0\n__pycache__/\n"
+        )
+        shutil.copytree(ROOT / "LICENSES", course / "LICENSES")
+        (course / "python").mkdir()
+        shutil.copy(ROOT / "python" / "LICENSE.md", course / "python" / "LICENSE.md")
         return course
 
     def test_reports_and_fixes_each_kind_of_file(self, repo):
@@ -177,10 +183,12 @@ class TestCopyright:
         assert run(repo, "copyright.py").returncode == 0
 
         notice = "Copyright © 2026-present CAehi.us"
-        assert (repo / "a.py").read_text().splitlines()[:2] == ["#!/usr/bin/env python", f"# {notice}"]
-        assert (repo / "d.html").read_text().splitlines()[:2] == ["<!DOCTYPE html>", f"<!-- {notice} -->"]
-        assert (repo / "f.qmd").read_text().splitlines()[:2] == ["---", f"# {notice}"]
-        assert json.loads((repo / "package.json").read_text())["author"] == "CAehi.us"
+        code = "LicenseRef-Prosperity-3.0.0"
+        assert (repo / "a.py").read_text().splitlines()[:3] == ["#!/usr/bin/env python", f"# {notice}", f"# SPDX-License-Identifier: {code}"]
+        assert (repo / "d.html").read_text().splitlines()[:3] == ["<!DOCTYPE html>", f"<!-- {notice} -->", f"<!-- SPDX-License-Identifier: {code} -->"]
+        assert (repo / "f.qmd").read_text().splitlines()[:3] == ["---", f"# {notice}", "# SPDX-License-Identifier: CC-BY-NC-SA-4.0"]
+        package = json.loads((repo / "package.json").read_text())
+        assert (package["author"], package["license"]) == ("CAehi.us", code)
         nb = json.loads((repo / "notebooks" / "01_x.ipynb").read_text())
         assert nb["metadata"]["copyright"] == notice
         assert notice in "".join(nb["cells"][-1]["source"])
@@ -193,3 +201,28 @@ class TestCopyright:
         (repo / "data.csv").write_text("a,b\n")
         result = run(repo, "copyright.py")
         assert result.returncode == 1 and "no copyright rule" in result.stderr
+
+    def test_notice_inside_code_does_not_count(self, repo):
+        (repo / "c.ts").write_text('export const C = "Copyright © 2026-present CAehi.us";\n')
+        assert run(repo, "copyright.py").returncode == 1
+        assert run(repo, "copyright.py", "--fix").returncode == 0
+        lines = (repo / "c.ts").read_text().splitlines()
+        assert lines[:2] == ["// Copyright © 2026-present CAehi.us", "// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0"]
+        assert lines[2].startswith("export const C")
+
+    def test_content_and_code_get_different_licenses(self, repo):
+        (repo / "page.qmd").write_text("---\ntitle: x\n---\n")
+        (repo / "tool.py").write_text("x = 1\n")
+        write(repo, "01_x.ipynb", notebook(("markdown", "# L")))
+        run(repo, "copyright.py", "--fix")
+        assert "SPDX-License-Identifier: CC-BY-NC-SA-4.0" in (repo / "page.qmd").read_text()
+        assert "SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0" in (repo / "tool.py").read_text()
+        nb = json.loads((repo / "notebooks" / "01_x.ipynb").read_text())
+        assert nb["metadata"]["license"] == "CC-BY-NC-SA-4.0"
+
+    def test_wrong_license_is_reported_and_corrected(self, repo):
+        (repo / "tool.py").write_text("# Copyright © 2026-present CAehi.us\n# SPDX-License-Identifier: MIT\nx = 1\n")
+        result = run(repo, "copyright.py")
+        assert "license is MIT" in result.stderr
+        run(repo, "copyright.py", "--fix")
+        assert (repo / "tool.py").read_text().splitlines()[1] == "# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0"

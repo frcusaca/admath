@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /** The readout panel: the worked inner product, the chips, the numbers, and the −1…1 meter. */
 import { esc, fmt, fmtSignedDegrees, signClass } from "../format";
 import type { PairFacts, Sign } from "../math";

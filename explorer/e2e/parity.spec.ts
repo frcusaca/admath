@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /**
  * The port must look like the original page. Both are screenshotted in light and
  * dark, wide and phone-sized, and compared pixel by pixel. The only intended

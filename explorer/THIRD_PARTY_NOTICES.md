@@ -1,4 +1,5 @@
 <!-- Copyright © 2026-present CAehi.us -->
+<!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
 # Third-party notices
 
 The explorer's builds (and the copy embedded in the `vecdraw` Python package)

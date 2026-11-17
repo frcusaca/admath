@@ -4,6 +4,7 @@
   "private": true,
   "description": "The Angle Explorer: draggable vectors, the inner product and the signed angle.",
   "author": "CAehi.us",
+  "license": "LicenseRef-Prosperity-3.0.0",
   "type": "module",
   "module": "./dist/lib/angle-explorer.js",
   "types": "./dist/types/index.d.ts",

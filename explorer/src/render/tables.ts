@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 /** The vector table (editable) and the table of every pair. */
 import { esc, fmt, signClass } from "../format";
 import { length } from "../math";

@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Every Mastery Coin in a student notebook has exactly one answer-key row, and the reverse.
 
     python tools/check_coins.py

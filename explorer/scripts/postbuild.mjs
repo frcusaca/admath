@@ -1,4 +1,5 @@
 // Copyright © 2026-present CAehi.us
+// SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 // After `vite build`: give the standalone page its real name, and copy the
 // classic-script build into the Python package (python/src/vecdraw/static/),
 // which is what explore_angles() embeds in notebook outputs.

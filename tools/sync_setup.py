@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Write the setup cells of every student notebook from course.toml.
 
     python tools/sync_setup.py           rewrite the notebooks

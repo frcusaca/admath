@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 # linalg-circle: one entry point for everything. `make` lists the targets.
 #
 # Tools live inside the repo: .venv/ (Python), node_modules/, .tools/quarto,
@@ -94,7 +95,7 @@ check-setup: ## Every setup cell matches course.toml
 check-coins: ## Every Mastery Coin has exactly one answer-key row, and the reverse
 	cd tools && $(PY) check_coins.py
 
-check-copyright: ## Every file carries the copyright notice
+check-copyright: ## Every file carries the copyright notice and its license
 	$(PY) tools/copyright.py
 
 check-latex: ## Every $...$ and $$...$$ parses with KaTeX
@@ -135,10 +136,11 @@ colab: ## Bundle the student notebooks for Colab into dist/colab/
 
 # ---- maintenance -------------------------------------------------------------
 
-sync-setup: ## Copy course.toml into every notebook's setup cell
+sync-setup: ## Copy course.toml into every setup cell and the Prosperity license
 	cd tools && $(PY) sync_setup.py
+	$(PY) tools/copyright.py --fix
 
-copyright: ## Add the copyright notice to every file that lacks it
+copyright: ## Add or correct copyright and license lines; sync license copies
 	$(PY) tools/copyright.py --fix
 
 strip: ## Remove outputs (and fix Quarto-unsafe rules) in every notebook

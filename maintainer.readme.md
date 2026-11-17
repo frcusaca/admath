@@ -1,4 +1,5 @@
 <!-- Copyright © 2026-present CAehi.us -->
+<!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
 # Maintainer guide
 
 How to add, change, build and deploy the course. The kids never see this.
@@ -16,14 +17,16 @@ For the reasons behind the layout, see [`docs/PLAN.md`](docs/PLAN.md).
 - [10. Give notebooks to the kids](#10-give-notebooks-to-the-kids)
 - [11. Upgrade the tools](#11-upgrade-the-tools)
 - [12. When something breaks](#12-when-something-breaks)
-- [13. Copyright notices](#13-copyright-notices)
+- [13. Copyright and licenses](#13-copyright-and-licenses)
 
 ## 1. The map
 
 ```
 linalg-circle/
 ├── Makefile                  the only entry point: `make` lists every target
-├── course.toml               repository URL + ref; copied into every setup cell
+├── course.toml               repository URL + ref; copied into every setup cell and the license
+├── LICENSE.md                which license covers what (summary)
+├── LICENSES/                 the license texts (never edit by hand)
 ├── notebooks/                SOURCE OF TRUTH. Committed without outputs.
 │   ├── 00_vectors_and_inner_product.ipynb     student notebook (module 0)
 │   ├── 00_teacher_guide.ipynb                 teacher guide (module 0)
@@ -90,11 +93,11 @@ by itself.
 | `make explorer` | Rebuild the explorer (and the copy in `python/`). |
 | `make test` | Unit and browser tests only (no notebooks, no Quarto). |
 | `make colab` | Zip the student notebooks into `dist/colab/`. |
-| `make copyright` | Add the copyright notice to any file that lacks it. |
+| `make copyright` | Add or correct copyright and license lines in any file. |
 
 What `make check` runs, in order:
 
-1. `check-copyright`: every file carries the copyright notice (§13).
+1. `check-copyright`: every file carries the copyright notice and its license (§13).
 1. `check-clean`: no outputs or execution counts in any notebook.
 2. `check-setup`: every setup cell matches `course.toml`.
 3. `check-coins`: every Mastery Coin has exactly one answer-key row, and the reverse.
@@ -245,9 +248,11 @@ Then try it in Colab (see §10). For a term, pin a tag so the library can't
 change under the kids: `git tag v0.4.0 && git push --tags`, set
 `ref = "v0.4.0"` in `course.toml`, then `make sync-setup`, commit and push.
 
-**Licensing.** No license file has been added; that is your decision. The
-explorer bundles two OFL-licensed fonts, credited in
-`explorer/THIRD_PARTY_NOTICES.md`.
+**Licensing.** Lessons are CC BY-NC-SA 4.0 and software is the Prosperity
+Public License 3.0.0 (see `LICENSE.md` and §13). The Prosperity license names
+the repository in its "Source Code:" line; `make sync-setup` writes the URL from
+`course.toml` there too. The explorer bundles two OFL-licensed fonts, credited
+in `explorer/THIRD_PARTY_NOTICES.md`.
 
 **This folder sits inside another repository** (`CAeHius`), which sees it as an
 untracked folder. Add `math/linalg-circle/` to that repository's `.gitignore`
@@ -362,30 +367,52 @@ socket paths are limited to 108 characters and deep checkouts exceed that.)
 **Parity test skipped.** No internet, so the original page could not load its
 Google Fonts. Run it again online.
 
-## 13. Copyright notices
+## 13. Copyright and licenses
 
-The notice is **Copyright © 2026-present CAehi.us**. `make check` fails if any
-file lacks it, and `make copyright` adds it in the right comment syntax:
+Every file says **Copyright © 2026-present CAehi.us** and names its license with
+a standard `SPDX-License-Identifier` line (the [REUSE](https://reuse.software/)
+convention). Which license depends on the path:
+
+| Files | License | SPDX identifier |
+| --- | --- | --- |
+| `notebooks/` (lessons and teacher guides, code cells included), `*.qmd` site pages | Creative Commons BY-NC-SA 4.0 | `CC-BY-NC-SA-4.0` |
+| Everything else: `python/`, `explorer/`, `tools/`, configuration, docs | Prosperity Public License 3.0.0 | `LicenseRef-Prosperity-3.0.0` |
+
+The rule is `license_for()` in `tools/copyright.py`. The texts are in
+`LICENSES/`, and `LICENSE.md` summarises the split. Prosperity is not on the
+SPDX list, which is why its identifier starts with `LicenseRef-`.
+
+`make check` fails if anything is missing or wrong; `make copyright` fixes it:
 
 | Where | How |
 | --- | --- |
-| Python, shell, Makefile, YAML, TOML, requirements, `.gitignore` | `# Copyright …` (after a `#!` line) |
-| TypeScript, JavaScript, `tsconfig*.json` | `// Copyright …` |
-| CSS | `/* Copyright … */` |
-| HTML, Markdown | `<!-- Copyright … -->` (HTML: after the doctype) |
-| `.qmd` pages | a YAML comment in the front matter |
-| Notebooks | `metadata.copyright`, and a last cell `<small>Copyright …</small>` |
-| `package.json` | `"author": "CAehi.us"` (JSON has no comments) |
-| Built explorer files | a `/*! … */` banner added by the build (`explorer/src/copyright.ts`) |
-| Student and teacher sites | the page footer (`_quarto.yml`) |
-| PDFs | the foot of every page (`_quarto.yml`, `include-in-header`) |
-| Standalone explorer page | a footer line (the embedded explorer has none; its page does) |
+| Python, shell, Makefile, YAML, TOML, requirements, `.gitignore` | two `#` lines (after a `#!` line) |
+| TypeScript, JavaScript, `tsconfig*.json` | two `//` lines |
+| CSS | two `/* … */` lines |
+| HTML, Markdown | two `<!-- … -->` lines (HTML: after the doctype) |
+| `.qmd` pages | two YAML comment lines in the front matter |
+| Notebooks | `metadata.copyright`, `metadata.license`, and a last cell with the notice and a link to CC BY-NC-SA 4.0 |
+| `package.json` | `"author"` and `"license"` fields (JSON has no comments) |
+| `python/pyproject.toml` | also `license` and `license-files`; the wheel ships `python/LICENSE.md` |
+| Built explorer files | a `/*! … */` banner with the notice and license (`explorer/src/copyright.ts`) |
+| Student and teacher sites | the page footer, with links to both licenses (`_quarto.yml`) |
+| PDFs | the foot of every page: notice and "CC BY-NC-SA 4.0" (`_quarto.yml`) |
+| Standalone explorer page | a footer line naming the Prosperity license |
 
-Only `package-lock.json` and `.nvmrc` are exempt. A new kind of file makes the
-check fail until `tools/copyright.py` has a rule for it, so nothing is
-skipped silently. To change the wording, change `NOTICE` in
-`tools/copyright.py`, `COPYRIGHT` in `explorer/src/copyright.ts`, and the two
-footers in `_quarto.yml`, then run `make copyright` (it updates notebook footers,
-but not the old comment lines: replace those with a search-and-replace).
+Kept in sync automatically (`make sync-setup` or `make copyright`):
+`python/LICENSE.md` is a copy of `LICENSES/LicenseRef-Prosperity-3.0.0.md`, and
+both carry the repository URL from `course.toml` in their "Source Code:" line.
 
-No license has been chosen. Adding one is a separate decision.
+Exempt: `LICENSES/` (license texts are never edited), `package-lock.json`,
+`.nvmrc`. A new kind of file fails the check until `tools/copyright.py` has a
+rule for it. The notice only counts as a comment line at the top: the same
+words inside code (like the constant in `explorer/src/copyright.ts`) do not.
+
+To change the holder or wording, change `NOTICE` in `tools/copyright.py`,
+`COPYRIGHT` in `explorer/src/copyright.ts`, and the footers in `_quarto.yml`.
+Old comment lines then need a search-and-replace; `make copyright` updates
+notebook footers and license lines but does not rewrite existing notices.
+
+**Commercial licenses.** As the copyright holder, CAehi.us can teach paid
+classes with this material and can grant anyone a separate license, such as a
+paid commercial license for the software. The public licenses only limit others.

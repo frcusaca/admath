@@ -1,4 +1,5 @@
 # Copyright © 2026-present CAehi.us
+# SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 [build-system]
 requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
@@ -9,6 +10,8 @@ version = "0.4.0"
 description = "A tiny, readable helper for drawing vectors, plus the Angle Explorer, for the linalg-circle course."
 readme = "README.md"
 authors = [{ name = "CAehi.us" }]
+license = "LicenseRef-Prosperity-3.0.0"
+license-files = ["LICENSE.md"]
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.24",

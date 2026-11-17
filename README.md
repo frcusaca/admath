@@ -1,4 +1,5 @@
 <!-- Copyright © 2026-present CAehi.us -->
+<!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
 # Linear Algebra Circle
 
 A linear algebra course for advanced 5th graders, taught math-circle style
@@ -71,8 +72,14 @@ dependencies: all npm packages are build and test tools.
 
 Maintainers: start with [`maintainer.readme.md`](maintainer.readme.md).
 
-## Copyright
+## Copyright and licenses
 
-Copyright © 2026-present CAehi.us. Every file carries this notice
-(`make check-copyright`); the bundled fonts are credited in
-[`explorer/THIRD_PARTY_NOTICES.md`](explorer/THIRD_PARTY_NOTICES.md).
+Copyright © 2026-present CAehi.us. See [`LICENSE.md`](LICENSE.md).
+
+- **Lessons** (`notebooks/`, the site pages): [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+  Share and adapt for noncommercial purposes, with credit, under the same license.
+- **Software** (`vecdraw`, the Angle Explorer, tools): [Prosperity Public License 3.0.0](https://prosperitylicense.com/versions/3.0.0).
+  Free for noncommercial use, including by schools; a 30-day trial for commercial use.
+
+Every file names its license (`make check-copyright`). The bundled fonts are
+credited in [`explorer/THIRD_PARTY_NOTICES.md`](explorer/THIRD_PARTY_NOTICES.md).
