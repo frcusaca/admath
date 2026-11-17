@@ -98,6 +98,9 @@ by itself.
 What `make check` runs, in order:
 
 1. `check-copyright`: every file carries the copyright notice and its license (§13).
+1. `check-gitignore`: caches, virtualenvs and build output are ignored, and no
+   source path is (`tools/check_gitignore.py` lists both; add to them when you
+   add a new tool or folder).
 1. `check-clean`: no outputs or execution counts in any notebook.
 2. `check-setup`: every setup cell matches `course.toml`.
 3. `check-coins`: every Mastery Coin has exactly one answer-key row, and the reverse.
@@ -331,6 +334,11 @@ those. Don't add `execute: enabled: true` to `_quarto.yml`. A plain
 `quarto render` in the repo root is safe; it just shows no outputs. For the same
 reason `make preview` previews the staged copy: after editing a notebook,
 stop it and run `make preview` again.
+
+**`check-gitignore` fails.** "not ignored" means a tool now leaves files git
+would commit: add a rule to `.gitignore`. "ignored, but it is source" means a
+rule is too broad: anchor it with a leading `/`. `.gitignore` has no end-of-line
+comments: a `#` after a pattern becomes part of the pattern.
 
 **`check-clean` fails.** Someone committed or saved outputs. `make strip`.
 

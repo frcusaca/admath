@@ -29,7 +29,7 @@ QUIET     := { grep -v --line-buffered "Kernel is running over TCP" || true; }
 
 .PHONY: help setup setup-python setup-node setup-quarto \
         explorer test test-python test-tools test-explorer test-e2e test-site \
-        notebooks check-static check-clean check-setup check-coins check-latex check-copyright copyright \
+        notebooks check-static check-clean check-setup check-coins check-latex check-copyright check-gitignore copyright \
         stage site teacher pdf preview preview-teacher colab sync-setup strip check clean distclean
 
 help: ## Show this list
@@ -98,6 +98,9 @@ check-coins: ## Every Mastery Coin has exactly one answer-key row, and the rever
 check-copyright: ## Every file carries the copyright notice and its license
 	$(PY) tools/copyright.py
 
+check-gitignore: ## .gitignore ignores junk (caches, venvs, builds) and never hides source
+	$(PY) tools/check_gitignore.py
+
 check-latex: ## Every $...$ and $$...$$ parses with KaTeX
 	node tools/check_latex.mjs $(NOTEBOOKS)
 
@@ -149,7 +152,7 @@ strip: ## Remove outputs (and fix Quarto-unsafe rules) in every notebook
 # ---- everything ----------------------------------------------------------------
 
 check: ## Everything that can fail: static checks, all tests, every notebook, both sites
-	@$(MAKE) check-copyright check-clean check-setup check-coins check-latex
+	@$(MAKE) check-copyright check-gitignore check-clean check-setup check-coins check-latex
 	@$(MAKE) check-static
 	@$(MAKE) test-python test-tools test-explorer test-e2e
 	@$(MAKE) site teacher
