@@ -226,8 +226,9 @@ def _draw_static(ax, vectors, names):
             text = f"{abs(degrees):.1f}°"
         else:
             text = f"{degrees:+.1f}°"
-        ax.text(2.6 * np.cos(middle), 2.6 * np.sin(middle), text.replace("-", "−"),
-                ha="center", va="center", fontsize=11, fontweight="bold", color=INK)
+        ax.text(3.0 * np.cos(middle), 3.0 * np.sin(middle), text.replace("-", "−"),
+                ha="center", va="center", fontsize=11, fontweight="bold", color=INK,
+                bbox={"boxstyle": "round,pad=0.15", "facecolor": "white", "edgecolor": "none", "alpha": 0.85})
         ax.set_title(f"⟨{names[0]}, {names[1]}⟩ = {_number(inner)},  normalized {_number(normalized)}",
                      fontsize=11)
 
@@ -239,7 +240,7 @@ def _draw_static(ax, vectors, names):
                                 "linewidth": 2.5 if picked else 1.6, "mutation_scale": 16})
         length = float(np.hypot(v[0], v[1]))
         if length > 1e-9:
-            spot = (v[0] + v[0] / length * 0.7, v[1] + v[1] / length * 0.7)
+            spot = (v[0] + v[0] / length * 0.9, v[1] + v[1] / length * 0.9)
         else:
             spot = (0.5, 0.5)
         ax.text(spot[0], spot[1], names[index], ha="center", va="center",
