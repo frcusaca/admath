@@ -1,0 +1,21 @@
+# local tooling
+.venv/
+.tools/
+node_modules/
+.remember/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# build output
+explorer/dist/
+_site/
+_site-teacher/
+.quarto/
+_freeze/
+dist/
+build/
+test-results/
+playwright-report/
+*.quarto_ipynb

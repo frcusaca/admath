@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angle Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout idea: an engineering-pad plot on the left, a live readout on the right,
+     and two linked tables (the vectors, every pair) underneath. Blue and orange mean
+     the sign of the inner product, nothing else. Turn direction is shown by an arrow on the arc. */
+  --paper: #eaf0df;
+  --panel: #f9fbf3;
+  --ink: #17242b;
+  --muted: #566a63;
+  --grid: #c6d7bb;
+  --grid-strong: #7fa37a;
+  --line: #cbd9c0;
+  --pos: #1c6bb0;
+  --neg: #c44d1c;
+  --display: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #101c17; --panel: #17251e; --ink: #e9f1e4; --muted: #9db3a7;
+    --grid: #263d2f; --grid-strong: #4f745c; --line: #2b4235;
+    --pos: #74b8f6; --neg: #f39160;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #101c17; --panel: #17251e; --ink: #e9f1e4; --muted: #9db3a7;
+  --grid: #263d2f; --grid-strong: #4f745c; --line: #2b4235;
+  --pos: #74b8f6; --neg: #f39160;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.45; }
+main { max-width: 1120px; margin: 0 auto; padding: 22px 16px 40px; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+h1 { font-family: var(--display); font-size: 30px; line-height: 1.1; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h1 span { font-family: var(--mono); font-weight: 400; font-size: 20px; color: var(--muted); margin-left: 8px; }
+.lede { margin: 0; color: var(--muted); max-width: 62ch; }
+h2 { font-size: 13px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin: 0; font-weight: 700; }
+h3 { font-size: 15px; margin: 0; font-weight: 700; }
+.two { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+svg { display: block; max-width: 100%; }
+#plot { width: 100%; height: auto; touch-action: none; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+#plot .gr { stroke: var(--grid); stroke-width: 1; }
+#plot .ax { stroke: var(--grid-strong); stroke-width: 1.6; }
+#plot .tick { fill: var(--muted); font: 11px var(--mono); }
+#plot .arw { stroke: var(--muted); stroke-width: 2.2; stroke-linecap: round; opacity: 0.7; }
+#plot .hdp { fill: var(--muted); opacity: 0.7; }
+#plot .arw.sel { stroke: var(--ink); stroke-width: 4; opacity: 1; }
+#plot .hdp.sel { fill: var(--ink); opacity: 1; }
+#plot .lab { fill: var(--muted); font: 700 17px var(--body); }
+#plot .lab.sel { fill: var(--ink); font-size: 20px; }
+#plot .bdg { fill: var(--ink); }
+#plot .bdt { fill: var(--panel); font: 700 12px var(--mono); }
+#plot .grab { fill: transparent; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 3; opacity: 0.55; }
+#plot .wedge { stroke: none; fill-opacity: 0.22; }
+#plot .arc { fill: none; stroke-width: 2.5; }
+#plot .pos { fill: var(--pos); stroke: var(--pos); }
+#plot .neg { fill: var(--neg); stroke: var(--neg); }
+#plot .flat { fill: var(--ink); stroke: var(--ink); }
+#plot .arc.pos, #plot .arc.neg, #plot .arc.flat { fill: none; }
+#plot .square { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+#plot .deg { font: 700 15px var(--mono); fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 5px; stroke-linejoin: round; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.hint { color: var(--muted); font-size: 14px; margin: 0; }
+label.check { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; cursor: pointer; }
+.eq { font-family: var(--mono); font-size: 17px; overflow-x: auto; white-space: nowrap; padding-bottom: 2px; }
+.eq b { font-size: 22px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 5px 12px; font-weight: 700; border: 2px solid var(--ink); width: fit-content; }
+.chip.pos { border-color: var(--pos); color: var(--pos); }
+.chip.neg { border-color: var(--neg); color: var(--neg); }
+.chip i { font-style: normal; font-family: var(--mono); font-size: 18px; line-height: 1; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; font-size: 15px; }
+dt { color: var(--muted); }
+dd { margin: 0; font-family: var(--mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.meter text, .trace text { font: 11px var(--mono); fill: var(--muted); }
+.meter .track, .trace .zero { stroke: var(--grid-strong); stroke-width: 2; }
+.trace .frame { fill: none; stroke: var(--line); }
+.trace .vg { stroke: var(--grid); stroke-width: 1; }
+.trace .guide { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+.trace .now { fill: var(--panel); stroke: var(--ink); stroke-width: 2.5; }
+.trace { cursor: crosshair; touch-action: pan-y; }
+.meter .tk { stroke: var(--grid-strong); stroke-width: 2; }
+.meter .mark { stroke: var(--panel); stroke-width: 2; fill: var(--ink); }
+.meter .mark.pos { fill: var(--pos); } .meter .mark.neg { fill: var(--neg); }
+.dot { stroke: none; } .dot.pos { fill: var(--pos); } .dot.neg { fill: var(--neg); } .dot.zero { fill: var(--ink); }
+#tip { min-height: 42px; font-size: 14px; margin: 0; }
+details { font-size: 14px; color: var(--muted); }
+details summary { cursor: pointer; color: var(--ink); font-weight: 700; width: fit-content; }
+details p { margin: 6px 0 0; max-width: 60ch; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--pos); outline-offset: 2px; }
+.btn { background: var(--ink); color: var(--panel); border: 0; border-radius: 6px; padding: 8px 14px; font-weight: 700; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn.small { padding: 5px 10px; font-size: 14px; }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.seg { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; }
+.seg button { background: transparent; border: 0; padding: 5px 12px; font-size: 14px; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); font-weight: 700; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+#vt { width: 100%; }
+#vt th { text-align: left; font-size: 13px; color: var(--muted); font-weight: 700; padding: 2px 8px 6px 0; }
+#vt td { padding: 4px 8px 4px 0; border-top: 1px solid var(--line); }
+#vt td.len { font-family: var(--mono); }
+#vt td.nm { font-weight: 700; font-size: 18px; }
+#vt input[type="number"] { width: 68px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 5px 6px; font-family: var(--mono); }
+#vt input[type="radio"] { width: 20px; height: 20px; accent-color: var(--ink); cursor: pointer; margin: 0; vertical-align: middle; }
+.x { border: 0; background: transparent; color: var(--muted); font-size: 18px; padding: 2px 8px; border-radius: 4px; }
+#gm th { font: 700 15px var(--body); padding: 4px 6px; color: var(--muted); }
+#gm td { padding: 2px; }
+#gm button { width: 100%; min-width: 58px; height: 40px; border: 1.5px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 14px; color: var(--ink); }
+#gm button.sel { border-color: var(--ink); border-width: 2.5px; font-weight: 700; }
+#gm button.diag { opacity: 0.6; cursor: default; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--muted); margin: 0; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+@media (max-width: 820px) { .two { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 26px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Angle Explorer <span>&#10216;a, b&#10217;</span></h1>
+    <p class="lede">Pick a first vector and a second vector. Drag their tips. The plot, the numbers and the table of pairs all move together.</p>
+  </header>
+
+  <section class="two">
+    <div class="panel">
+      <h2>Plot</h2>
+      <svg id="plot" viewBox="-16 -16 552 552" role="img" aria-label="Graph paper with vectors drawn from the origin. An arc runs from the first picked vector to the second."></svg>
+      <div class="row">
+        <p class="hint">Tap an arrow to make it the second vector. Drag a tip to change it.</p>
+        <label class="check" for="snap"><input type="checkbox" id="snap" checked> Snap to whole numbers</label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <h2>From the first vector to the second</h2>
+        <button class="btn ghost small" id="swap" type="button">Swap first and second</button>
+      </div>
+      <div id="read" aria-live="polite"></div>
+      <svg class="meter" id="meter" viewBox="0 0 300 54" role="img" aria-label="Scale from minus one to one showing the normalized inner product"></svg>
+      <div class="row">
+        <h3>The normalized inner product at every angle</h3>
+        <button class="btn" id="spin" type="button">Spin b once around</button>
+      </div>
+      <svg class="trace" id="trace" viewBox="0 0 300 130" role="img" aria-label="Chart of the normalized inner product against the angle from the first vector to the second"></svg>
+      <p class="hint" id="tip"></p>
+      <details>
+        <summary>What is this curve?</summary>
+        <p>Across is the angle from the first vector to the second. A plus sign means a counterclockwise turn and a minus sign means clockwise. Up is the normalized inner product.</p>
+        <p>The curve is 1 when the two vectors point the same way, 0 at a right angle, and &minus;1 when they point opposite ways. It is the same on the left and the right, so the inner product cannot tell a left turn from a right turn.</p>
+        <p>This curve has a name: the cosine. The notebook function <code>angle_between</code> runs it backwards, to turn a normalized inner product into an angle.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="panel">
+      <div class="row">
+        <h2>Vectors</h2>
+        <button class="btn ghost" id="add" type="button">Add a vector</button>
+      </div>
+      <div class="scroll">
+        <table id="vt">
+          <thead><tr><th>1st</th><th>2nd</th><th>Name</th><th>x</th><th>y</th><th>Length</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <h2>Every pair at once</h2>
+        <div class="seg" role="group" aria-label="Which inner product to show">
+          <button type="button" id="mraw" aria-pressed="false">Raw</button>
+          <button type="button" id="mnorm" aria-pressed="true">Normalized</button>
+        </div>
+      </div>
+      <div class="scroll"><table id="gm"></table></div>
+      <p class="legend">
+        <span><span class="sw" style="background:var(--pos)"></span>positive</span>
+        <span><span class="sw" style="background:var(--neg)"></span>negative</span>
+        <span><span class="sw" style="border:1.5px solid var(--muted)"></span>zero</span>
+      </p>
+      <p class="hint">Tap a square to pick that pair. The row is the first vector and the column is the second.</p>
+      <p class="hint" id="gmhint"></p>
+    </div>
+  </section>
+</main>
+
+<script>
+const S = 8, W = 520, U = W / (2 * S + 1), C = W / 2;
+const X = x => C + x * U, Y = y => C - y * U;
+const NAMES = "abcdefgh";
+const start0 = { vecs: [{n:"a",x:4,y:0},{n:"b",x:3,y:3},{n:"c",x:0,y:5},{n:"d",x:-4,y:2},{n:"e",x:-2,y:-4}], sel: [0, 1], mode: "norm", snap: true };
+let st, trace = [], spin = null, drag = null, hover = null;
+
+const $ = id => document.getElementById(id);
+const svg = $("plot");
+const dot = (p, q) => p.x * q.x + p.y * q.y;
+const len = p => Math.hypot(p.x, p.y);
+function f(v, places = 2) {
+  if (Math.abs(v - Math.round(v)) < 1e-4) v = Math.round(v);
+  const s = Number.isInteger(v) ? String(v) : v.toFixed(places);
+  return s.replace("-", "−");
+}
+// Everything about an ordered pair: p is the first vector, q is the second.
+function pairOf(i, j) {
+  const p = st.vecs[i], q = st.vecs[j], d = dot(p, q), lp = len(p), lq = len(q);
+  const ok = lp > 1e-9 && lq > 1e-9;
+  const n = ok ? Math.max(-1, Math.min(1, d / (lp * lq))) : 0;
+  const sign = (ok ? Math.abs(n) < 0.004 : Math.abs(d) < 1e-9) ? 0 : (d > 0 ? 1 : -1);
+  const cross = p.x * q.y - p.y * q.x;                     // inner product of (p turned left) with q
+  const turn = !ok || Math.abs(cross) < 1e-6 * (1 + lp * lq) ? 0 : (cross > 0 ? 1 : -1);
+  const sdeg = ok ? Math.atan2(cross, d) * 180 / Math.PI : null;   // signed angle from p to q
+  return { i, j, p, q, d, lp, lq, ok, n, sign, cross, turn, sdeg };
+}
+const pair = () => pairOf(st.sel[0], st.sel[1]);
+const cls = s => s > 0 ? "pos" : s < 0 ? "neg" : "zero";
+const signed = (deg, turn) => turn === 0 ? f(Math.abs(deg), 1) + "°" : (deg > 0 ? "+" : "") + f(deg, 1) + "°";
+
+function renderPlot() {
+  let h = "";
+  for (let k = -S; k <= S; k++) {
+    const c = k === 0 ? "ax" : "gr";
+    h += `<line class="${c}" x1="${X(k)}" y1="${Y(-S - .5)}" x2="${X(k)}" y2="${Y(S + .5)}"/>`;
+    h += `<line class="${c}" x1="${X(-S - .5)}" y1="${Y(k)}" x2="${X(S + .5)}" y2="${Y(k)}"/>`;
+    if (k !== 0 && k % 2 === 0) {
+      h += `<text class="tick" x="${X(k)}" y="${Y(0) + 14}" text-anchor="middle">${f(k)}</text>`;
+      h += `<text class="tick" x="${X(0) - 6}" y="${Y(k) + 4}" text-anchor="end">${f(k)}</text>`;
+    }
+  }
+  const pr = pair();
+  if (pr.ok) {
+    const t1 = Math.atan2(pr.p.y, pr.p.x), dl = pr.sdeg * Math.PI / 180, t2 = t1 + dl;
+    const r = 1.5 * U, at = (t, rr) => [C + rr * Math.cos(t), C - rr * Math.sin(t)];
+    const c = pr.sign === 0 ? "flat" : cls(pr.sign);
+    if (Math.abs(dl) > 1e-6) {
+      const a = at(t1, r), b = at(t2, r), sweep = dl > 0 ? 0 : 1;
+      if (pr.sign !== 0) h += `<path class="wedge ${c}" d="M${C} ${C} L${a[0]} ${a[1]} A${r} ${r} 0 0 ${sweep} ${b[0]} ${b[1]} Z"/>`;
+      h += `<path class="arc ${c}" d="M${a[0]} ${a[1]} A${r} ${r} 0 0 ${sweep} ${b[0]} ${b[1]}"/>`;
+      if (pr.turn !== 0 && Math.abs(dl) > 0.25) {          // arrowhead: which way the turn goes
+        const dir = dl > 0 ? 1 : -1, tx = -Math.sin(t2) * dir, ty = -Math.cos(t2) * dir, nx = Math.cos(t2), ny = -Math.sin(t2);
+        const bx = b[0] - tx * 11, by = b[1] - ty * 11;
+        h += `<polygon class="${c}" points="${b[0] + tx * 2},${b[1] + ty * 2} ${bx + nx * 6},${by + ny * 6} ${bx - nx * 6},${by - ny * 6}"/>`;
+      }
+      if (pr.sign === 0) {
+        const s = 0.75 * U, p1 = at(t1, s), p2 = at(t2, s);
+        h += `<path class="square" d="M${p1[0]} ${p1[1]} L${p1[0] + p2[0] - C} ${p1[1] + p2[1] - C} L${p2[0]} ${p2[1]}"/>`;
+      }
+    }
+    const m = at(t1 + dl / 2, r + 0.95 * U);
+    h += `<text class="deg" x="${m[0]}" y="${m[1] + 5}" text-anchor="middle">${signed(pr.sdeg, pr.turn)}</text>`;
+  }
+  const order = st.vecs.map((_, i) => i).sort((a, b) => st.sel.includes(a) - st.sel.includes(b));
+  for (const i of order) {
+    const v = st.vecs[i], on = st.sel.includes(i) ? " sel" : "";
+    const tx = X(v.x), ty = Y(v.y), L = len(v) * U;
+    if (L > 1e-6) {
+      const ux = v.x * U / L, uy = -v.y * U / L, hd = on ? 15 : 11, hw = on ? 7 : 5;
+      const bx = tx - ux * hd, by = ty - uy * hd;
+      h += `<line class="arw${on}" x1="${C}" y1="${C}" x2="${bx}" y2="${by}"/>`;
+      h += `<polygon class="hdp${on}" points="${tx},${ty} ${bx - uy * hw},${by + ux * hw} ${bx + uy * hw},${by - ux * hw}"/>`;
+      h += `<text class="lab${on}" x="${tx + ux * 17}" y="${ty + uy * 17 + 6}" text-anchor="middle">${v.n}</text>`;
+      if (on) {
+        const cx = tx + ux * 38, cy = ty + uy * 38;
+        h += `<circle class="bdg" cx="${cx}" cy="${cy}" r="9"/><text class="bdt" x="${cx}" y="${cy + 4}" text-anchor="middle">${i === st.sel[0] ? 1 : 2}</text>`;
+      }
+    } else {
+      h += `<text class="lab${on}" x="${C + 14}" y="${C - 10}">${v.n}</text>`;
+    }
+    if (on && !spin) h += `<circle class="grab" cx="${tx}" cy="${ty}" r="13"/>`;
+  }
+  svg.innerHTML = h;
+}
+
+function renderRead() {
+  const pr = pair(), a = pr.p.n, b = pr.q.n;
+  const words = { 1: ["+", "positive", "less than 90°"], 0: ["0", "zero", "exactly 90°"], [-1]: ["−", "negative", "more than 90°"] }[pr.sign];
+  const turns = { 1: ["↺", `counterclockwise: ${b} is on the left of ${a}`], 0: ["↔", `no turn: ${a} and ${b} lie along one line`], [-1]: ["↻", `clockwise: ${b} is on the right of ${a}`] }[pr.turn];
+  let h = `<div style="display:flex;flex-direction:column;gap:12px">`;
+  h += `<div class="eq">⟨${a}, ${b}⟩ = (${f(pr.p.x)})(${f(pr.q.x)}) + (${f(pr.p.y)})(${f(pr.q.y)}) = <b>${f(pr.d)}</b></div>`;
+  if (pr.ok) {
+    h += `<div class="chips"><div class="chip ${cls(pr.sign)}"><i>${words[0]}</i>${words[1]}, so the angle is ${words[2]}</div>`;
+    h += `<div class="chip"><i>${turns[0]}</i>${turns[1]}</div></div>`;
+    h += `<dl><dt>length of ${a}</dt><dd>‖${a}‖ = ${f(pr.lp)}</dd><dt>length of ${b}</dt><dd>‖${b}‖ = ${f(pr.lq)}</dd>`;
+    h += `<dt>normalized</dt><dd>${f(pr.d)} ÷ (${f(pr.lp)} × ${f(pr.lq)}) = <b>${f(pr.n)}</b></dd>`;
+    h += `<dt>angle from ${a} to ${b}</dt><dd><b>${signed(pr.sdeg, pr.turn)}</b></dd>`;
+    h += `<dt>left or right?</dt><dd>⟨(${f(-pr.p.y)}, ${f(pr.p.x)}), ${b}⟩ = ${f(pr.cross)}</dd></dl>`;
+    h += `<p class="hint">(${f(-pr.p.y)}, ${f(pr.p.x)}) is ${a} turned a quarter turn to the left. A positive answer means ${b} is on that side.</p>`;
+  } else {
+    h += `<div class="chip"><i>?</i>a vector of length 0 has no direction, so there is no angle</div>`;
+  }
+  $("read").innerHTML = h + `</div>`;
+
+  const mx = n => 150 + n * 132;
+  let m = `<line class="track" x1="${mx(-1)}" y1="24" x2="${mx(1)}" y2="24"/>`;
+  for (const [n, num, word, anchor] of [[-1, "−1", "opposite", "start"], [0, "0", "perpendicular", "middle"], [1, "1", "same way", "end"]])
+    m += `<line class="tk" x1="${mx(n)}" y1="17" x2="${mx(n)}" y2="31"/><text x="${mx(n)}" y="10" text-anchor="middle">${num}</text><text x="${mx(n)}" y="48" text-anchor="${anchor}">${word}</text>`;
+  if (pr.ok) m += `<circle class="mark ${cls(pr.sign)}" cx="${mx(pr.n)}" cy="24" r="8"/>`;
+  $("meter").innerHTML = m;
+
+  $("spin").textContent = spin ? "Stop" : `Spin ${b} once around`;
+  $("spin").disabled = !pr.ok && !spin;
+  $("swap").disabled = !!spin;
+  renderTrace();
+}
+
+const TX0 = 30, TX1 = 292, TYT = 10, TYB = 98;
+const tX = d => TX0 + (d + 180) / 360 * (TX1 - TX0), tY = n => (TYT + TYB) / 2 - n * (TYB - TYT) / 2;
+function renderTrace() {
+  const pr = pair(), a = pr.p.n, b = pr.q.n;
+  let t = `<rect class="frame" x="${TX0}" y="${TYT - 4}" width="${TX1 - TX0}" height="${TYB - TYT + 8}" rx="3"/>`;
+  for (const d of [-90, 0, 90]) t += `<line class="vg" x1="${tX(d)}" y1="${TYT - 4}" x2="${tX(d)}" y2="${TYB + 4}"/>`;
+  t += `<line class="zero" x1="${TX0}" y1="${tY(0)}" x2="${TX1}" y2="${tY(0)}"/>`;
+  for (const n of [1, 0, -1]) t += `<text x="${TX0 - 6}" y="${tY(n) + 4}" text-anchor="end">${f(n)}</text>`;
+  for (const d of [-180, -90, 0, 90, 180]) t += `<text x="${tX(d)}" y="${TYB + 17}" text-anchor="${d === -180 ? "start" : d === 180 ? "end" : "middle"}">${f(d)}°</text>`;
+  t += `<text x="${(TX0 + TX1) / 2}" y="${TYB + 31}" text-anchor="middle">angle from ${a} to ${b} (minus is clockwise)</text>`;
+  for (const p of trace) t += `<circle class="dot ${cls(Math.abs(p.n) < 0.004 ? 0 : p.n)}" cx="${tX(p.s)}" cy="${tY(p.n)}" r="2"/>`;
+  if (hover) t += `<line class="guide" x1="${tX(hover.s)}" y1="${TYT - 4}" x2="${tX(hover.s)}" y2="${TYB + 4}"/><circle class="dot ${cls(Math.abs(hover.n) < 0.004 ? 0 : hover.n)}" cx="${tX(hover.s)}" cy="${tY(hover.n)}" r="5"/>`;
+  if (pr.ok) t += `<circle class="now" cx="${tX(pr.sdeg)}" cy="${tY(pr.n)}" r="5"/>`;
+  $("trace").innerHTML = t;
+
+  let tip;
+  if (hover) {
+    const s = Math.abs(hover.n) < 0.004 ? 0 : Math.sign(hover.n);
+    const w = { 1: "Positive, so the angle is less than 90°.", 0: "Zero, so the angle is exactly 90°.", [-1]: "Negative, so the angle is more than 90°." }[s];
+    tip = `At ${signed(hover.s, Math.abs(hover.s) < 0.05 || Math.abs(hover.s) > 179.95 ? 0 : 1)} the normalized inner product is ${f(hover.n)}. ${w}`;
+  } else if (trace.length) tip = "Hover over the curve, or tap it, to read any point. The ring is where the two vectors are now.";
+  else tip = `The ring is where ${a} and ${b} are now. Press the Spin button to draw the whole curve.`;
+  $("tip").textContent = tip;
+}
+function traceHover(e) {
+  const r = $("trace").getBoundingClientRect();
+  const deg = ((e.clientX - r.left) / r.width * 300 - TX0) / (TX1 - TX0) * 360 - 180;
+  let best = null, bd = 6;
+  for (const p of trace) { const d = Math.abs(p.s - deg); if (d < bd) { bd = d; best = p; } }
+  hover = best; renderTrace();
+}
+$("trace").addEventListener("pointermove", traceHover);
+$("trace").addEventListener("pointerdown", traceHover);
+$("trace").addEventListener("pointerleave", () => { hover = null; renderTrace(); });
+
+function renderTable() {
+  let h = "";
+  st.vecs.forEach((v, i) => {
+    const dis = spin ? " disabled" : "";
+    h += `<tr><td><input type="radio" name="first" id="f${i}" data-first="${i}"${i === st.sel[0] ? " checked" : ""}${dis} aria-label="Make ${v.n} the first vector"></td>`;
+    h += `<td><input type="radio" name="second" id="s${i}" data-second="${i}"${i === st.sel[1] ? " checked" : ""}${dis} aria-label="Make ${v.n} the second vector"></td>`;
+    h += `<td class="nm">${v.n}</td>`;
+    h += `<td><input id="vx${i}" type="number" step="1" min="${-S}" max="${S}" value="${+v.x.toFixed(2)}" data-i="${i}" data-k="x" aria-label="x of ${v.n}"${dis}></td>`;
+    h += `<td><input id="vy${i}" type="number" step="1" min="${-S}" max="${S}" value="${+v.y.toFixed(2)}" data-i="${i}" data-k="y" aria-label="y of ${v.n}"${dis}></td>`;
+    h += `<td class="len" id="vl${i}">${f(len(v))}</td>`;
+    h += `<td>${st.vecs.length > 2 ? `<button type="button" class="x" data-del="${i}" aria-label="Remove vector ${v.n}"${dis}>×</button>` : ""}</td></tr>`;
+  });
+  $("vt").tBodies[0].innerHTML = h;
+  $("add").disabled = st.vecs.length >= NAMES.length || !!spin;
+}
+
+function renderMatrix() {
+  const raw = st.mode === "raw";
+  let h = `<tr><th></th>${st.vecs.map(v => `<th>${v.n}</th>`).join("")}</tr>`;
+  st.vecs.forEach((v, i) => {
+    h += `<tr><th>${v.n}</th>`;
+    st.vecs.forEach((w, j) => {
+      const pr = pairOf(i, j), val = raw ? pr.d : pr.n;
+      const pct = pr.sign === 0 ? 0 : Math.round(12 + Math.abs(pr.n) * 48);
+      const bg = pr.sign === 0 ? "transparent" : `color-mix(in srgb, var(--${cls(pr.sign)}) ${pct}%, var(--panel))`;
+      const on = i === st.sel[0] && j === st.sel[1];
+      const diag = i === j, label = `${v.n} with ${w.n}: ${f(val)}`;
+      h += `<td><button type="button" class="${on ? "sel" : ""}${diag ? " diag" : ""}" style="background:${bg}" data-i="${i}" data-j="${j}" aria-label="${label}"${diag ? " tabindex=\"-1\"" : ""}>${pr.ok || raw ? f(val) : "?"}</button></td>`;
+    });
+    h += `</tr>`;
+  });
+  $("gm").innerHTML = h;
+  $("mraw").setAttribute("aria-pressed", raw);
+  $("mnorm").setAttribute("aria-pressed", !raw);
+  $("gmhint").textContent = raw
+    ? "Raw numbers grow when a vector gets longer. The corner-to-corner squares hold each length squared."
+    : "Normalized numbers stay between −1 and 1, however long the vectors are.";
+}
+
+function renderAll() { renderPlot(); renderRead(); renderTable(); renderMatrix(); }
+
+// Tapping a vector makes it the second one. The old second becomes the first.
+function pick(i) {
+  if (i === st.sel[1]) return;
+  st.sel = [st.sel[1], i];
+  trace = []; hover = null;
+}
+
+function world(e) {
+  const r = svg.getBoundingClientRect();
+  const sx = (e.clientX - r.left) / r.width * 552 - 16, sy = (e.clientY - r.top) / r.height * 552 - 16;
+  return { x: (sx - C) / U, y: (C - sy) / U };
+}
+function nearTip(w) {
+  let best = -1, bd = 1e9;
+  st.vecs.forEach((v, i) => { const d = Math.hypot(v.x - w.x, v.y - w.y) - (st.sel.includes(i) ? 0.2 : 0); if (d < bd) { bd = d; best = i; } });
+  return bd < 0.85 ? best : -1;
+}
+function nearBody(w) {
+  let best = -1, bd = 1e9;
+  st.vecs.forEach((v, i) => {
+    const L2 = v.x * v.x + v.y * v.y; if (L2 < 1e-9) return;
+    const t = Math.max(0, Math.min(1, (w.x * v.x + w.y * v.y) / L2));
+    const d = Math.hypot(w.x - t * v.x, w.y - t * v.y);
+    if (d < bd) { bd = d; best = i; }
+  });
+  return bd < 0.45 ? best : -1;
+}
+svg.addEventListener("pointerdown", e => {
+  if (spin) return;
+  const w = world(e), i = nearTip(w);
+  drag = { i, moved: false, body: i < 0 ? nearBody(w) : -1 };
+  if (i >= 0) { svg.setPointerCapture(e.pointerId); e.preventDefault(); }
+});
+svg.addEventListener("pointermove", e => {
+  if (!drag || drag.i < 0) return;
+  const w = world(e), q = st.snap ? 1 : 10, v = st.vecs[drag.i];
+  const x = Math.max(-S, Math.min(S, Math.round(w.x * q) / q)), y = Math.max(-S, Math.min(S, Math.round(w.y * q) / q));
+  if (x === v.x && y === v.y) return;
+  v.x = x; v.y = y; drag.moved = true;
+  if (!st.sel.includes(drag.i)) pick(drag.i);
+  trace = []; hover = null;
+  renderAll();
+});
+function endDrag() {
+  if (!drag) return;
+  if (drag.i >= 0 && !drag.moved) pick(drag.i);
+  else if (drag.i < 0 && drag.body >= 0) pick(drag.body);
+  drag = null; renderAll();
+}
+svg.addEventListener("pointerup", endDrag);
+svg.addEventListener("pointercancel", () => { drag = null; });
+
+$("vt").addEventListener("input", e => {
+  const el = e.target; if (!el.dataset || el.dataset.k === undefined) return;
+  const i = +el.dataset.i, val = parseFloat(el.value);
+  st.vecs[i][el.dataset.k] = Number.isFinite(val) ? Math.max(-S, Math.min(S, val)) : 0;
+  trace = []; hover = null;
+  renderPlot(); renderRead(); renderMatrix();
+  $("vl" + i).textContent = f(len(st.vecs[i]));
+});
+$("vt").addEventListener("change", e => {
+  const d = e.target.dataset; if (!d || spin) return;
+  if (d.first !== undefined) { const i = +d.first; st.sel = i === st.sel[1] ? [i, st.sel[0]] : [i, st.sel[1]]; }
+  else if (d.second !== undefined) { const i = +d.second; st.sel = i === st.sel[0] ? [st.sel[1], i] : [st.sel[0], i]; }
+  else return;
+  trace = []; hover = null; renderAll();
+});
+$("vt").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b || spin || b.dataset.del === undefined) return;
+  const i = +b.dataset.del; st.vecs.splice(i, 1);
+  st.sel = st.sel.map(s => s > i ? s - 1 : s).map(s => Math.min(s, st.vecs.length - 1));
+  if (st.sel[0] === st.sel[1]) st.sel = st.sel[1] === 0 ? [1, 0] : [0, st.sel[1]];
+  trace = []; hover = null; renderAll();
+});
+$("add").addEventListener("click", () => {
+  const used = st.vecs.map(v => v.n), n = [...NAMES].find(c => !used.includes(c)); if (!n) return;
+  const spots = [[2, -3], [-5, -1], [6, 2], [-1, 6], [5, -5], [-6, 5]];
+  const s = spots.find(([x, y]) => !st.vecs.some(v => v.x === x && v.y === y)) || [1, 1];
+  st.vecs.push({ n, x: s[0], y: s[1] }); pick(st.vecs.length - 1); renderAll();
+});
+$("gm").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b || spin) return;
+  const i = +b.dataset.i, j = +b.dataset.j; if (i === j) return;
+  st.sel = [i, j]; trace = []; hover = null; renderAll();
+});
+$("swap").addEventListener("click", () => { if (spin) return; st.sel = [st.sel[1], st.sel[0]]; trace = []; hover = null; renderAll(); });
+$("mraw").addEventListener("click", () => { st.mode = "raw"; renderMatrix(); });
+$("mnorm").addEventListener("click", () => { st.mode = "norm"; renderMatrix(); });
+$("snap").addEventListener("change", e => { st.snap = e.target.checked; });
+
+function stopSpin() {
+  if (!spin) return;
+  cancelAnimationFrame(spin.raf);
+  Object.assign(st.vecs[spin.j], spin.o);
+  spin = null; renderAll();
+}
+$("spin").addEventListener("click", () => {
+  if (spin) { stopSpin(); return; }
+  const pr = pair(); if (!pr.ok) return;
+  const j = st.sel[1], o = { ...st.vecs[j] }, L = len(o), t0 = Math.atan2(o.y, o.x);
+  trace = []; hover = null;
+  const step = deg => {
+    const t = t0 + deg * Math.PI / 180;
+    st.vecs[j].x = L * Math.cos(t); st.vecs[j].y = L * Math.sin(t);
+    const now = pair(); trace.push({ s: now.sdeg, n: now.n });
+  };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    for (let d = 0; d <= 360; d += 2) step(d);
+    Object.assign(st.vecs[j], o); renderAll(); return;
+  }
+  let t1 = null;
+  spin = { j, o, raf: 0 };
+  const tick = ts => {
+    if (!spin) return;
+    if (t1 === null) t1 = ts;
+    const deg = Math.min(360, (ts - t1) / 7000 * 360);
+    step(deg); renderPlot(); renderRead(); renderMatrix();
+    if (deg < 360) spin.raf = requestAnimationFrame(tick); else stopSpin();
+  };
+  renderTable();
+  spin.raf = requestAnimationFrame(tick);
+});
+
+function boot(saved) {
+  st = saved && saved.vecs ? saved : JSON.parse(JSON.stringify(start0));
+  $("snap").checked = st.snap;
+  renderAll();
+}
+window.claude?.hot?.snapshot?.(() => { if (spin) Object.assign(st.vecs[spin.j], spin.o); return st; });
+if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? {});
+</script>
+</body>
+</html>
