@@ -12,6 +12,56 @@ machine-learning class. Kids work in Jupyter notebooks
 **The one rule: predict, then run.** The notebooks are committed without
 outputs, so every result is a surprise worth predicting.
 
+---
+
+## 🚧 BIG TO-DO: accessibility and Section 508 compliance 🚧
+
+> **Not done. Not audited. Do not claim this course is accessible or 508
+> compliant until the work below is finished and checked.**
+
+**Why it matters.** Section 508 of the U.S. Rehabilitation Act covers
+technology bought or used by federal agencies, and many schools and districts
+require the same of what they adopt. Its 2017 standards point to WCAG 2.0,
+levels A and AA. Public schools are also covered by ADA Title II, whose 2024
+web rule points to WCAG 2.1 AA. **Research first: check the current rules and
+deadlines, and which ones apply to the places that will use this course.**
+
+**The goal: cover more and more people, one group at a time.** Make a written
+plan that lists who could be shut out today and, for each group, what to fix,
+in priority order. Then work through it, with checks in `make check` so fixes
+stay fixed. A starting list:
+
+| Who | What is likely in the way now | Where |
+| --- | --- | --- |
+| Colour-blind kids | Some pictures carry meaning by colour; the colour-mixing lessons (Notebook 01 Deep 2, Notebook 02 Deep 4) are plain RGB by decision | notebooks, `vecdraw`, explorer |
+| Blind kids, screen-reader users | Plots are images with no text alternative; math needs to be readable aloud; the PDFs are not tagged | `vecdraw`, site, PDFs |
+| Low-vision kids | Contrast and zoom not checked everywhere; small text in plots | site, plots, explorer |
+| Keyboard-only and switch users | The explorer has keyboard support, but nothing else is tested | explorer, site |
+| Touch-screen users (iPads, Chromebooks) | Hover hints cannot be hovered (the site turns them into footnotes, but notebooks can't) | notebooks |
+| Kids who read slowly, or in a second language | Long paragraphs; no audio | lessons |
+| Kids with motion sensitivity | The explorer follows "reduced motion"; nothing else is checked | explorer, site |
+
+**Suggested first step for colour: a "color-blindness" setting.** Many
+examples could read one setting and, when it is on, show colour differences
+with **patterns** (hatching, dashes, marker shapes) or **brightness contrast**
+as well as hue. For example:
+
+- `vecdraw`: a setting such as `vecdraw.settings["color-blindness"] = True`
+  (one place, read by every drawing function) that switches to dashed or
+  hatched arrows and stronger light/dark differences;
+- the Angle Explorer: a matching `mountAngleExplorer(el, { colorBlindness: true })`
+  option and an on-page toggle, drawing positive and negative with different
+  patterns, not only blue and orange;
+- the site: the same toggle, remembered per browser.
+
+Other steps for the plan: run an automatic checker (such as axe-core in the
+Playwright tests) on the site and the explorer; give every plot a text
+description; produce tagged, accessible PDFs; test with a real screen reader;
+and, when the course is offered to schools, write an Accessibility
+Conformance Report (a VPAT) that says honestly what is and is not supported.
+
+---
+
 ## What is here
 
 | Folder | What it is |

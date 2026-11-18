@@ -114,6 +114,8 @@ convention, add it here in the same commit.
 - Exception, by decision (2026-11-18): lessons about colour itself (mixing
   light: Notebook 01 Deep 2, Notebook 02 Deep 4) stay as they are, in plain RGB,
   made for most kids. Don't add colour-blind variants to them unless asked.
+- Accessibility (Section 508, WCAG) is a big open TO-DO; see the README. Don't
+  call the course accessible or 508 compliant. New work should not make it harder.
 
 ### Hover hints
 
