@@ -28,7 +28,7 @@ export function renderReadout(pr: PairFacts, firstName: string, secondName: stri
     h += `<div class="chips"><div class="chip ${signClass(pr.sign)}"><i>${words[0]}</i>${words[1]}, so the angle is ${words[2]}</div>`;
     h += `<div class="chip"><i>${turns[0]}</i>${turns[1]}</div></div>`;
     h += `<dl><dt>length of ${a}</dt><dd>‖${a}‖ = ${fmt(pr.lp)}</dd><dt>length of ${b}</dt><dd>‖${b}‖ = ${fmt(pr.lq)}</dd>`;
-    h += `<dt>normalized</dt><dd>${fmt(pr.d)} ÷ (${fmt(pr.lp)} × ${fmt(pr.lq)}) = <b>${fmt(pr.n)}</b></dd>`;
+    h += `<dt>normalized</dt><dd>${fmt(pr.d)} ÷ ((${fmt(pr.lp)})(${fmt(pr.lq)})) = <b>${fmt(pr.n)}</b></dd>`;
     h += `<dt>angle from ${a} to ${b}</dt><dd><b>${fmtSignedDegrees(pr.sdeg, pr.turn)}</b></dd>`;
     h += `<dt>left or right?</dt><dd>⟨(${fmt(-pr.p.y)}, ${fmt(pr.p.x)}), ${b}⟩ = ${fmt(pr.cross)}</dd></dl>`;
     h += `<p class="hint">(${fmt(-pr.p.y)}, ${fmt(pr.p.x)}) is ${a} turned a quarter turn to the left. A positive answer means ${b} is on that side.</p>`;

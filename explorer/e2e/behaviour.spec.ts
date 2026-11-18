@@ -12,6 +12,9 @@ test.describe("standalone page", () => {
   test("starts like the original: a first, b second, +45°", async ({ page }) => {
     await expect(q(page, "#read .eq")).toContainText("⟨a, b⟩ = (4)(3) + (0)(3) = 12");
     await expect(q(page, "#read")).toContainText("+45°");
+    // no times cross anywhere: products are written (4)(3), see AGENTS.md
+    await expect(q(page, "#read")).toContainText("12 ÷ ((4)(");
+    await expect(q(page, "#read")).not.toContainText("×");
     await expect(q(page, "#f0")).toBeChecked();
     await expect(q(page, "#s1")).toBeChecked();
     await expect(page.locator("main")).toHaveCount(1);

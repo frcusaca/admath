@@ -39,6 +39,14 @@ for (const { scheme, width } of cases) {
           return document.fonts.check('16px "Atkinson Hyperlegible"');
         });
         test.skip(!fontsOk, "Google Fonts not reachable, so the original page cannot be rendered faithfully");
+        // The one intended change from the original: products are written (a)(b), not a × b
+        // (AGENTS.md, rule 2). Apply it to the original too, so everything else must still match.
+        await page.evaluate(() => {
+          const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+            n.textContent = n.textContent!.replace(/÷ \(([^()×]+) × ([^()×]+)\)/g, "÷ (($1)($2))");
+          }
+        });
       }
       await page.evaluate(() => document.fonts.ready);
       shots.push(PNG.sync.read(await page.screenshot({ fullPage: true })));
