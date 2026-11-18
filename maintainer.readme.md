@@ -129,17 +129,16 @@ What `make check` runs, in order:
 
 Things the checks enforce, so you don't have to remember them:
 
-- **Mastery Coins.** They sit under a `#### Mastery Coins 0.4` heading. Each coin
-  is a list item holding only its bold id, capital M and a space, with the
-  problem indented two spaces below it:
+- **Mastery Coins.** They sit under a `### Mastery Coins 0.4` heading. Each coin
+  is its own level-4 heading, capital M and a space, with the problem below it:
 
   ```
-  - **M 0.4.10**
+  #### M 0.4.10
 
-    Find the number …
+  Find the number …
   ```
 
-  Each id appears in bold exactly once, and the module number matches the file's
+  Each id appears as a heading exactly once, and the module number matches the file's
   prefix. The teacher guide answers it in a table row that starts with the id:
   `| M 0.4.10 | answer |`. The old form `m0.4.10` fails the check.
 - **Math.** Inside a Markdown table, inline math must not contain `|` (it splits

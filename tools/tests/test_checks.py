@@ -47,7 +47,7 @@ def run(course, script, *args):
     )
 
 
-STUDENT = notebook(("markdown", "#### Mastery Coins 3.1\n\n- **M 3.1.1**\n\n  one\n- **M 3.1.2**\n\n  two"))
+STUDENT = notebook(("markdown", "### Mastery Coins 3.1\n\n#### M 3.1.1\n\none\n\n#### M 3.1.2\n\ntwo"))
 
 
 def key(*rows):
@@ -77,17 +77,17 @@ class TestCoins:
         assert message in result.stderr
 
     def test_fails_on_duplicate_or_wrong_module_in_student(self, course):
-        write(course, "03_lesson.ipynb", notebook(("markdown", "- **M 3.1.1**\n\n  a\n- **M 3.1.1**\n\n  b\n- **M 2.1.1**\n\n  c")))
+        write(course, "03_lesson.ipynb", notebook(("markdown", "#### M 3.1.1\n\na\n\n#### M 3.1.1\n\nb\n\n#### M 2.1.1\n\nc")))
         write(course, "03_teacher_guide.ipynb", key("M 3.1.1", "M 2.1.1"))
         result = run(course, "check_coins.py")
         assert "defined 2 times" in result.stderr
         assert "belongs to module 2" in result.stderr
 
-    def test_fails_on_old_id_or_problem_on_the_label_line(self, course):
-        write(course, "03_lesson.ipynb", notebook(("markdown", "- **M 3.1.1** on the same line\n- **m3.1.2** old")))
+    def test_fails_on_old_id_or_bad_layout(self, course):
+        write(course, "03_lesson.ipynb", notebook(("markdown", "#### M 3.1.1\nno blank line\n\n- **m3.1.2** old")))
         write(course, "03_teacher_guide.ipynb", key("M 3.1.1"))
         result = run(course, "check_coins.py")
-        assert "M 3.1.1 must be a list item holding only the bold id" in result.stderr
+        assert "M 3.1.1 must be a level-4 heading" in result.stderr
         assert "old coin id m3.1.2" in result.stderr
 
     def test_fails_without_a_teacher_guide(self, course):

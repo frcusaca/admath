@@ -5,15 +5,15 @@
     python tools/check_coins.py
 
 Coin ids look like M <module>.<part>.<n>, e.g. M 0.4.10 (capital M, a space).
-- In a student notebook, a coin is *defined* by a list item holding only its
-  bold id, with the problem indented on the lines below:
+- In a student notebook, a coin is *defined* by its own level-4 heading, with
+  the problem in the paragraphs below it:
 
-      - **M 0.4.10**
+      #### M 0.4.10
 
-        Find the number ...
+      Find the number ...
 
   Each id must be defined exactly once, and its module number must match the
-  notebook's. The coins sit under a "#### Mastery Coins <module>.<part>" heading.
+  notebook's. The coins sit under a "### Mastery Coins <module>.<part>" heading.
 - In the matching teacher guide (same leading number, "teacher" in the name),
   each answer-key row is a table row whose first cell is the id:
   | M 0.4.10 | ... |
@@ -28,9 +28,9 @@ from collections import Counter
 from nbutil import fail, load, module_number, student_notebooks, teacher_notebooks, text
 
 COIN = r"M (\d+)\.(\d+)\.(\d+)"
-DEFINED = re.compile(r"\*\*(" + COIN + r")\*\*")
-# the layout: "- **M 0.4.10**", a blank line, then the problem indented by two spaces
-LAID_OUT = re.compile(r"^- \*\*(" + COIN + r")\*\*\n\n  \S", re.MULTILINE)
+DEFINED = re.compile(r"^#{1,6} (" + COIN + r")\s*$", re.MULTILINE)
+# the layout: "#### M 0.4.10" alone on its line, a blank line, then the problem
+LAID_OUT = re.compile(r"^#### (" + COIN + r")\n\n\S", re.MULTILINE)
 KEY_ROW = re.compile(r"^\s*\|\s*(" + COIN + r")\s*\|", re.MULTILINE)
 ANY_ID = re.compile(r"\b" + COIN + r"\b")
 OLD_ID = re.compile(r"\bm\d+\.\d+\.\d+\b")
@@ -56,11 +56,11 @@ def main():
         defined = Counter(m.group(1) for m in DEFINED.finditer(md))
         laid_out = {m.group(1) for m in LAID_OUT.finditer(md)}
         for coin in sorted(set(defined) - laid_out):
-            problems.append(f"{student.name}: {coin} must be a list item holding only the bold id, with the problem indented below it")
+            problems.append(f"{student.name}: {coin} must be a level-4 heading (#### {coin}) with the problem below it")
         mentioned = {m.group(0) for m in ANY_ID.finditer(md)}
         if not defined:
             if mentioned:
-                problems.append(f"{student.name}: mentions coin ids {sorted(mentioned)} but defines none in bold")
+                problems.append(f"{student.name}: mentions coin ids {sorted(mentioned)} but defines none as a heading")
             print(f"  --   {student.name}: no Mastery Coins")
             continue
         for coin, n in defined.items():
@@ -69,7 +69,7 @@ def main():
             if module_of(coin) != module:
                 problems.append(f"{student.name}: {coin} belongs to module {module_of(coin)}, not {module}")
         for coin in sorted(mentioned - set(defined)):
-            problems.append(f"{student.name}: {coin} is mentioned but never defined in bold")
+            problems.append(f"{student.name}: {coin} is mentioned but never defined as a heading")
 
         guide = guides.get(module)
         if guide is None:
