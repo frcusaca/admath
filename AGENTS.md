@@ -100,6 +100,11 @@ convention, add it here in the same commit.
 - A new word is **bold** where it is defined, and explained right there, in
   plain words. Hyphenated words get one sentence on what kind of word they are.
 - Counting starts at 0: chapters are 00, 01, …, and Python's first slot is `[0]`.
+- Mastery Coins: `### Mastery Coins 0.3`, then each coin as its own heading
+  `#### M 0.3.1` with the problem below it (`check-coins` enforces the shape).
+- Extra material that is not on the coin track goes in a
+  `### Beyond the coins: …` section after the part's coins, with its answers
+  in the teacher guide and checked in its "Check the key" cell.
 - "Predict, then run": text before a code cell asks for a prediction.
 
 ### Colour
