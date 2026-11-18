@@ -58,7 +58,7 @@ on our side, e.g. the advisory was withdrawn).
 | [SEC-003](#sec-003) | `explore_angles` output could break out of its `<script>` | Medium | Fixed | 2026-11-16 |
 | [SEC-004](#sec-004) | Colab installs `vecdraw` from a moving branch | Medium | Open | 2026-11-16 |
 | [SEC-005](#sec-005) | Teacher guides (answer keys) are public in the repository | Low | Open | 2026-11-17 |
-| [SEC-006](#sec-006) | Personal email address in commit metadata | Medium | Open | 2026-11-18 |
+| [SEC-006](#sec-006) | Personal email address in commit metadata | Medium | Monitoring | 2026-11-18 |
 | [SEC-007](#sec-007) | Quarto and TinyTeX downloads are not checksum-verified | Low | Open | 2026-11-18 |
 | [SEC-008](#sec-008) | Notebook outputs and machine details could be committed | Low | Fixed | 2026-11-16 |
 | [SEC-009](#sec-009) | Jupyter kernel talks over unencrypted TCP on 127.0.0.1 | Low | Accepted | 2026-11-16 |
@@ -148,25 +148,28 @@ on our side, e.g. the advisory was withdrawn).
 
 ### SEC-006
 
-**Personal email address in commit metadata.** Medium (privacy). Open.
+**Personal email address in commit metadata.** Medium (privacy). Monitoring.
 
-- **Details:** the commits made locally name the maintainer's personal email
-  as author and committer, and so does the repository's "Initial commit",
-  which GitHub created and which is **already public** on `jia` (found
-  2026-11-18). Each push publishes more of them, and a pushed address can only
-  be removed by rewriting public history.
-- **Action:**
-  1. On GitHub, turn on *Settings → Emails → Keep my email addresses private*
-     and *Block command line pushes that expose my email*.
-  2. `git config user.email 22866129+frcusaca@users.noreply.github.com` in this
-     repository (the account's GitHub noreply address, as shown under
-     *Settings → Emails*).
-  3. Before the first push: rewrite the unpushed commits to that address, for
-     example with `git filter-repo --mailmap`. Their commit ids change, which is
-     harmless before they are pushed.
-  4. Decide whether to also rewrite the pushed "Initial commit" (a force-push
-     of `jia`; cheap in a new repository, but the address may already have been
-     copied, so treat it as public either way).
+- **Details:** the commits made locally named the maintainer's personal email
+  as author and committer, and so did the repository's "Initial commit",
+  which GitHub created and which was already public on `jia` (found
+  2026-11-18).
+- **Done (2026-11-18):**
+  1. On GitHub, *Settings → Emails → Keep my email addresses private* and
+     *Block command line pushes that expose my email* are on.
+  2. This repository has `git config user.email
+     22866129+frcusaca@users.noreply.github.com` (the account's GitHub noreply
+     address).
+  3. Every commit on `jia`, including the "Initial commit", was rewritten to
+     that address (`git filter-branch --env-filter`; file contents unchanged)
+     and `jia` was force-pushed.
+- **Still exposed:** the old "Initial commit" (`f2688f9`) is still the parent
+  of the remote branch `copilot/fix-22866129-…`, and GitHub keeps
+  unreferenced commits reachable by id for a while. Deleting or rebasing that
+  branch removes the last reference. Treat the address as public anyway: it
+  was visible for a while and may have been copied.
+- **Monitor:** `git log --all --format='%ae %ce' | grep -v noreply` should
+  print nothing for commits made from now on.
 
 ### SEC-007
 
@@ -246,6 +249,7 @@ on our side, e.g. the advisory was withdrawn).
 | 2026-11-18 | `npm audit`, `pip-audit` (49 packages: none), secrets in all history (none), commit identities, installer downloads, Colab supply chain, published content | SEC-004 to 007, 009, 012 recorded; this file and `tools/check_security.py` added |
 | 2026-11-18 | Commit identities on GitHub | SEC-006 updated: the pushed "Initial commit" already shows the personal email |
 | 2026-11-18 | `npm audit` reported 0 advisories | SEC-001 closed: GHSA-fc5q-39xc-vjpf was withdrawn by GitHub |
+| 2026-11-18 | Commit identities after rewrite | SEC-006 to Monitoring: all of `jia` uses the noreply address; the `copilot/…` branch still points at the old initial commit |
 
 ## Adding a finding
 
