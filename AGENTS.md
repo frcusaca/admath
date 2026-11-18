@@ -16,13 +16,9 @@ render to a website and PDFs with Quarto.
 
 1. **Don't change the lessons by accident.** Math content, lesson wording and
    Mastery Coin ids (`m<module>.<part>.<n>`) only change when the task says so.
-2. **Notation:** inner product `$\langle \mathbf{a}, \mathbf{b} \rangle$`, length
-   `$\lVert \mathbf{a} \rVert$`. In LaTeX, vectors and points are bold (`\mathbf{a}`,
-   `\mathbf{P}`); numbers are plain italics (`c`, `t`, and coordinates `x`, `y`, `z`).
-   **Never a raised dot or a times cross** (`\cdot`, `\times`, `·`, `×`) for any
-   multiplication, in math or text: write `(3)(4)`, `2\mathbf{a}`, `2(3, 4)`. Both
-   symbols are kept for the dot and cross products later; `check-latex` enforces it.
-   Vectors are rows; a matrix is a stack of row vectors. In Roblox-style 3D, y is up.
+2. **Follow the [Style](#style) section** for notation, fonts, symbols, words,
+   colour and hover hints. Vectors are rows; a matrix is a stack of row vectors.
+   In Roblox-style 3D, y is up.
 3. **Committed notebooks carry no outputs.** Kids predict before they run.
    `make strip` removes outputs; never let Quarto execute `notebooks/` in place.
 4. **`python/src/vecdraw/__init__.py` is read by 10-year-olds.** No decorators,
@@ -47,6 +43,90 @@ render to a website and PDFs with Quarto.
    wrote it. If you cannot find out your exact model id, write `Model: unknown`
    instead of guessing. Commits are made with the repository's noreply address
    (`git config user.email`, see SECURITY.md SEC-006), never a personal one.
+
+## Style
+
+How the lessons write math and talk to kids. It applies to the notebooks, the
+teacher guides, the site pages and anything the explorer shows. New content
+follows it. Old content that breaks it is a bug: fix it in its own commit
+(after asking, if it changes lesson wording). When the user sets a new
+convention, add it here in the same commit.
+
+### Fonts (LaTeX)
+
+| What | Written | Looks like |
+| --- | --- | --- |
+| A vector or a point | `\mathbf{a}`, `\mathbf{P}` | bold upright |
+| Its length-1 version | `\hat{\mathbf{a}}` | bold with a hat |
+| A number, a scale factor, time | `c`, `d`, `t` | thin italics |
+| A coordinate or an axis | `x`, `y`, `z`, as in `(x, y)` | thin italics, never bold |
+| A written-out vector | `(3, 4)` | plain numbers in parentheses |
+| Inner product | `\langle \mathbf{a}, \mathbf{b} \rangle` | angle brackets |
+| Length | `\lVert \mathbf{a} \rVert` | double bars |
+
+- The same letter can be both: `x` is a coordinate in `(x, y)` but a vector in
+  "find the vector $\mathbf{x}$". Decide from the sentence, never by search and replace.
+- In Part 0.2's build-up ("5 apples", `5x`, `cx + dy`), `x` and `y` are *things*,
+  so they stay thin; they turn bold when the lesson says they are vectors.
+- Kids writing by hand draw a small arrow over a vector letter instead of bold.
+
+### Symbols
+
+- **No raised dot and no times cross for multiplication**, in math or text:
+  not `\cdot`, `\times`, `·` or `×`. Both get their own meanings later (the dot and
+  cross products), and kids who already use them for ordinary multiplication
+  would mix them up. `check-latex` fails on them; code spans are exempt.
+- A number times a number: `(3)(4)`. A number times a vector: `2\mathbf{a}` or
+  `2(3, 4)`. Two lengths: `\lVert \mathbf{a} \rVert \, \lVert \mathbf{b} \rVert`.
+  Division: `\div` or `\frac{}{}`. Read `5x` aloud as "five x".
+- Python's `*` is the only multiplication star, and only in code. Say so
+  where code first scales a vector (`2 * a`).
+- Lists of slot names are written in parentheses, the same shape as the numbers
+  they name: (strength, stealth, armor, magic, luck) next to $(9, 3, 8, 1, 5)$.
+- The explorer writes products the same way: `⟨a, b⟩ = (4)(3) + (0)(3)`,
+  `12 ÷ ((4)(4.24))`.
+
+### Words
+
+| Word | Meaning in this course | Where it is introduced |
+| --- | --- | --- |
+| slot | one position in a vector; the everyday word | Part 0.0 |
+| element | the number in a slot; the math word | Part 0.0 |
+| element-wise | adjective: one element at a time, each with its partner in the same slot (adding, subtracting, scaling) | Part 0.0, "A new word" |
+| dimension | the number of slots; not "space" | Part 0.0 |
+| inner product | $\langle \mathbf{a}, \mathbf{b} \rangle$; "dot product" is mentioned only as the name other books and `np.dot` use | Part 0.4 |
+| move / point | a vector is a move, a point is a place; both are bold | Part 0.1 |
+
+- A new word is **bold** where it is defined, and explained right there, in
+  plain words. Hyphenated words get one sentence on what kind of word they are.
+- Counting starts at 0: chapters are 00, 01, …, and Python's first slot is `[0]`.
+- "Predict, then run": text before a code cell asks for a prediction.
+
+### Colour
+
+- Colour is never the only signal. Every coloured thing also has a word, a
+  number, a sign, a shape or a position that says the same.
+- **Blue and orange mean only the sign of an inner product** (rule 5). Nothing
+  else may use them, including decoration.
+- Arrow colours in `vecdraw` come from the Okabe–Ito palette (`COLORS`), which
+  stays distinct for colour-blind viewers. They only tell arrows apart.
+- The `<<` / `>>` navigation colours are decoration; the arrows and names carry it.
+- Lessons about colour itself (mixing light: Notebook 01 Deep 2, Notebook 02
+  Deep 4) cannot avoid colour. They should let kids answer from the RGB numbers,
+  not only by judging the picture. **Not done yet:** both still ask kids to judge
+  by eye; a teacher-guide note or number hints would fix it.
+
+### Hover hints
+
+A hint is extra help, never the only place something is said: touch screens
+cannot hover, and the PDF drops it.
+
+```html
+<span title="A pizza order is (pepperoni, mushroom, olive). Check the table above." style="text-decoration: underline dotted; cursor: help">pizza orders</span>
+```
+
+The dotted underline shows there is something to hover over. Keep the words
+inside the span exactly as the sentence needs them without the span.
 
 ## Commands
 
