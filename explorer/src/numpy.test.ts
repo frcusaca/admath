@@ -19,6 +19,14 @@ describe("Copy as NumPy", () => {
     const code = toNumpy([{ n: "a", x: -Math.SQRT2, y: 0 }]);
     expect(code).not.toMatch(/−/);
   });
+  it("a name cannot smuggle code into the pasted line (SECURITY.md SEC-011)", () => {
+    const code = toNumpy([
+      { n: "a\nimport os; os.system('x')", x: 1, y: 2 },
+      { n: "b\r\nprint(1)", x: 3, y: 4 },
+    ]);
+    expect(code.split("\n")).toHaveLength(1);            // one line: nothing runs after the comment
+    expect(code.startsWith("vectors = np.array([[1, 2], [3, 4]])    # rows:")).toBe(true);
+  });
   it("falls back to one matrix when a name is not a Python variable", () => {
     expect(isPythonName("knight")).toBe(true);
     expect(isPythonName("my vec")).toBe(false);

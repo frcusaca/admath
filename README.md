@@ -74,6 +74,7 @@ dependencies: all npm packages are build and test tools.
 - `explorer/dist/standalone/angle-explorer.html`: the explorer as one file that works offline.
 
 Maintainers: start with [`maintainer.readme.md`](maintainer.readme.md).
+Security reports and known issues: [`SECURITY.md`](SECURITY.md).
 
 ## Copyright and licenses
 
