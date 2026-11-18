@@ -25,6 +25,7 @@ For the reasons behind the layout, see [`docs/PLAN.md`](docs/PLAN.md).
 admath/
 ├── Makefile                  the only entry point: `make` lists every target
 ├── course.toml               repository URL + ref; copied into every setup cell and the license
+├── AGENTS.md                 map and rules for AI coding agents (CLAUDE.md imports it)
 ├── SECURITY.md               security findings (SEC-NNN), reporting, monitoring
 ├── LICENSE.md                which license covers what (summary)
 ├── LICENSES/                 the license texts (never edit by hand)
@@ -99,6 +100,7 @@ by itself.
 What `make check` runs, in order:
 
 1. `check-copyright`: every file carries the copyright notice and its license (§13).
+1. `check-agents`: `AGENTS.md` mentions every top-level entry, tool and target.
 1. `check-security`: every advisory from `npm audit` and `pip-audit` has an entry
    in `SECURITY.md` (skipped with a warning when offline).
 1. `check-gitignore`: caches, virtualenvs and build output are ignored, and no
