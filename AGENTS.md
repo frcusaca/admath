@@ -15,7 +15,7 @@ render to a website and PDFs with Quarto.
 ## Rules that never bend
 
 1. **Don't change the lessons by accident.** Math content, lesson wording and
-   Mastery Coin ids (`m<module>.<part>.<n>`) only change when the task says so.
+   Mastery Coin ids (`M <module>.<part>.<n>`, e.g. `M 0.4.10`) only change when the task says so.
 2. **Follow the [Style](#style) section** for notation, fonts, symbols, words,
    colour and hover hints. Vectors are rows; a matrix is a stack of row vectors.
    In Roblox-style 3D, y is up.

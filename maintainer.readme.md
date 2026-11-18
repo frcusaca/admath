@@ -129,10 +129,19 @@ What `make check` runs, in order:
 
 Things the checks enforce, so you don't have to remember them:
 
-- **Mastery Coins.** A coin is defined in the student notebook by its bold id,
-  `- **m0.4.10** question…`. Each id appears in bold exactly once, and the
-  module number matches the file's prefix. The teacher guide answers it in a
-  table row that starts with the id: `| m0.4.10 | answer |`.
+- **Mastery Coins.** They sit under a `#### Mastery Coins 0.4` heading. Each coin
+  is a list item holding only its bold id, capital M and a space, with the
+  problem indented two spaces below it:
+
+  ```
+  - **M 0.4.10**
+
+    Find the number …
+  ```
+
+  Each id appears in bold exactly once, and the module number matches the file's
+  prefix. The teacher guide answers it in a table row that starts with the id:
+  `| M 0.4.10 | answer |`. The old form `m0.4.10` fails the check.
 - **Math.** Inside a Markdown table, inline math must not contain `|` (it splits
   the cell): write `\lvert`/`\rVert` instead. A lone `$` (money) is reported.
 - **Horizontal rules.** A markdown cell that starts with `---` needs a blank line

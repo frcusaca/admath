@@ -46,7 +46,7 @@ def run(course, script, *args):
     )
 
 
-STUDENT = notebook(("markdown", "- **m3.1.1** one\n- **m3.1.2** two"))
+STUDENT = notebook(("markdown", "#### Mastery Coins 3.1\n\n- **M 3.1.1**\n\n  one\n- **M 3.1.2**\n\n  two"))
 
 
 def key(*rows):
@@ -56,15 +56,16 @@ def key(*rows):
 class TestCoins:
     def test_passes_when_every_coin_has_one_row(self, course):
         write(course, "03_lesson.ipynb", STUDENT)
-        write(course, "03_teacher_guide.ipynb", key("m3.1.1", "m3.1.2"))
+        write(course, "03_teacher_guide.ipynb", key("M 3.1.1", "M 3.1.2"))
         assert run(course, "check_coins.py").returncode == 0
 
     @pytest.mark.parametrize(
         "rows, message",
         [
-            (("m3.1.1",), "no answer-key row for m3.1.2"),
-            (("m3.1.1", "m3.1.2", "m3.1.3"), "m3.1.3, which"),
-            (("m3.1.1", "m3.1.2", "m3.1.2"), "m3.1.2 has 2 answer-key rows"),
+            (("M 3.1.1",), "no answer-key row for M 3.1.2"),
+            (("M 3.1.1", "M 3.1.2", "M 3.1.3"), "M 3.1.3, which"),
+            (("M 3.1.1", "M 3.1.2", "M 3.1.2"), "M 3.1.2 has 2 answer-key rows"),
+            (("m3.1.1", "M 3.1.1", "M 3.1.2"), "old coin id m3.1.1"),
         ],
     )
     def test_fails_on_mismatch(self, course, rows, message):
@@ -75,11 +76,18 @@ class TestCoins:
         assert message in result.stderr
 
     def test_fails_on_duplicate_or_wrong_module_in_student(self, course):
-        write(course, "03_lesson.ipynb", notebook(("markdown", "**m3.1.1** a\n**m3.1.1** b\n**m2.1.1** c")))
-        write(course, "03_teacher_guide.ipynb", key("m3.1.1", "m2.1.1"))
+        write(course, "03_lesson.ipynb", notebook(("markdown", "- **M 3.1.1**\n\n  a\n- **M 3.1.1**\n\n  b\n- **M 2.1.1**\n\n  c")))
+        write(course, "03_teacher_guide.ipynb", key("M 3.1.1", "M 2.1.1"))
         result = run(course, "check_coins.py")
         assert "defined 2 times" in result.stderr
         assert "belongs to module 2" in result.stderr
+
+    def test_fails_on_old_id_or_problem_on_the_label_line(self, course):
+        write(course, "03_lesson.ipynb", notebook(("markdown", "- **M 3.1.1** on the same line\n- **m3.1.2** old")))
+        write(course, "03_teacher_guide.ipynb", key("M 3.1.1"))
+        result = run(course, "check_coins.py")
+        assert "M 3.1.1 must be a list item holding only the bold id" in result.stderr
+        assert "old coin id m3.1.2" in result.stderr
 
     def test_fails_without_a_teacher_guide(self, course):
         write(course, "03_lesson.ipynb", STUDENT)
