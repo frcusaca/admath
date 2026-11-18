@@ -38,4 +38,6 @@ for path in student_notebooks():
 
 Each notebook page also links a PDF version.
 
+**Why start at 0?** Two reasons. Zero is where everyone starts. And computers count from 0, too: in Python, the first item in a list is `my_list[0]`.
+
 The [Angle Explorer](angle-explorer.qmd) is the drawing tool behind `explore_angles`.
