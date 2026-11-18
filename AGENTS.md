@@ -28,6 +28,20 @@ render to a website and PDFs with Quarto.
    anything (site, package), changing licenses, or rewriting pushed history.
 7. **Every file carries the copyright notice and its license line** (`make copyright`).
 8. **Small commits, one concern each.** Run `make check` before committing.
+9. **Every commit an agent makes names the exact model that made it**, as two
+   trailers at the end of the message: a `Co-Authored-By:` line with the model's
+   name and version number, and a `Model:` line with the exact model id your
+   harness reports. Not just "Claude" or "GPT"; the full name and version. For example:
+
+   ```
+   Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+   Model: claude-opus-5-5
+   ```
+
+   If the model changes partway through a task, each commit names the model that
+   wrote it. If you cannot find out your exact model id, write `Model: unknown`
+   instead of guessing. Commits are made with the repository's noreply address
+   (`git config user.email`, see SECURITY.md SEC-006), never a personal one.
 
 ## Commands
 
