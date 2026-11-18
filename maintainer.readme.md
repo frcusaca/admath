@@ -107,7 +107,7 @@ What `make check` runs, in order:
    source path is (`tools/check_gitignore.py` lists both; add to them when you
    add a new tool or folder).
 1. `check-clean`: no outputs or execution counts in any notebook.
-2. `check-setup`: every setup cell matches `course.toml`.
+2. `check-setup`: every setup cell and `<<` / `>>` navigation strip matches `course.toml`.
 3. `check-coins`: every Mastery Coin has exactly one answer-key row, and the reverse.
 4. `check-latex`: every `$…$` and `$$…$$` parses with KaTeX (strict).
 5. `check-static`: the explorer bundle committed in `python/` matches a fresh build.
@@ -310,6 +310,10 @@ this machine):
 6. Deep 6: `COLORS[0] = "black"`, then redraw the angle gallery; arrow `a` turns black.
 7. Run the setup cell again: it should skip the install and be instant.
 8. *Runtime → Restart session*, then run the setup and import cells again. Everything works.
+9. Under the title, click `Notebook 1 >>`: notebook 1 opens in Colab in a **new tab**.
+   Hover over it first: a tooltip names the notebook. The `>>` is purple-ish, a
+   `<<` green-ish (if Colab strips the colours, the links still work). Scroll to
+   the bottom: the same strip is above the copyright line.
 
 ## 11. Upgrade the tools
 
@@ -347,7 +351,8 @@ comments: a `#` after a pattern becomes part of the pattern.
 
 **`check-clean` fails.** Someone committed or saved outputs. `make strip`.
 
-**`check-setup` fails.** `course.toml` changed, or a setup cell was edited by hand.
+**`check-setup` fails.** `course.toml` changed, a notebook was added, renamed or retitled
+(the `<<` / `>>` strips name the neighbours), or a generated cell was edited by hand.
 `make sync-setup`.
 
 **`check-static` fails.** The explorer changed but its copy in `python/` was not

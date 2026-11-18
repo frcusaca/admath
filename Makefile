@@ -89,7 +89,7 @@ check-static: explorer ## The explorer copy committed in python/ matches a fresh
 check-clean: ## Notebooks have no outputs and nothing Quarto would misread
 	cd tools && $(PY) check_clean.py
 
-check-setup: ## Every setup cell matches course.toml
+check-setup: ## Every setup cell and navigation strip matches course.toml
 	cd tools && $(PY) sync_setup.py --check
 
 check-coins: ## Every Mastery Coin has exactly one answer-key row, and the reverse
@@ -147,7 +147,7 @@ colab: ## Bundle the student notebooks for Colab into dist/colab/
 
 # ---- maintenance -------------------------------------------------------------
 
-sync-setup: ## Copy course.toml into every setup cell and the Prosperity license
+sync-setup: ## Copy course.toml into every setup cell, the chapter navigation and the Prosperity license
 	cd tools && $(PY) sync_setup.py
 	$(PY) tools/copyright.py --fix
 

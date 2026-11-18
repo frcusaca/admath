@@ -44,6 +44,18 @@ test("every notebook page links its PDF", async ({ page }) => {
   }
 });
 
+test("<< and >> link the neighbouring pages in a new tab, top and bottom", async ({ page }) => {
+  await page.goto("/notebooks/02_span_everywhere_the_rover_can_reach.html");
+  for (const name of ["01_rover_moves_linear_combinations", "03_getting_back_home_dependence"]) {
+    // Quarto's script makes hrefs absolute, so match the end; target picks our strip
+    const links = page.locator(`a[href$="/notebooks/${name}.html"][target="_blank"][rel="noopener"]`);
+    await expect(links).toHaveCount(2);
+  }
+  expect(await page.locator('a[href*="colab.research.google.com"][target="_blank"]').count()).toBe(0);
+  expect((await page.request.get("/notebooks/03_getting_back_home_dependence.html")).status()).toBe(200);
+  await expect(page.getByText("This whole notebook, text, code and pictures, is licensed")).toBeVisible();
+});
+
 test("the teacher site holds the guides, with the answer key checked", () => {
   const teacher = resolve(import.meta.dirname, "../../_site-teacher");
   const files = htmlFiles(teacher).map((f) => f.slice(teacher.length));

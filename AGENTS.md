@@ -57,7 +57,7 @@ render to a website and PDFs with Quarto.
 | `make stage` / `make site` / `make teacher` / `make pdf` | Stage executed copies in `.build/site/`, render `_site/`, `_site-teacher/`, PDFs. |
 | `make preview` / `make preview-teacher` | Quarto preview of the staged copy. |
 | `make colab` | Zip the student notebooks into `dist/colab/`. |
-| `make sync-setup` | Write `course.toml` into every setup cell and the Prosperity license. |
+| `make sync-setup` | Write `course.toml` into every setup cell, the chapter navigation and the Prosperity license. |
 | `make strip` | Remove notebook outputs (and fix `---` rules Quarto misreads). |
 | `make copyright` | Add or correct copyright and license lines in every file. |
 | `make test-site` | Smoke-test the rendered sites (after `make site teacher`). |
@@ -141,7 +141,7 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 | `check_clean.py` | No outputs in notebooks; `---` rules followed by a blank line (`--fix`). | `check-clean`, `strip` |
 | `check_coins.py` | Each Mastery Coin has exactly one answer-key row, and the reverse. | `check-coins` |
 | `check_latex.mjs` | Every `$…$`/`$$…$$` parses with KaTeX (strict). | `check-latex` |
-| `sync_setup.py` | Write the setup cells from `course.toml` (`--check`). | `sync-setup`, `check-setup` |
+| `sync_setup.py` | Write the setup cells and the `<<` / `>>` chapter navigation (cells `nav-top`, `nav-bottom`) from `course.toml` (`--check`). | `sync-setup`, `check-setup` |
 | `copyright.py` | Copyright + SPDX license line in every file; syncs license copies with `course.toml`. | `copyright`, `check-copyright` |
 | `check_gitignore.py` | Junk is ignored, source is not, nothing committed is ignored. | `check-gitignore` |
 | `check_security.py` | `npm audit` + `pip-audit` advisories must all be tracked in `SECURITY.md`. | `check-security` |
@@ -155,6 +155,11 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 - **`course.toml` → everything that names the repository.** `make sync-setup`
   writes the URL and ref into each student notebook's setup cell and into the
   Prosperity license's "Source Code:" line; `index.qmd` builds Colab links from it.
+- **Chapter navigation.** `sync_setup.py` writes a `<<` previous / next `>>` strip
+  after each student notebook's title and before its footer, linking to the
+  neighbours in Colab, in a new tab. `stage_site.py` rewrites the links to the
+  `.html` pages for the site; the PDF drops the strip (raw HTML). Never edit the
+  strip by hand; never use blue or orange for it (they mean the sign of $\langle a, b \rangle$).
 - **Copyright in notebooks.** `copyright.py` keeps a `<small>` notice line at
   the end of each notebook's first cell (covering the whole notebook) and the
   footer cell. The rest of the title cell is lesson wording: don't touch it.

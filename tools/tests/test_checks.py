@@ -116,15 +116,47 @@ class TestRunNotebooks:
 
 
 class TestSyncSetup:
+    @staticmethod
+    def chapter(title):
+        return notebook(
+            ("markdown", f"# {title}\n\nIntro."),
+            ("markdown", "**Setup.** old"),
+            ("code", "%%writefile vecdraw.py\nx = 1"),
+            ("code", "import vecdraw"),
+            ("markdown", "<small>Copyright</small>"),
+        )
+
     def test_check_reports_drift_and_sync_fixes_it(self, course):
-        write(course, "01_x.ipynb", notebook(("markdown", "**Setup.** old"), ("code", "%%writefile vecdraw.py\nx = 1"), ("code", "import vecdraw")))
+        write(course, "01_x.ipynb", self.chapter("Notebook 1: X"))
         assert run(course, "sync_setup.py", "--check").returncode == 1
         assert run(course, "sync_setup.py").returncode == 0
         assert run(course, "sync_setup.py", "--check").returncode == 0
         nb = json.loads((course / "notebooks" / "01_x.ipynb").read_text())
-        setup = "".join(nb["cells"][1]["source"])
+        ids = [c["id"] for c in nb["cells"]]
+        assert ids[1] == "nav-top" and ids[-2] == "nav-bottom"
+        setup = "".join(nb["cells"][3]["source"])
         assert "CHANGE-ME" in setup and "#subdirectory=python" in setup
-        assert "".join(nb["cells"][2]["source"]) == "import vecdraw"
+        assert "".join(nb["cells"][4]["source"]) == "import vecdraw"
+
+    def test_navigation_links_neighbours_in_new_tabs(self, course):
+        for n in range(3):
+            write(course, f"0{n}_x.ipynb", self.chapter(f"Notebook {n}: Title <{n}>"))
+        assert run(course, "sync_setup.py").returncode == 0
+        strips = {}
+        for n in range(3):
+            nb = json.loads((course / "notebooks" / f"0{n}_x.ipynb").read_text())
+            top, bottom = ("".join(c["source"]) for c in nb["cells"] if c["id"] in ("nav-top", "nav-bottom"))
+            assert top == bottom
+            strips[n] = top
+        assert "&lt;&lt;" not in strips[0] and "01_x.ipynb" in strips[0]
+        assert "00_x.ipynb" in strips[1] and "02_x.ipynb" in strips[1]
+        assert "&gt;&gt;" not in strips[2]
+        assert strips[1].count('target="_blank" rel="noopener"') == 2
+        assert "Title &lt;0&gt;" in strips[1]          # titles are escaped
+        # running again changes nothing (no duplicate strips)
+        assert run(course, "sync_setup.py").stdout.count("updated") == 0
+        nb = json.loads((course / "notebooks" / "01_x.ipynb").read_text())
+        assert [c["id"] for c in nb["cells"]].count("nav-top") == 1
 
 
 class TestLatex:

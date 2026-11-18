@@ -15,7 +15,8 @@ import shutil
 import subprocess
 import sys
 
-from nbutil import ROOT
+from nbutil import ROOT, load, save, set_text
+from sync_setup import NAV_IDS, chapter_neighbours, nav_html
 
 STAGE = ROOT / ".build" / "site"
 
@@ -52,6 +53,15 @@ def main():
     )
     if result.returncode != 0:
         sys.exit(result.returncode)
+    # On the website, << and >> go to the neighbouring pages instead of Colab.
+    for path, prev, nxt in chapter_neighbours():
+        staged = STAGE / "notebooks" / path.name
+        nb = load(staged)
+        strip = nav_html(prev, nxt, link=lambda q: q.with_suffix(".html").name)
+        for cell in nb["cells"]:
+            if cell.get("id") in NAV_IDS:
+                set_text(cell, strip)
+        save(staged, nb)
     print(f"staged the Quarto project with executed notebooks in {STAGE.relative_to(ROOT)}/")
 
 
