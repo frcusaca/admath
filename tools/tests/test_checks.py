@@ -159,6 +159,18 @@ class TestSyncSetup:
         assert [c["id"] for c in nb["cells"]].count("nav-top") == 1
 
 
+class TestHintsToFootnotes:
+    def test_hint_becomes_a_numbered_footnote(self):
+        sys.path.insert(0, str(TOOLS))
+        from stage_site import hints_to_footnotes
+
+        src = 'Two <span title="One &amp; two." style="x">pizza orders</span> and <span title="B">b</span>.'
+        out = hints_to_footnotes(src, "hint3")
+        assert out.startswith("Two pizza orders[^hint3-1] and b[^hint3-2].")
+        assert "[^hint3-1]: One & two.\n[^hint3-2]: B" in out
+        assert hints_to_footnotes("no hints here", "hint0") == "no hints here"
+
+
 class TestLatex:
     def test_fails_on_bad_math_and_stray_dollar(self, course):
         write(course, "01_x.ipynb", notebook(("markdown", "good $\\langle a, b \\rangle$ and bad $\\frac{1}{$ and $5")))

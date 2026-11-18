@@ -56,6 +56,16 @@ test("<< and >> link the neighbouring pages in a new tab, top and bottom", async
   await expect(page.getByText("This whole notebook, text, code and pictures, is licensed")).toBeVisible();
 });
 
+test("a hover hint becomes a footnote that pops up on hover", async ({ page }) => {
+  await page.goto("/notebooks/00_vectors_and_inner_product.html");
+  const ref = page.locator("a.footnote-ref").first();
+  await expect(ref).toBeVisible();
+  await expect(page.locator("#footnotes, section.footnotes")).toContainText("pepperoni, mushroom, olive");
+  await ref.hover();
+  await expect(page.locator(".tippy-box")).toContainText("Check the table above");
+  expect(await page.locator("span[title]").count()).toBe(0);
+});
+
 test("the teacher site holds the guides, with the answer key checked", () => {
   const teacher = resolve(import.meta.dirname, "../../_site-teacher");
   const files = htmlFiles(teacher).map((f) => f.slice(teacher.length));

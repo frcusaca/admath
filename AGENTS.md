@@ -111,10 +111,9 @@ convention, add it here in the same commit.
 - Arrow colours in `vecdraw` come from the Okabe–Ito palette (`COLORS`), which
   stays distinct for colour-blind viewers. They only tell arrows apart.
 - The `<<` / `>>` navigation colours are decoration; the arrows and names carry it.
-- Lessons about colour itself (mixing light: Notebook 01 Deep 2, Notebook 02
-  Deep 4) cannot avoid colour. They should let kids answer from the RGB numbers,
-  not only by judging the picture. **Not done yet:** both still ask kids to judge
-  by eye; a teacher-guide note or number hints would fix it.
+- Exception, by decision (2026-11-18): lessons about colour itself (mixing
+  light: Notebook 01 Deep 2, Notebook 02 Deep 4) stay as they are, in plain RGB,
+  made for most kids. Don't add colour-blind variants to them unless asked.
 
 ### Hover hints
 
@@ -127,6 +126,11 @@ cannot hover, and the PDF drops it.
 
 The dotted underline shows there is something to hover over. Keep the words
 inside the span exactly as the sentence needs them without the span.
+
+Only this exact shape (`title` first) is recognised: for the website and the
+PDFs, `stage_site.py` turns each hint into a Quarto footnote, which pops up on
+hover on the site and is a real footnote in the PDF. Jupyter and Colab keep the
+hover version. Don't put `"` inside the note.
 
 ## Commands
 
@@ -222,7 +226,7 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 | --- | --- | --- |
 | `nbutil.py` | Shared helpers: load/save notebooks in Jupyter's format, list student/teacher notebooks. | – |
 | `run_notebooks.py` | Execute notebooks; teacher guides must print "All N checks passed."; `--write DIR` saves executed copies. | `notebooks` |
-| `stage_site.py` | Copy the Quarto project to `.build/site/` and execute the notebooks there. | `stage` |
+| `stage_site.py` | Copy the Quarto project to `.build/site/` and execute the notebooks there; point `<<`/`>>` at the site's pages and turn hover hints into footnotes. | `stage` |
 | `check_clean.py` | No outputs in notebooks; `---` rules followed by a blank line (`--fix`). | `check-clean`, `strip` |
 | `check_coins.py` | Each Mastery Coin has exactly one answer-key row, and the reverse. | `check-coins` |
 | `check_latex.mjs` | Every `$…$`/`$$…$$` parses with KaTeX (strict). | `check-latex` |

@@ -10,12 +10,17 @@ output-free, so Quarto never executes them. Instead this script copies the
 project into .build/site/, executes every notebook there with
 run_notebooks.py (which fails on any cell error, and checks each teacher
 guide's answer key), and `make site` / `make teacher` render that copy.
+
+Two rewrites happen in the copy only: the << / >> links point at the site's
+pages instead of Colab, and hover hints (<span title="...">) become footnotes.
 """
+import html
+import re
 import shutil
 import subprocess
 import sys
 
-from nbutil import ROOT, load, save, set_text
+from nbutil import ROOT, load, save, set_text, text
 from sync_setup import NAV_IDS, chapter_neighbours, nav_html
 
 STAGE = ROOT / ".build" / "site"
@@ -25,6 +30,29 @@ FILES = ["_quarto.yml", "_quarto-student.yml", "_quarto-teacher.yml", "course.to
 GLOBS = ["*.qmd"]
 TREES = {"tools": ["tests", "__pycache__"]}
 RESOURCES = ["explorer/dist/standalone/angle-explorer.html"]
+
+
+# A hover hint in a notebook (AGENTS.md, Style, "Hover hints"):
+#   <span title="the note" style="...">the words</span>
+HINT = re.compile(r'<span title="([^"]*)"[^>]*>(.*?)</span>', re.S)
+
+
+def hints_to_footnotes(source, prefix):
+    """Turn hover hints into Quarto footnotes: hover popup on the site, a real footnote in the PDF.
+
+    Returns the new markdown. Footnote ids are prefix-1, prefix-2, ...; the
+    definitions go at the end of the cell.
+    """
+    notes = []
+
+    def swap(m):
+        notes.append(html.unescape(m.group(1)))
+        return f"{m.group(2)}[^{prefix}-{len(notes)}]"
+
+    body = HINT.sub(swap, source)
+    if not notes:
+        return source
+    return body.rstrip() + "\n\n" + "\n".join(f"[^{prefix}-{i}]: {n}" for i, n in enumerate(notes, 1)) + "\n"
 
 
 def main():
@@ -61,6 +89,13 @@ def main():
         for cell in nb["cells"]:
             if cell.get("id") in NAV_IDS:
                 set_text(cell, strip)
+        save(staged, nb)
+    # Hover hints become footnotes (Jupyter and Colab keep the hover version).
+    for staged in sorted((STAGE / "notebooks").glob("*.ipynb")):
+        nb = load(staged)
+        for n, cell in enumerate(nb["cells"]):
+            if cell["cell_type"] == "markdown":
+                set_text(cell, hints_to_footnotes(text(cell), f"hint{n}"))
         save(staged, nb)
     print(f"staged the Quarto project with executed notebooks in {STAGE.relative_to(ROOT)}/")
 
