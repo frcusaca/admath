@@ -17,8 +17,9 @@ Each file gets two comment lines near the top, in its own comment syntax:
   /* ... */       CSS
   <!-- ... -->    HTML (after the doctype), Markdown
   YAML comment    .qmd front matter
-Notebooks get "copyright" and "license" in their metadata and a small last
-cell, so the notice shows in Jupyter, Colab, on the site and in the PDFs.
+Notebooks get "copyright" and "license" in their metadata, a small line at the
+end of their first cell (the title) covering the whole notebook, and a small
+last cell, so the notice shows in Jupyter, Colab, on the site and in the PDFs.
 package.json cannot hold comments: it gets "author" and "license" fields.
 
 Also kept in sync (--fix writes them):
@@ -45,6 +46,7 @@ CONTENT = "CC-BY-NC-SA-4.0"
 CODE = "LicenseRef-Prosperity-3.0.0"
 CONTENT_URL = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 FOOTER_CELL = f"<small>{NOTICE}. Licensed under [CC BY-NC-SA 4.0]({CONTENT_URL}).</small>"
+HEADER_LINE = f"<small>{NOTICE}. This whole notebook, text, code and pictures, is licensed under [CC BY-NC-SA 4.0]({CONTENT_URL}).</small>"
 
 PROSPERITY = ROOT / "LICENSES" / f"{CODE}.md"
 PYTHON_LICENSE = ROOT / "python" / "LICENSE.md"
@@ -123,6 +125,9 @@ def problem(rel, k):
             return "notebook metadata needs copyright and license"
         if last is None or last["cell_type"] != "markdown" or text(last) != FOOTER_CELL:
             return "the last cell must be the copyright footer"
+        first = nb["cells"][0]
+        if first["cell_type"] != "markdown" or not text(first).endswith("\n\n" + HEADER_LINE):
+            return "the first cell must end with the copyright line"
         return None
     head = [line.strip() for line in path.read_text(encoding="utf-8").splitlines()[:8]]
     notice_line, license_line = (x.strip() for x in comment_lines(k, want))
@@ -164,6 +169,11 @@ def fix(rel, k):
             set_text(cells[-1], FOOTER_CELL)
         else:
             cells.append({"cell_type": "markdown", "id": "copyright", "metadata": {}, "source": [FOOTER_CELL]})
+        if cells[0]["cell_type"] == "markdown":
+            body = text(cells[0]).rstrip()
+            if body.splitlines()[-1].startswith(f"<small>{NOTICE}"):
+                body = "\n".join(body.splitlines()[:-1]).rstrip()
+            set_text(cells[0], body + "\n\n" + HEADER_LINE)
         save(path, nb)
         return
 

@@ -399,7 +399,7 @@ SPDX list, which is why its identifier starts with `LicenseRef-`.
 | CSS | two `/* … */` lines |
 | HTML, Markdown | two `<!-- … -->` lines (HTML: after the doctype) |
 | `.qmd` pages | two YAML comment lines in the front matter |
-| Notebooks | `metadata.copyright`, `metadata.license`, and a last cell with the notice and a link to CC BY-NC-SA 4.0 |
+| Notebooks | `metadata.copyright`, `metadata.license`, a notice line at the end of the first (title) cell covering the whole notebook, and a last cell with the notice and a link to CC BY-NC-SA 4.0 |
 | `package.json` | `"author"` and `"license"` fields (JSON has no comments) |
 | `python/pyproject.toml` | also `license` and `license-files`; the wheel ships `python/LICENSE.md` |
 | Built explorer files | a `/*! … */` banner with the notice and license (`explorer/src/copyright.ts`) |

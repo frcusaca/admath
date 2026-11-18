@@ -155,6 +155,9 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 - **`course.toml` → everything that names the repository.** `make sync-setup`
   writes the URL and ref into each student notebook's setup cell and into the
   Prosperity license's "Source Code:" line; `index.qmd` builds Colab links from it.
+- **Copyright in notebooks.** `copyright.py` keeps a `<small>` notice line at
+  the end of each notebook's first cell (covering the whole notebook) and the
+  footer cell. The rest of the title cell is lesson wording: don't touch it.
 - **Explorer → Python.** `make explorer` builds `explorer/dist/lib/angle-explorer.iife.js`
   and copies it into `python/src/vecdraw/static/`. `explore_angles` embeds that
   file in notebook outputs. Commit the copy with the explorer change (`check-static`).

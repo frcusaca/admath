@@ -194,6 +194,8 @@ class TestCopyright:
         nb = json.loads((repo / "notebooks" / "01_x.ipynb").read_text())
         assert nb["metadata"]["copyright"] == notice
         assert notice in "".join(nb["cells"][-1]["source"])
+        title = "".join(nb["cells"][0]["source"])
+        assert title.startswith("# Lesson\n\n<small>" + notice) and "This whole notebook" in title
         # running --fix again changes nothing
         before = {p: p.read_bytes() for p in repo.rglob("*") if p.is_file() and ".git" not in p.parts}
         run(repo, "copyright.py", "--fix")
