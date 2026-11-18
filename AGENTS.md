@@ -186,7 +186,7 @@ Use the repo's tools, not system ones: `.venv/bin/python`, `npm -w explorer`,
 | `python/` | The `vecdraw` package (pip-installable; Colab installs it from git). |
 | `explorer/` | The Angle Explorer: strict TypeScript, ES modules, no framework. |
 | `tools/` | Checks and build helpers, run through `make`. |
-| `docs/` | `docs/COURSE_DESIGN.md`: **how to write lesson material** (problems first, theorems as shortcuts; read it before adding content). `docs/PLAN.md`: the original restructuring plan and its deviations (history). |
+| `docs/` | `docs/COURSE_DESIGN.md`: **how to write lesson material** (problems first, theorems as shortcuts; read it before adding content). `docs/PLAN.md`: the original restructuring plan and its deviations (history). `docs/todo/*.todo.md`: todo lists (e.g. `scratch.todo.md`, small lesson changes collected for later), kept by the todo skill's format: `# Open (next id)` and a prepend-only `# Log`. |
 | `course.toml` | The one course-wide setting: repository URL and ref Colab installs from. |
 | `Makefile` | The single entry point. |
 | `_quarto.yml` | Shared Quarto settings; **holds no file lists** (profiles append to lists). |
