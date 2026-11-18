@@ -16,7 +16,12 @@ render to a website and PDFs with Quarto.
 
 1. **Don't change the lessons by accident.** Math content, lesson wording and
    Mastery Coin ids (`m<module>.<part>.<n>`) only change when the task says so.
-2. **Notation:** inner product `$\langle a, b \rangle$`, length `$\lVert a \rVert$`.
+2. **Notation:** inner product `$\langle \mathbf{a}, \mathbf{b} \rangle$`, length
+   `$\lVert \mathbf{a} \rVert$`. In LaTeX, vectors and points are bold (`\mathbf{a}`,
+   `\mathbf{P}`); numbers are plain italics (`c`, `t`, and coordinates `x`, `y`, `z`).
+   **Never a raised dot or a times cross** (`\cdot`, `\times`, `·`, `×`) for any
+   multiplication, in math or text: write `(3)(4)`, `2\mathbf{a}`, `2(3, 4)`. Both
+   symbols are kept for the dot and cross products later; `check-latex` enforces it.
    Vectors are rows; a matrix is a stack of row vectors. In Roblox-style 3D, y is up.
 3. **Committed notebooks carry no outputs.** Kids predict before they run.
    `make strip` removes outputs; never let Quarto execute `notebooks/` in place.

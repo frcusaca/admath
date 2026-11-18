@@ -87,7 +87,7 @@ def nav_html(prev, nxt, link):
             f'<a href="{html.escape(link(path))}" target="_blank" rel="noopener" '
             f'title="{word}: {html.escape(full)} (opens in a new tab)">{inner}</a>'
         )
-    return "<p>" + " &nbsp;&nbsp;·&nbsp;&nbsp; ".join(parts) + "</p>"
+    return "<p>" + " &emsp;&emsp; ".join(parts) + "</p>"
 
 
 def chapter_neighbours():

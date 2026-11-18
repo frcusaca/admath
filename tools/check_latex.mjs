@@ -7,6 +7,9 @@
 //
 // Also catches a stray $ that is not part of any math, and a | inside inline math
 // in a Markdown table row (it would split the table cell).
+// Also rejects the raised dot and the times cross (\\cdot, \\times, ·, ×) in
+// math and text: this course writes products as (3)(4), 2a or 2(3, 4), because
+// both symbols get new meanings later (dot and cross products). See AGENTS.md.
 // Exit status 1 if anything is wrong.
 //
 // Ported from the original tools/check_latex.js; the checks are the same, and
@@ -35,6 +38,7 @@ if (args.length === 0) {
 
 let total = 0;
 let bad = 0;
+const NO_PRODUCT_SIGNS = /\\(cdot|times|cdotp|ast)(?![A-Za-z])|[×·∙⋅]/;
 const escapeHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 for (const f of args) {
@@ -60,6 +64,14 @@ for (const f of args) {
       bad++;
       const at = t.indexOf("$");
       console.log("STRAY $ in", f, ":", t.slice(Math.max(0, at - 40), at + 40).replace(/\n/g, " "));
+    }
+    // no dot or cross for multiplication, in math or in text (code spans are fine)
+    for (const piece of [t, ...store.filter((s) => s.k !== "code").map((s) => s.v)]) {
+      const hit = piece.match(NO_PRODUCT_SIGNS);
+      if (hit) {
+        bad++;
+        console.log("PRODUCT SIGN in", f, ":", JSON.stringify(hit[0]), "in", piece.slice(Math.max(0, hit.index - 40), hit.index + 30).replace(/\n/g, " "));
+      }
     }
     // pipes inside inline math within a table row would break the table
     for (const line of src.split("\n")) {

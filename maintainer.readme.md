@@ -58,7 +58,10 @@ admath/
 - Committed notebooks carry **no outputs**. Kids predict before they run.
 - Don't change the math content, the lesson wording or any coin id without
   meaning to. `make check` catches broken coins, but not changed wording.
-- Notation: inner product `$\langle a, b \rangle$`, length `$\lVert a \rVert$`.
+- Notation: inner product `$\langle \mathbf{a}, \mathbf{b} \rangle$`, length `$\lVert \mathbf{a} \rVert$`.
+  Vectors and points are bold (`\mathbf{a}`), numbers are not (`c`, `t`, coordinates).
+- No raised dot or times cross for multiplication (`\cdot`, `\times`, `·`, `×`): write
+  `(3)(4)`, `2\mathbf{a}` or `2(3, 4)`. `check-latex` fails on them; Python's `*` in code is fine.
   Vectors are rows; a matrix is a stack of row vectors. In Roblox-style 3D, y is up.
 - Blue and orange in the explorer mean **only** the sign of the inner product.
 

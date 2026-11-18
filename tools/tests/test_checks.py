@@ -170,6 +170,21 @@ class TestLatex:
         assert "KATEX ERROR" in result.stdout or "STRAY $" in result.stdout
 
 
+    def test_fails_on_dot_or_cross_for_multiplication(self, course):
+        write(course, "01_x.ipynb", notebook(("markdown", "$2 \\times 3$ is fine in `code · ×` only")))
+        result = subprocess.run(
+            ["node", str(ROOT / "tools" / "check_latex.mjs"), str(course / "notebooks" / "01_x.ipynb")],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        assert result.returncode == 1 and result.stdout.count("PRODUCT SIGN") == 1
+        write(course, "01_x.ipynb", notebook(("markdown", "$(3)(4) + 2\\mathbf{a}$ and `a · b`")))
+        result = subprocess.run(
+            ["node", str(ROOT / "tools" / "check_latex.mjs"), str(course / "notebooks" / "01_x.ipynb")],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        assert result.returncode == 0, result.stdout
+
+
 class TestQuartoYamlLookalike:
     def test_rule_followed_by_text_is_reported_and_fixed(self, course):
         write(course, "01_x.ipynb", notebook(("markdown", "---\n## Part 1\ntext"), ("markdown", "---\n\n## Part 2")))

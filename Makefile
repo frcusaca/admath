@@ -109,7 +109,7 @@ check-security: ## Every dependency advisory (npm audit, pip-audit) is tracked i
 
 audit: check-security ## Same as check-security
 
-check-latex: ## Every $...$ and $$...$$ parses with KaTeX
+check-latex: ## Every $...$ and $$...$$ parses with KaTeX; no dot or cross for multiplication
 	node tools/check_latex.mjs $(NOTEBOOKS)
 
 # ---- render ----------------------------------------------------------------
