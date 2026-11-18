@@ -18,6 +18,14 @@ test("no teacher guide is published with the student site", () => {
   expect(existsSync(join(site, "notebooks/00_teacher_guide.pdf"))).toBe(false);
 });
 
+test("nothing from docs/ (plans, design notes, todo lists) is published on either site", () => {
+  for (const dir of [site, resolve(import.meta.dirname, "../../_site-teacher")]) {
+    expect(existsSync(join(dir, "docs"))).toBe(false);
+    const leaked = htmlFiles(dir).filter((f) => /todo|COURSE_DESIGN|PLAN/i.test(f.slice(dir.length)));
+    expect(leaked).toEqual([]);
+  }
+});
+
 test("the explorer mounts where explore_angles is called", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
