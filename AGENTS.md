@@ -280,6 +280,12 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 
 - **Quarto writes outputs back into an `.ipynb` it executes.** Hence the staging;
   don't add `execute: enabled: true` to `_quarto.yml`.
+- **`MPLBACKEND=Agg` must not reach notebook kernels.** The Makefile exports it
+  (no plot windows for tests and tools), but a kernel that inherits it never
+  turns on the inline backend: `plt.show()` warns "FigureCanvasAgg is
+  non-interactive" and **no figures** reach the executed notebooks or the site.
+  `run_notebooks.py` removes it from the kernel's environment; any new code that
+  starts a kernel must do the same. A site test fails if lesson pages lose their figures.
 - **Quarto profiles append to the base config's lists.** Keep file lists in the profiles only.
 - **Quarto rewrote `<table>` markup inside the explorer's embedded `<script>`.**
   `html-table-processing: none` in `_quarto.yml` prevents it; `make test-site` catches it.

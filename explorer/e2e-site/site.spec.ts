@@ -66,6 +66,14 @@ test("a hover hint becomes a footnote that pops up on hover", async ({ page }) =
   expect(await page.locator("span[title]").count()).toBe(0);
 });
 
+test("lesson pages show their figures, not a matplotlib warning", async ({ page }) => {
+  for (const name of ["00_vectors_and_inner_product", "02_span_everywhere_the_rover_can_reach"]) {
+    await page.goto(`/notebooks/${name}.html`);
+    expect(await page.locator(".cell-output-display img").count()).toBeGreaterThan(0);
+    await expect(page.locator("body")).not.toContainText("non-interactive");
+  }
+});
+
 test("the teacher site holds the guides, with the answer key checked", () => {
   const teacher = resolve(import.meta.dirname, "../../_site-teacher");
   const files = htmlFiles(teacher).map((f) => f.slice(teacher.length));

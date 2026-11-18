@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0
 """Each check must fail when it should. Synthetic notebooks in a temp folder."""
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -121,6 +122,19 @@ class TestRunNotebooks:
     def test_teacher_guide_passes_with_the_key_line(self, course):
         write(course, "01_teacher_guide.ipynb", notebook(("markdown", "## Check the key"), ("code", "print('All 3 checks passed.')")))
         assert run(course, "run_notebooks.py").returncode == 0
+
+    def test_figures_reach_the_notebook_even_with_mplbackend_agg(self, course):
+        # `make` exports MPLBACKEND=Agg; the kernel must still use the inline backend.
+        write(course, "01_x.ipynb", notebook(("code", "import matplotlib.pyplot as plt\nplt.plot([0, 1])\nplt.show()")))
+        out = course / "executed"
+        result = subprocess.run(
+            [sys.executable, str(course / "tools" / "run_notebooks.py"), "--write", str(out)],
+            cwd=course, capture_output=True, text=True, env={**os.environ, "MPLBACKEND": "Agg"},
+        )
+        assert result.returncode == 0, result.stderr
+        executed = (out / "01_x.ipynb").read_text()
+        assert "image/png" in executed
+        assert "non-interactive" not in executed
 
 
 class TestSyncSetup:

@@ -11,6 +11,7 @@ outputs. (--write is how the site build gets executed notebooks; see stage_site.
 For a teacher guide, the cell under the "Check the key" heading must also
 print "All N checks passed.".
 """
+import os
 import re
 import sys
 import time
@@ -56,9 +57,16 @@ def run(path, write_to=None):
         kernel_name="python3",
         resources={"metadata": {"path": str(NOTEBOOKS)}},   # run from notebooks/, like Jupyter would
     )
+    # The kernel gets our environment minus MPLBACKEND. The Makefile exports
+    # MPLBACKEND=Agg (no windows for tests and tools), but a kernel that inherits it
+    # never switches to the inline backend that Jupyter and Colab use: plt.show()
+    # then warns "FigureCanvasAgg is non-interactive" and no figure reaches the
+    # executed notebook. Without it, ipykernel picks the inline backend itself.
+    kernel_env = dict(os.environ)
+    kernel_env.pop("MPLBACKEND", None)
     start = time.time()
     try:
-        client.execute()
+        client.execute(env=kernel_env)
     except CellExecutionError as err:
         first_lines = "\n".join(str(err).splitlines()[:40])
         return f"{path.name}: a cell raised an error\n{first_lines}"
