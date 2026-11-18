@@ -144,17 +144,23 @@ deliberately left), or **Fixed**.
 
 **Personal email address in commit metadata.** Medium (privacy). Open.
 
-- **Details:** 23 commits name the maintainer's personal email as author and
-  committer. Pushing publishes it permanently: it can't be removed later
-  without rewriting public history.
-- **Action (before the first push):**
+- **Details:** the commits made locally name the maintainer's personal email
+  as author and committer, and so does the repository's "Initial commit",
+  which GitHub created and which is **already public** on `jia` (found
+  2026-11-18). Each push publishes more of them, and a pushed address can only
+  be removed by rewriting public history.
+- **Action:**
   1. On GitHub, turn on *Settings → Emails → Keep my email addresses private*
      and *Block command line pushes that expose my email*.
-  2. `git config user.email <id>+<username>@users.noreply.github.com` in this
-     repository.
-  3. Rewrite the unpushed commits to use that address, for example with
-     `git filter-repo --mailmap`. This changes their commit ids, which is
+  2. `git config user.email 22866129+frcusaca@users.noreply.github.com` in this
+     repository (the account's GitHub noreply address, as shown under
+     *Settings → Emails*).
+  3. Before the first push: rewrite the unpushed commits to that address, for
+     example with `git filter-repo --mailmap`. Their commit ids change, which is
      harmless before they are pushed.
+  4. Decide whether to also rewrite the pushed "Initial commit" (a force-push
+     of `jia`; cheap in a new repository, but the address may already have been
+     copied, so treat it as public either way).
 
 ### SEC-007
 
@@ -232,6 +238,7 @@ deliberately left), or **Fixed**.
 | 2026-11-16 | Notebook build: outputs leaking into commits | SEC-008 found, history rewritten before push, fixed |
 | 2026-11-17 | `npm audit` after moving to `admath` | SEC-001 opened (no fixed release yet) |
 | 2026-11-18 | `npm audit`, `pip-audit` (49 packages: none), secrets in all history (none), commit identities, installer downloads, Colab supply chain, published content | SEC-004 to 007, 009, 012 recorded; this file and `tools/check_security.py` added |
+| 2026-11-18 | Commit identities on GitHub | SEC-006 updated: the pushed "Initial commit" already shows the personal email |
 
 ## Adding a finding
 
