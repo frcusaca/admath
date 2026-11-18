@@ -54,3 +54,24 @@ def test_the_real_security_md_tracks_the_known_advisory():
     assert "GHSA-fc5q-39xc-vjpf" in cs.tracked_ids(text)
     for n in range(1, 13):
         assert f"### SEC-{n:03d}" in text, f"SEC-{n:03d} section"
+
+
+def test_closed_findings_are_recognised_by_their_status_line():
+    text = """
+### SEC-001
+
+**A thing.** Low. Closed 2026-11-18: advisory withdrawn.
+
+- **Advisory:** GHSA-fc5q-39xc-vjpf
+
+### SEC-002
+
+**Another.** Low. Monitoring.
+
+- see CVE-2026-1234
+"""
+    assert cs.closed_ids(text) == {"GHSA-fc5q-39xc-vjpf"}
+
+
+def test_the_real_security_md_marks_sec_001_closed():
+    assert "GHSA-fc5q-39xc-vjpf" in cs.closed_ids((cs.ROOT / "SECURITY.md").read_text())

@@ -46,13 +46,14 @@ Severity is our rating for **this project**, which can be lower than the
 advisory's own rating when the vulnerable code never sees untrusted input
 (the advisory's rating is noted too). Status is one of **Open** (needs action),
 **Monitoring** (waiting on others; nothing to do yet), **Accepted** (known and
-deliberately left), or **Fixed**.
+deliberately left), **Fixed**, or **Closed** (no longer applies without a fix
+on our side, e.g. the advisory was withdrawn).
 
 ## Findings
 
 | ID | Finding | Severity | Status | Since |
 | --- | --- | --- | --- | --- |
-| [SEC-001](#sec-001) | `picomatch` ReDoS in build tools (GHSA-fc5q-39xc-vjpf) | Low | Monitoring | 2026-11-17 |
+| [SEC-001](#sec-001) | `picomatch` ReDoS in build tools (GHSA-fc5q-39xc-vjpf) | Low | Closed | 2026-11-17 |
 | [SEC-002](#sec-002) | Vector names could inject HTML into the explorer | Medium | Fixed | 2026-11-16 |
 | [SEC-003](#sec-003) | `explore_angles` output could break out of its `<script>` | Medium | Fixed | 2026-11-16 |
 | [SEC-004](#sec-004) | Colab installs `vecdraw` from a moving branch | Medium | Open | 2026-11-16 |
@@ -67,7 +68,7 @@ deliberately left), or **Fixed**.
 
 ### SEC-001
 
-**`picomatch` ReDoS in build tools.** Low (advisory: high). Monitoring.
+**`picomatch` ReDoS in build tools.** Low (advisory: high). Closed 2026-11-18: advisory withdrawn.
 
 - **Advisory:** [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf),
   "picomatch vulnerable to ReDoS through single-branch repeated extglobs",
@@ -82,6 +83,11 @@ deliberately left), or **Fixed**.
   2026-11-17). `npm audit fix --force` would *downgrade* Vite and Vitest by
   major versions, so don't. When a fixed `picomatch` ships: `npm update`,
   `make check`, mark Fixed.
+- **Closed 2026-11-18:** GitHub withdrew the advisory (withdrawn at
+  2026-11-18 15:38 UTC; the advisory still lists no patched version) and
+  `npm audit` stopped reporting it. Nothing changed here: `picomatch` is still
+  4.0.7. If the advisory is reinstated, `make check` fails again and this
+  entry should be reopened.
 
 ### SEC-002
 
@@ -239,6 +245,7 @@ deliberately left), or **Fixed**.
 | 2026-11-17 | `npm audit` after moving to `admath` | SEC-001 opened (no fixed release yet) |
 | 2026-11-18 | `npm audit`, `pip-audit` (49 packages: none), secrets in all history (none), commit identities, installer downloads, Colab supply chain, published content | SEC-004 to 007, 009, 012 recorded; this file and `tools/check_security.py` added |
 | 2026-11-18 | Commit identities on GitHub | SEC-006 updated: the pushed "Initial commit" already shows the personal email |
+| 2026-11-18 | `npm audit` reported 0 advisories | SEC-001 closed: GHSA-fc5q-39xc-vjpf was withdrawn by GitHub |
 
 ## Adding a finding
 

@@ -13,7 +13,10 @@ ids written in SECURITY.md.
 
 - An advisory that SECURITY.md does not mention fails the check: add an entry.
 - An id in SECURITY.md that no audit reports any more is listed, so its entry
-  can be marked Fixed (this does not fail).
+  can be marked Fixed or Closed (this does not fail). Ids in findings already
+  marked Fixed or Closed are not listed again.
+- An id that an audit reports again after its finding was closed still
+  counts as tracked; the run prints a note to reopen it.
 """
 import json
 import re
@@ -34,6 +37,16 @@ class AuditUnavailable(Exception):
 
 def tracked_ids(text):
     return set(ADVISORY_ID.findall(text))
+
+
+def closed_ids(text):
+    """Advisory ids inside findings whose status line says Fixed or Closed."""
+    closed = set()
+    for section in re.split(r"(?m)^### ", text)[1:]:
+        status_line = next((line for line in section.splitlines()[1:] if line.strip()), "")
+        if re.search(r"\b(Fixed|Closed)\b", status_line):
+            closed |= set(ADVISORY_ID.findall(section))
+    return closed
 
 
 def npm_findings(report):
@@ -110,7 +123,9 @@ def compare(findings, tracked):
 
 def main():
     strict = "--strict" in sys.argv
-    tracked = tracked_ids(SECURITY_MD.read_text(encoding="utf-8"))
+    text = SECURITY_MD.read_text(encoding="utf-8")
+    tracked = tracked_ids(text)
+    closed = closed_ids(text)
     findings = {}
     skipped = []
     for name, audit in (("npm audit", run_npm_audit), ("pip-audit", run_pip_audit)):
@@ -125,8 +140,10 @@ def main():
     untracked, gone = compare(findings, tracked)
     for line in skipped:
         print(f"WARNING: skipped {line}", file=sys.stderr)
-    for advisory in sorted(gone):
-        print(f"  note: {advisory} is in SECURITY.md but no audit reports it now; if fixed, mark its entry Fixed")
+    for advisory in sorted(gone - closed):
+        print(f"  note: {advisory} is in SECURITY.md but no audit reports it now; mark its entry Fixed or Closed")
+    for advisory in sorted((tracked - gone) & closed):
+        print(f"  note: {advisory} is reported again but its finding is marked Fixed/Closed; reopen it")
     if untracked:
         for key, text in sorted(untracked.items()):
             print(f"FAIL: untracked advisory {key}: {text}", file=sys.stderr)
