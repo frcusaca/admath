@@ -4,7 +4,7 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import { COPYRIGHT, LICENSE_ID, LICENSE_NAME, LICENSE_URL } from "./src/copyright";
+import { COPYRIGHT, LICENSE_ID, LICENSE_NAME, LICENSE_URL } from "./src/copyright.ts";
 
 /** Added after minification (postBanner), so every built file starts with the notice. */
 const banner = `/*! Angle Explorer. ${COPYRIGHT}. SPDX-License-Identifier: ${LICENSE_ID} (${LICENSE_NAME}, ${LICENSE_URL}) */`;
