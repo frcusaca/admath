@@ -46,6 +46,10 @@ render to a website and PDFs with Quarto.
 
 ## Style
 
+**What to write** (problems first, then the question they force, the slow way, the
+structure, and only then the theorem) is in `docs/COURSE_DESIGN.md`. This section
+is **how it must look**.
+
 How the lessons write math and talk to kids. It applies to the notebooks, the
 teacher guides, the site pages and anything the explorer shows. New content
 follows it. Old content that breaks it is a bug: fix it in its own commit
@@ -182,7 +186,7 @@ Use the repo's tools, not system ones: `.venv/bin/python`, `npm -w explorer`,
 | `python/` | The `vecdraw` package (pip-installable; Colab installs it from git). |
 | `explorer/` | The Angle Explorer: strict TypeScript, ES modules, no framework. |
 | `tools/` | Checks and build helpers, run through `make`. |
-| `docs/` | `docs/PLAN.md`: the original restructuring plan and its deviations (history). |
+| `docs/` | `docs/COURSE_DESIGN.md`: **how to write lesson material** (problems first, theorems as shortcuts; read it before adding content). `docs/PLAN.md`: the original restructuring plan and its deviations (history). |
 | `course.toml` | The one course-wide setting: repository URL and ref Colab installs from. |
 | `Makefile` | The single entry point. |
 | `_quarto.yml` | Shared Quarto settings; **holds no file lists** (profiles append to lists). |

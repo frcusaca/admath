@@ -166,7 +166,7 @@ page; no lesson calls it yet.
    `00_vectors_and_inner_product.ipynb` (the "**Setup.**" markdown, the setup
    code cell, and the import cell that starts `import numpy as np`). Then run
    `make sync-setup`. The code cell is generated, so don't edit it by hand.
-3. **Coins:** ids `m5.<part>.<n>` in bold.
+3. **Coins:** under `### Mastery Coins 5.<part>`, each coin a heading `#### M 5.<part>.<n>` with the problem below it.
 4. **Teacher guide:** `notebooks/05_teacher_guide.ipynb` (the name must contain
    `teacher` and share the prefix). Give it an answer-key table with one row per
    coin, and a "## Check the key" heading followed by a code cell that ends with
