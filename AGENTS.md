@@ -106,8 +106,11 @@ convention, add it here in the same commit.
 
 - Colour is never the only signal. Every coloured thing also has a word, a
   number, a sign, a shape or a position that says the same.
-- **Blue and orange mean only the sign of an inner product** (rule 5). Nothing
-  else may use them, including decoration.
+- **In the explorer, blue and orange mean only the sign of an inner product**
+  (rule 5), and nothing else there may use them. Elsewhere, don't use them to
+  *mean* anything new. `vecdraw`'s arrow palette starts with blue and orange,
+  but there they only tell arrows apart. Decoration (such as the `<<` / `>>`
+  strip) avoids them.
 - Arrow colours in `vecdraw` come from the Okabe–Ito palette (`COLORS`), which
   stays distinct for colour-blind viewers. They only tell arrows apart.
 - The `<<` / `>>` navigation colours are decoration; the arrows and names carry it.
