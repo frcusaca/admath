@@ -77,7 +77,7 @@ How this list is organised:
   - [x] (28) Audit every "Your turn" in all modules (done 2026-11-19). No workspace cell of their own: Module 0 Part 0.0's seven-segment digit (the next cell is the pizza orders), Notebook 1 Part 5's "Change the charger", Notebook 4 Part 1's "Try three other chargers". They send the kid back to edit an example: Module 0 Part 0.0's "Change `speed` and `time` in the cell above", Part 0.2's "draw `b` first ... in the cell above", Part 0.6's "Go back to the cell where `v` and `f` are made" (four cells to re-run). Partial skeletons already there: Part 0.3 (length, no length-1 line), Part 0.3's L-p tests, Part 0.4's "two more pairs". Fine as they are: Notebook 2's and 3's "Your turn" sections and Notebook 4's slanted paper and basis check, which have `# change me` cells.
   - [x] (29) Write the convention in AGENTS.md's Style section: a "Your turn" is followed by its own code cell; in the first modules it starts as a copy of the example, with `# change me` marks (the pattern several cells already use).
   - [x] (30) Module 0: the seven-segment cell, already drawing a 7, ready to change into a 4.
-  - [ ] (31) Module 0: the other "Your turn" cells found by (28).
+  - [x] (31) Module 0: the other "Your turn" cells found by (28).
   - [ ] (32) Modules 1 to 4: the "Your turn" cells found by (28). Decided 2026-11-19 (default): skeleton code that already shows the example's answer in Modules 0 and 1; from Notebook 2 on, `# change me` cells as they are now.
   - [ ] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
   - [ ] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (31): Module 0's other "Your turn" cells
+*2026-11-19 14:08* done
+
+Part 0.3's cell has a line for the length-1 version; Part 0.4's has a place for two pairs; Part 0.6's exercise has its own `%%your_turn 0.6.1` cell that recomputes all three answers, and the coins moved to their own markdown cell.
 
 ## (4) refined: three uses of "heading", each said exactly
 *2026-11-19 14:06* changed
