@@ -22,10 +22,10 @@ How this list is organised:
 - [ ] (0) Lesson 0: introduce the word "heading" early, where vectors first mean a direction
   Where a vector is first read as a direction (Part 0.1, "Vectors as moves", or near it), name it: a vector's **heading** is the way it points, a direction taken *from a position*, and that position is itself a vector. Today "heading" first appears in Part 0.3 ("speed times heading") and then in Deep 9 (heading and facing), with no early introduction.
   Purpose: start the intuition that runs from direction to position. Converting a direction vector (from $\mathbf{0}$ toward point $\mathbf{p}$) into a position (point $\mathbf{p}$) means moving from the origin along that direction: $\mathbf{0} + \mathbf{v} = \mathbf{p}$. A vector can itself be a position.
-  - [ ] (4) Settle what "heading" means. Decided 2026-11-19: admit that people use the word two ways. A ship's captain orders a heading as an angle, measured from a fixed direction such as north on a compass; and people often call a velocity "the heading". In our documents we say either that something is **heading (or headed) in the direction of** a vector $\mathbf{v}$, of any length, or that **the heading** is the length-1 vector for that direction. Deep 9's first output, which can be shorter than 1 or $(0, 0)$, is therefore not called a heading.
-  - [ ] (5) Write the definition in Part 0.1, bold where defined and explained in plain words (AGENTS.md Style, Words). Likely next to "One list of numbers, two ways to read it".
-  - [ ] (6) Tie the later uses back to it: Part 0.3's "speed times heading" and Deep 9's heading and facing.
-  - [ ] (7) Add "heading" to the Words table in AGENTS.md, in the same commit as (5).
+  - [x] (4) Settle what "heading" means. Decided 2026-11-19: admit that people use the word two ways. A ship's captain orders a heading as an angle, measured from a fixed direction such as north on a compass; and people often call a velocity "the heading". In our documents we say either that something is **heading (or headed) in the direction of** a vector $\mathbf{v}$, of any length, or that **the heading** is the length-1 vector for that direction. Deep 9's first output, which can be shorter than 1 or $(0, 0)$, is therefore not called a heading.
+  - [x] (5) Write the definition in Part 0.1, bold where defined and explained in plain words (AGENTS.md Style, Words). Likely next to "One list of numbers, two ways to read it".
+  - [x] (6) Tie the later uses back to it: Part 0.3's "speed times heading" and Deep 9's heading and facing.
+  - [x] (7) Add "heading" to the Words table in AGENTS.md, in the same commit as (5).
   - [ ] (8) Teacher guide 00: mention the word in the Part 0.1 lesson notes.
 
 #### Part 0.2: Adding, subtracting and scaling
@@ -34,7 +34,7 @@ How this list is organised:
   After element-wise addition is introduced (Part 0.2), add a small section that clarifies what a vector written in parentheses, such as $(3, 4)$, means. **As a direction:** a dot starting at $\mathbf{0}$ that takes each axis one at a time, moving the amount written in that slot. **As a point:** where you land when you go from $\mathbf{0}$ in that direction, worked out by element-wise addition, $\mathbf{0} + \mathbf{v} = \mathbf{p}$.
   Could instead sit early in the lesson; decide when writing it. Keep it short, and link it to item (0)'s "heading".
   - [ ] (9) Compare with Part 0.1's existing "One list of numbers, two ways to read it". Decided 2026-11-19: extend that section (the one-axis-at-a-time walk, "headed in the direction of"); then one short piece in Part 0.2 right after "Does the order matter?" with $\mathbf{0} + \mathbf{v} = \mathbf{p}$ and the routes of (2).
-  - [ ] (10) Add what is new: the direction read one axis at a time, each slot's amount in turn.
+  - [x] (10) Add what is new: the direction read one axis at a time, each slot's amount in turn.
   - [ ] (11) Write $\mathbf{0} + \mathbf{v} = \mathbf{p}$ as element-wise addition, once addition has been taught.
   - [ ] (12) Maybe a picture: `draw_path` walking each axis in turn, then the arrow from home; predict, then run.
 
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (4)-(7), (10): heading in the direction of a vector, and the heading
+*2026-11-19 14:02* done
+
+Part 0.1 admits both everyday uses and says how the course uses the word, and reads a point one slot at a time. Part 0.3 defines the heading as the length-1 vector. Deep 9's first output is now `go` (length at most 1, (0, 0) stands still). AGENTS.md's Words table has the row.
 
 ## (19), (30): Module 0's introduction and Part 0.0's workspaces
 *2026-11-19 13:59* done
