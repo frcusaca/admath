@@ -1,20 +1,149 @@
 <!-- Copyright © 2026-present CAehi.us -->
 <!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
-# Open (3)
+# Open (47)
+
+<!--
+How this list is organised:
+- Ids are plain numbers, handed out in order and never reused; the number in
+  "# Open (N)" is the next one.
+- Items sit under topic headings: "## <aspect>" (Content, Style, Fixes, ...), then
+  "### <module>", then "#### <part>". Add a heading wherever a new item needs one.
+- A big item is a parent; its steps are indented checkboxes beneath it. Tick a
+  parent only when all of its children are ticked.
+- New items, moves and ticks get an entry at the top of the Log.
+-->
+
+## Content
+
+### Module 0
+
+#### Part 0.1: Vectors as moves
 
 - [ ] (0) Lesson 0: introduce the word "heading" early, where vectors first mean a direction
   Where a vector is first read as a direction (Part 0.1, "Vectors as moves", or near it), name it: a vector's **heading** is the way it points, a direction taken *from a position*, and that position is itself a vector. Today "heading" first appears in Part 0.3 ("speed times heading") and then in Deep 9 (heading and facing), with no early introduction.
   Purpose: start the intuition that runs from direction to position. Converting a direction vector (from $\mathbf{0}$ toward point $\mathbf{p}$) into a position (point $\mathbf{p}$) means moving from the origin along that direction: $\mathbf{0} + \mathbf{v} = \mathbf{p}$. A vector can itself be a position.
+  - [ ] (4) Settle what "heading" means before defining it. Part 0.3 and the teacher guide (M 0.3.8) say the heading is a **length-1** vector (velocity = speed times heading); Deep 9 allows a heading of $(0, 0)$ and caps its length at 1. Pick one meaning, or name both, and make every use agree.
+  - [ ] (5) Write the definition in Part 0.1, bold where defined and explained in plain words (AGENTS.md Style, Words). Likely next to "One list of numbers, two ways to read it".
+  - [ ] (6) Tie the later uses back to it: Part 0.3's "speed times heading" and Deep 9's heading and facing.
+  - [ ] (7) Add "heading" to the Words table in AGENTS.md, in the same commit as (5).
+  - [ ] (8) Teacher guide 00: mention the word in the Part 0.1 lesson notes.
+
+#### Part 0.2: Adding, subtracting and scaling
 
 - [ ] (1) Lesson 0: a short "clarification" section after vector addition: one written vector, two meanings
   After element-wise addition is introduced (Part 0.2), add a small section that clarifies what a vector written in parentheses, such as $(3, 4)$, means. **As a direction:** a dot starting at $\mathbf{0}$ that takes each axis one at a time, moving the amount written in that slot. **As a point:** where you land when you go from $\mathbf{0}$ in that direction, worked out by element-wise addition, $\mathbf{0} + \mathbf{v} = \mathbf{p}$.
   Could instead sit early in the lesson; decide when writing it. Keep it short, and link it to item (0)'s "heading".
+  - [ ] (9) Compare with Part 0.1's existing "One list of numbers, two ways to read it", which already reads $(1, 2, 3)$ as a point and as a move from home. Decide: extend that section, add a short follow-up after Part 0.2's addition, or both. Don't say it twice.
+  - [ ] (10) Add what is new: the direction read one axis at a time, each slot's amount in turn.
+  - [ ] (11) Write $\mathbf{0} + \mathbf{v} = \mathbf{p}$ as element-wise addition, once addition has been taught.
+  - [ ] (12) Maybe a picture: `draw_path` walking each axis in turn, then the arrow from home; predict, then run.
 
 - [ ] (2) Lesson 0: show the associative property of vector addition with directions and destinations
   Build on item (1): several directions can be added first and then started from $\mathbf{0}$, or walked one at a time from $\mathbf{0}$, and every way reaches the same final destination, e.g. $(\mathbf{0} + \mathbf{u}) + \mathbf{v} = \mathbf{0} + (\mathbf{u} + \mathbf{v})$. A picture with two or three routes to the same point would make the build-up from direction to position "click".
   Check against existing material first (Part 0.2's "Does the order matter?" and the teacher guide's note on rules kids already know) so it extends rather than repeats them.
+  - [ ] (13) Read what exists: Part 0.2's "Does the order matter?" (order, not grouping) and the teacher guide's "Why this is easy" note (grouping does not matter, among five rules). Plan the extension.
+  - [ ] (14) A picture with two or three routes to the same point; a code cell with a prediction before it.
+  - [ ] (15) The prose that links it to (1): add the moves first and start from $\mathbf{0}$, or walk them one at a time.
+  - [ ] (16) Decide: a new Mastery Coin, a "Beyond the coins" problem, or neither. A coin needs an answer-key row (`check-coins`), and coin ids only change when asked.
+  - [ ] (17) Teacher guide 00: lesson note, and answers if (16) adds a problem.
+
+## Style
+
+### Prose: read like good English
+
+- [ ] (3) All modules: read like good English prose, starting with Module 0's introduction
+  Module 0's introduction gives orders ("The one rule: predict, then run. Before you run a cell, say out loud what you think it will print or draw. Being wrong is fine. Being surprised is how you learn."). Rewrite it to be friendly and inviting, keeping the predict-then-run idea but as an invitation rather than a command.
+  Then do the same in every module: an opening sentence at the top of the document that grabs the reader, a good topic sentence at the start of each introductory paragraph, and, sometimes, a concluding sentence to close a concluding paragraph. The notebooks should read like good English prose that happens to contain a foreign language of graphs, math symbols and computation.
+  - [ ] (18) Write the convention first: a "Prose" subsection in AGENTS.md's Style section (grabbing opener, topic sentences, concluding sentences where they fit, invite rather than command). Keep "Predict, then run" as an invitation, since Style requires a prediction prompt before code cells.
+  - [ ] (19) Module 0: rewrite the introduction's "The one rule: predict, then run" paragraph.
+  - [ ] (20) Module 0: a prose pass over Parts 0.0 to 0.6, the cheat sheet, the proficiency check and the Deep End.
+  - [ ] (21) Module 1: prose pass (`01_rover_moves_linear_combinations`).
+  - [ ] (22) Module 2: prose pass (`02_span_everywhere_the_rover_can_reach`).
+  - [ ] (23) Module 3: prose pass (`03_getting_back_home_dependence`).
+  - [ ] (24) Module 4: prose pass (`04_basis_and_dimension`).
+  - [ ] (25) Decide whether the teacher guides get the same pass (only `00_teacher_guide` exists so far).
+
+## Kid Comfort
+
+### "Your turn": room to work
+
+- [ ] (27) Every "Your turn" exercise gets its own place to work, with skeleton code in the early modules
+  A "Your turn" inside a chapter should be followed by a code cell that is the kid's own workspace, not an instruction to edit a cell further up. In the first few modules that cell starts with skeleton code to change: for the seven-segment display, the cell already draws a 7 and the kid changes it into a 4.
+  The hope: kids save their copy of the notebook and can come back to see their own work.
+  - [ ] (28) Audit every "Your turn" in all modules. Found so far without a cell of their own: Module 0 Part 0.0's seven-segment digit (the next cell is the pizza orders), Module 1's "Change the charger" and Module 4's "Try three other chargers". Module 0 Part 0.6 says "Go back to the cell where `v` and `f` are made", which overwrites the original.
+  - [ ] (29) Write the convention in AGENTS.md's Style section: a "Your turn" is followed by its own code cell; in the first modules it starts as a copy of the example, with `# change me` marks (the pattern several cells already use).
+  - [ ] (30) Module 0: the seven-segment cell, already drawing a 7, ready to change into a 4.
+  - [ ] (31) Module 0: the other "Your turn" cells found by (28).
+  - [ ] (32) Modules 1 to 4: the "Your turn" cells found by (28); decide how far into the course skeleton code keeps going.
+  - [ ] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
+  - [ ] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
+  - [ ] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
+  - [ ] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
+    - a line magic for one expression, `%you_predict 1 + 1`. It remembers the expression text in the kernel, so it needs no hash and nothing for make to write. It can only evaluate, not assign, so "Run all" can never leave a name undefined.
+    - a cell magic for a multi-line "Your turn" cell, `%%your_turn 0.0.1`, with no hash (changed 2026-11-19): the first run fingerprints the cell as its original, and the cell runs only once the kid has changed it. Unchanged, it prints a short message instead, along the lines of "Your turn: make a change and answer the question. This cell runs once you have changed something." (wording in (42)). It knows which cell is which by the name on its line (45).
+    Decided 2026-11-19: the fingerprint is taken on the first run, so make writes nothing into the cells; authors write the name on the magic line ((39), (45)); the fingerprint ignores leading and trailing whitespace and comments; use the magics only where needed, with no `%%always` for the other cells. The seven-segment cell (30) uses neither, because seeing the 7 is the point. The memory resets with the kernel, so a restart asks again.
+    - [ ] (37) Put both in their own module, so `__init__.py` stays plain (rule 4); `register_magic_function` needs no decorator. Tests in `python/tests/`. The setup cell loads it as an IPython extension, `%load_ext vecdraw._predict` (the module defines `load_ipython_extension(ipython)`), so nothing new lands in the kids' variables.
+    - [ ] (38) Cell form: the fingerprint strips whitespace and removes comments with Python's `tokenize`, not by cutting at `#`, which would break strings such as `"#ff0000"`. Decide whether blank lines inside the cell count.
+    - [ ] (39) A check in `make check`, like `check-coins`: every `%%your_turn` has a name of the right shape, no name is used twice, and names are not renumbered once published. Tests in `tools/tests/`; AGENTS.md's map and Commands updated if it is a new script.
+    - [ ] (40) Cell form: on a first "Run all" every guarded cell is skipped, so a later cell that uses a name it defines fails with `NameError`. The tool in (39) rejects a guarded cell that defines a name used further down.
+    - [ ] (41) Builds: the site, PDF and teacher-guide runs execute each cell once and would publish the prompt in place of the answer. `run_notebooks.py` and `stage_site.py` set an environment variable that makes the magics always run (keep the teacher guide's "All N checks passed").
+    - [ ] (42) The names and the messages, in words a 10-year-old reads as a call to action. `%%your_turn`'s message says, more gracefully: "Your turn: make a change and answer the question. This cell runs once you have changed something." `%you_predict` might be `%guess_first` or similar. Add the chosen names to AGENTS.md's Style ("Predict, then run").
+    - [ ] (43) Pick the cells that use each form, from the audit (28).
+    - [ ] (44) Hide the magics' memory from the kids (decided 2026-11-19). The set of cells that already asked lives inside the module under a private name (`_asked`), never in the notebook's variables, so a kid cannot see it, overwrite it or trip over it. Watch out: the setup cell runs `from vecdraw import *`, and without `__all__` (rule 4 forbids it) that copies every public name in `vecdraw`, including a loaded submodule. A submodule named `predict` would land in the kids' variables as `predict` once loaded, so give the module a private name such as `_predict`. A test checks that loading the magics adds no name to the notebook's variables.
+    - [ ] (45) How `%%your_turn` knows which cell it is after the kid has edited it. Decided 2026-11-19: a human-readable name on the magic line, written by the author, `%%your_turn 0.5.1` (module, part, number, counting from 0 like everything else). The magic keeps `{name: first-run fingerprint}` in its private memory (44). Teachers can say "Your turn 0.5.1" out loud. Decide whether the name is quoted (`"0.5.1"`; the magic can accept both), and how to keep it from being mistaken for a Mastery Coin id (`M 0.5.1`).
+      Why not the editor's cell id: the kernel learns it only if the editor sends it with the run request (`cellId`, passed on as `info.cell_id`). Tested 2026-11-19: sent gives the id, not sent gives `None`. JupyterLab, Notebook 7 and VS Code send it; `nbclient`, which `make` uses, does not; Colab is undocumented and untested. A name on the magic line works everywhere, including a copy saved to Drive.
+      - [ ] (46) Optional, for curiosity: in Colab, run `print(get_ipython().kernel.get_parent()["metadata"])` and see whether Colab sends a cell id. It changes nothing above.
+
+## Fixes
+
+- [ ] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (45) changed: a human-readable name on the line, `%%your_turn 0.5.1`; (36) runs only after a change
+*2026-11-19 12:53* changed
+
+The author writes the name, so (39) is only a check (shape, no repeats). `%%your_turn` never runs an unchanged cell; its message goes in (42).
+
+## (45) decided: the notebook's own cell id, written on the `%%your_turn` line
+*2026-11-19 12:50* changed
+
+The editor's `cellId` reaches the kernel only when sent (tested: sent gives the id, unsent gives None; nbclient sends none, Colab unknown). So a readable cell id goes on the magic line, written and checked by (39). (46) created: a Colab probe, optional.
+
+## (36) changed: `%%your_turn` fingerprints the cell on its first run; (45) created
+*2026-11-19 12:49* changed
+
+No written hash: the first run's fingerprint is the original, then the same logic. (45): knowing which cell is which after an edit; nbclient sends no cell id, Colab untested.
+
+## (44) Hide the magics' memory from the kids
+*2026-11-19 12:47* created
+
+Child of (36). The memory is a private `_asked` inside a private module, loaded with `%load_ext`; `from vecdraw import *` would otherwise leak a public submodule name. (37) updated to match.
+
+## (36) reworked: a line magic and a cell magic, both asking once and then running
+*2026-11-19 12:46* changed
+
+`%you_predict <expression>` (no hash) and `%%your_turn <hash>`; first run asks for a prediction, second run shows the answer. Steps renumbered under (36): (37)-(41) rewritten, (42) names, (43) which cells.
+
+## (36) A cell magic that runs a "Your turn" cell only once it has changed
+*2026-11-19 12:43* created
+
+Child of (27), steps (37)-(41). Make writes the hashes; the fingerprint ignores whitespace and comments; used only where needed (not the seven-segment cell), no `%%always`.
+
+## (27) Every "Your turn" exercise gets its own place to work, with skeleton code in the early modules
+*2026-11-19 12:37* created
+
+New branch "Kid Comfort". A workspace cell after each "Your turn", with skeleton code in the first modules (a 7 to change into a 4), so kids can save their notebook and see their work. Steps (28)-(35); the audit found three "Your turn" exercises with no cell of their own.
+
+## restructured into a hierarchy
+*2026-11-19 09:23* planning
+
+Grouped by aspect (Content, Style, Fixes), then module and part. Split (0) into (4)-(8), (1) into (9)-(12), (2) into (13)-(17) and (3) into (18)-(25). Added (26), a coin count found while checking. While splitting: Part 0.1 already has "One list of numbers, two ways to read it", which overlaps (1); and "heading" means a length-1 vector in Part 0.3 but can be (0, 0) in Deep 9.
+
+## (3) All modules: read like good English prose, starting with Module 0's introduction
+*2026-11-19 09:22* created
+
+Module 0's "The one rule: predict, then run" reads as a command; make it friendly. Every module: a grabbing opening sentence, topic sentences for introductory paragraphs, concluding sentences where they fit; prose with math inside.
 
 ## (2) Lesson 0: show the associative property of vector addition with directions and destinations
 *2026-11-18 14:38* created
