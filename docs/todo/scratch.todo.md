@@ -35,16 +35,16 @@ How this list is organised:
   Could instead sit early in the lesson; decide when writing it. Keep it short, and link it to item (0)'s "heading".
   - [ ] (9) Compare with Part 0.1's existing "One list of numbers, two ways to read it". Decided 2026-11-19: extend that section (the one-axis-at-a-time walk, "headed in the direction of"); then one short piece in Part 0.2 right after "Does the order matter?" with $\mathbf{0} + \mathbf{v} = \mathbf{p}$ and the routes of (2).
   - [x] (10) Add what is new: the direction read one axis at a time, each slot's amount in turn.
-  - [ ] (11) Write $\mathbf{0} + \mathbf{v} = \mathbf{p}$ as element-wise addition, once addition has been taught.
-  - [ ] (12) Maybe a picture: `draw_path` walking each axis in turn, then the arrow from home; predict, then run.
+  - [x] (11) Write $\mathbf{0} + \mathbf{v} = \mathbf{p}$ as element-wise addition, once addition has been taught.
+  - [x] (12) Maybe a picture: `draw_path` walking each axis in turn, then the arrow from home; predict, then run.
 
 - [ ] (2) Lesson 0: show the associative property of vector addition with directions and destinations
   Build on item (1): several directions can be added first and then started from $\mathbf{0}$, or walked one at a time from $\mathbf{0}$, and every way reaches the same final destination, e.g. $(\mathbf{0} + \mathbf{u}) + \mathbf{v} = \mathbf{0} + (\mathbf{u} + \mathbf{v})$. A picture with two or three routes to the same point would make the build-up from direction to position "click".
   Check against existing material first (Part 0.2's "Does the order matter?" and the teacher guide's note on rules kids already know) so it extends rather than repeats them.
   - [ ] (13) Read what exists: Part 0.2's "Does the order matter?" (order, not grouping) and the teacher guide's "Why this is easy" note (grouping does not matter, among five rules). Plan the extension.
-  - [ ] (14) A picture with two or three routes to the same point; a code cell with a prediction before it.
-  - [ ] (15) The prose that links it to (1): add the moves first and start from $\mathbf{0}$, or walk them one at a time.
-  - [ ] (16) Decided 2026-11-19: no new Mastery Coin and no "Beyond the coins"; the short Part 0.2 piece with a picture is enough.
+  - [x] (14) A picture with two or three routes to the same point; a code cell with a prediction before it.
+  - [x] (15) The prose that links it to (1): add the moves first and start from $\mathbf{0}$, or walk them one at a time.
+  - [x] (16) Decided 2026-11-19: no new Mastery Coin and no "Beyond the coins"; the short Part 0.2 piece with a picture is enough.
   - [ ] (17) Teacher guide 00: lesson note, and answers if (16) adds a problem.
 
 ## Style
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (11), (12), (14), (15), (16): many routes, one place
+*2026-11-19 14:04* done
+
+Part 0.2: the swap is a `%%your_turn 0.2.1` workspace; a new "Many routes, one place" writes 0 + v = p as element-wise addition, then three routes to (5, 2) with `%guess_first` and a picture, and a concluding sentence on grouping. No new coin.
 
 ## (4)-(7), (10): heading in the direction of a vector, and the heading
 *2026-11-19 14:02* done
