@@ -8,6 +8,8 @@
 The setup is two cells near the top of each student notebook:
   1. a markdown cell starting with "**Setup.**"
   2. the code cell that gets the library (it replaced the old `%%writefile vecdraw.py` cell)
+     and loads the %guess_first and %%your_turn magics (vecdraw/_predict.py).
+     It uses %reload_ext, so running the setup again is quiet and starts fresh.
 The import cell after them (`import importlib, vecdraw ...`) is never touched.
 
 It also writes the chapter navigation: a "<< previous   next >>" strip as the
@@ -48,7 +50,9 @@ else:
             sys.path.insert(0, str(folder / "python" / "src"))
             break
     if importlib.util.find_spec("vecdraw") is None:
-        raise RuntimeError("Cannot find vecdraw. Run `make setup` in the course folder, or `pip install -e python`.")'''
+        raise RuntimeError("Cannot find vecdraw. Run `make setup` in the course folder, or `pip install -e python`.")
+
+%reload_ext vecdraw._predict'''
 
 OLD_CODE_MARKERS = ("%%writefile vecdraw.py", "# Setup: this cell gets the vecdraw library.")
 

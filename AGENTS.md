@@ -109,7 +109,12 @@ convention, add it here in the same commit.
 - Extra material that is not on the coin track goes in a
   `### Beyond the coins: …` section after the part's coins, with its answers
   in the teacher guide and checked in its "Check the key" cell.
-- "Predict, then run": text before a code cell asks for a prediction.
+- "Predict, then run": text before a code cell asks for a prediction. Two
+  magics can hold the answer back (`vecdraw/_predict.py`, loaded by the setup
+  cell): `%guess_first 2 * a` asks for a guess on the first run and shows the
+  value on the next; `%%your_turn 0.5.1` on a "Your turn" cell runs it only once
+  the kid has changed the code. The name is module, part, and which "Your turn"
+  of that part it is; never a cell number. Use them only where they help.
 - "Your turn": an exercise inside a part is followed by its own code cell, the
   kid's workspace, never an instruction to edit an example further up. In
   Modules 0 and 1 that cell starts as a copy of the example (the seven-segment
@@ -232,6 +237,7 @@ Generated and ignored (never commit): `.venv/`, `node_modules/`, `.tools/`,
 | Path | What it is |
 | --- | --- |
 | `src/vecdraw/__init__.py` | The drawing library kids read (`new_grid`, `draw_vector`, `draw_path`, `draw_point`, `draw_dots`, `draw_skewed_grid`, `draw_digit`, `angle_between`, `show`, `COLORS`). |
+| `src/vecdraw/_predict.py` | The `%guess_first` and `%%your_turn` magics, loaded with `%reload_ext vecdraw._predict`. Private name on purpose (see Gotchas). Builds set `VECDRAW_ALWAYS_RUN=1` to show every answer. |
 | `src/vecdraw/explore.py` | `explore_angles(*vectors, names=None)`: displays an object whose mimebundle has `text/html` (embedded explorer) and `image/png` (matplotlib fallback for PDF). |
 | `src/vecdraw/static/angle-explorer.iife.js` | **Generated** by `make explorer`; committed so `pip install git+…` needs no Node. `check-static` compares it with a fresh build. |
 | `pyproject.toml`, `LICENSE.md`, `README.md`, `tests/` | Packaging (hatchling), license copy shipped in the wheel (synced), tests. |
@@ -293,7 +299,8 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
   and executes the notebooks there; Quarto renders that copy, and `make site`
   moves `_site/` back. The sources are never executed in place.
 - **Setup cell in Colab:** `%pip install "vecdraw @ git+<url>@<ref>#subdirectory=python"`.
-  Locally it puts `python/src` on `sys.path` instead.
+  Locally it puts `python/src` on `sys.path` instead. Either way it ends with
+  `%reload_ext vecdraw._predict` (written by `make sync-setup`).
 
 ## Where to make common changes
 
@@ -327,6 +334,11 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
   Vite's coming native config loader rejects extensionless ones.
 - **`.gitignore` has no end-of-line comments**: a `#` after a pattern becomes part of it.
 - **Shell pipelines in the Makefile run with `pipefail`;** don't add a blanket `|| true` (it hid failures once).
+- **`from vecdraw import *` copies every public name, loaded submodules too.**
+  Rule 4 forbids `__all__`, so a submodule called `predict` would appear among the
+  kids' variables. Helper modules that kids should not trip over start with `_`.
+- **A build has no kid to guess.** `run_notebooks.py` sets `VECDRAW_ALWAYS_RUN=1`
+  in the kernel, so `%guess_first` and `%%your_turn` cells run and the site shows answers.
 - **Kernels use TCP on 127.0.0.1;** IPC fails on paths longer than 108 characters (SECURITY.md SEC-009).
 - **The system TeX Live may be unable to load fonts in LuaLaTeX;** PDFs use TinyTeX in `.tools/`.
 - **The parity e2e test is skipped offline** (the reference page loads Google Fonts).

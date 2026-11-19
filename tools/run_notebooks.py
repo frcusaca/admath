@@ -9,7 +9,8 @@
 Nothing is ever written back to notebooks/: the committed notebooks keep no
 outputs. (--write is how the site build gets executed notebooks; see stage_site.py.)
 For a teacher guide, the cell under the "Check the key" heading must also
-print "All N checks passed.".
+print "All N checks passed.". The kernel runs with VECDRAW_ALWAYS_RUN=1, so
+%guess_first and %%your_turn cells show their answers (see vecdraw/_predict.py).
 """
 import os
 import re
@@ -64,6 +65,10 @@ def run(path, write_to=None):
     # executed notebook. Without it, ipykernel picks the inline backend itself.
     kernel_env = dict(os.environ)
     kernel_env.pop("MPLBACKEND", None)
+    # %guess_first and %%your_turn (vecdraw._predict) hold back answers until a kid
+    # has guessed or changed the code. A build has no kid: show every answer, and
+    # let a broken exercise fail the run.
+    kernel_env["VECDRAW_ALWAYS_RUN"] = "1"
     start = time.time()
     try:
         client.execute(env=kernel_env)
