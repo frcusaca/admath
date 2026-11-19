@@ -104,11 +104,16 @@ How this list is organised:
 
 ## Fixes
 
-- [ ] (49) Module 4, Deep 1 points to "Notebook 0, Part 5" for what is special about $\mathbf{p}$ and $\mathbf{q}$ (they are perpendicular). Perpendicular and the sign rule are Part 0.4 today.
+- [x] (49) Module 4, Deep 1 points to "Notebook 0, Part 5" for what is special about $\mathbf{p}$ and $\mathbf{q}$ (they are perpendicular). Perpendicular and the sign rule are Part 0.4 today.
 
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (49) Notebook 4 Deep 1's cross-reference
+*2026-11-19 14:19* done
+
+Now points to Module 0, Part 0.4 (the sign rule: a zero inner product means perpendicular).
 
 ## (32), (35), (39), (40), (43): workspaces in Notebooks 1, 2 and 4; the check joins make check
 *2026-11-19 14:17* done
