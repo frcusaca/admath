@@ -56,7 +56,7 @@ How this list is organised:
   Then do the same in every module: an opening sentence at the top of the document that grabs the reader, a good topic sentence at the start of each introductory paragraph, and, sometimes, a concluding sentence to close a concluding paragraph. The notebooks should read like good English prose that happens to contain a foreign language of graphs, math symbols and computation.
   - [x] (18) Write the convention first: a "Prose" subsection in AGENTS.md's Style section (grabbing opener, topic sentences, concluding sentences where they fit, invite rather than command). Keep "Predict, then run" as an invitation, since Style requires a prediction prompt before code cells.
   - [x] (19) Module 0: rewrite the introduction's "The one rule: predict, then run" paragraph.
-  - [ ] (20) Module 0: a prose pass over Parts 0.0 to 0.6, the cheat sheet, the proficiency check and the Deep End.
+  - [x] (20) Module 0: a prose pass over Parts 0.0 to 0.6, the cheat sheet, the proficiency check and the Deep End.
   - [ ] (21) Module 1: prose pass (`01_rover_moves_linear_combinations`).
   - [ ] (22) Module 2: prose pass (`02_span_everywhere_the_rover_can_reach`).
   - [ ] (23) Module 3: prose pass (`03_getting_back_home_dependence`).
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (20): Module 0 prose pass
+*2026-11-19 14:10* done
+
+Topic sentences at the start of Parts 0.0, 0.2, 0.3, 0.4 and 0.5 and the calculator section; invitations instead of orders in a few prompts; the inner-product-with-itself pair now ends on a concluding sentence. The rest already read as prose and is unchanged.
 
 ## (31): Module 0's other "Your turn" cells
 *2026-11-19 14:08* done
