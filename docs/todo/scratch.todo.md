@@ -79,7 +79,7 @@ How this list is organised:
   - [x] (30) Module 0: the seven-segment cell, already drawing a 7, ready to change into a 4.
   - [x] (31) Module 0: the other "Your turn" cells found by (28).
   - [ ] (32) Modules 1 to 4: the "Your turn" cells found by (28). Decided 2026-11-19 (default): skeleton code that already shows the example's answer in Modules 0 and 1; from Notebook 2 on, `# change me` cells as they are now.
-  - [ ] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
+  - [x] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
   - [x] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
   - [ ] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
   - [ ] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (33): keep your work, on the home page
+*2026-11-19 14:15* done
+
+index.qmd says how to save a copy in Drive, and its "one rule" became an invitation. Module 0's introduction and the teacher guide already say it.
 
 ## (8), (17), (34), (25): teacher guide 00
 *2026-11-19 14:13* done

@@ -9,7 +9,9 @@ execute:
   echo: false
 ---
 
-**The one rule: predict, then run.** Before you run a cell, say out loud what you think it will print or draw.
+Each notebook tells its story in words, pictures, math and code. Before you run a cell, guess what it will print or draw, and then run it to find out. The surprises are where the learning happens.
+
+**Keep your work.** Colab does not save a notebook opened from the links below. Once it is open, choose **File**, then **Save a copy in Drive**, and work in your copy. Your changes will be waiting the next time you open it.
 
 ```{python}
 #| output: asis
