@@ -110,6 +110,11 @@ How this list is organised:
 
 # Log
 
+## (4) refined: three uses of "heading", each said exactly
+*2026-11-19 14:06* changed
+
+The user added "heading toward a point Q": from P, the direction of Q - P, and the heading (Q - P)/||Q - P||. Part 0.1 lists the three phrases; Part 0.3 gives the formula; AGENTS.md's Words row says to always say which.
+
 ## (11), (12), (14), (15), (16): many routes, one place
 *2026-11-19 14:04* done
 

@@ -100,7 +100,7 @@ convention, add it here in the same commit.
 | dimension | the number of slots; not "space" | Part 0.0 |
 | inner product, dot product | $\langle \mathbf{a}, \mathbf{b} \rangle$; two names for one thing (`np.dot`). A chapter uses one of them throughout and mentions the other once; across the course both are used about equally | Part 0.4 |
 | move / point | a vector is a move, a point is a place; both are bold | Part 0.1 |
-| heading | something is **heading in the direction of** $\mathbf{v}$ (any length); **the heading** is the length-1 vector for that direction. Say once that a captain's heading is a compass angle and that people also call a velocity a heading; never call a vector that may be shorter than 1 "the heading" (Deep 9 calls it `go`) | Part 0.1, Part 0.3 |
+| heading | always say which: **heading in the direction of** $\mathbf{v}$ (any length); **heading toward** a point $\mathbf{Q}$ (from $\mathbf{P}$, the direction of $\mathbf{Q} - \mathbf{P}$); **the heading**, the length-1 vector for a direction, $\frac{\mathbf{Q} - \mathbf{P}}{\lVert \mathbf{Q} - \mathbf{P} \rVert}$ when heading toward $\mathbf{Q}$. Say once that a captain's heading is a compass angle and that people also call a velocity a heading; never call a vector that may be shorter than 1 "the heading" (Deep 9 calls it `go`) | Part 0.1, Part 0.3 |
 
 - A new word is **bold** where it is defined, and explained right there, in
   plain words. Hyphenated words get one sentence on what kind of word they are.
