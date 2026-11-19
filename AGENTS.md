@@ -98,7 +98,7 @@ convention, add it here in the same commit.
 | element | the number in a slot; the math word | Part 0.0 |
 | element-wise | adjective: one element at a time, each with its partner in the same slot (adding, subtracting, scaling) | Part 0.0, "A new word" |
 | dimension | the number of slots; not "space" | Part 0.0 |
-| inner product | $\langle \mathbf{a}, \mathbf{b} \rangle$; "dot product" is mentioned only as the name other books and `np.dot` use | Part 0.4 |
+| inner product, dot product | $\langle \mathbf{a}, \mathbf{b} \rangle$; two names for one thing (`np.dot`). A chapter uses one of them throughout and mentions the other once; across the course both are used about equally | Part 0.4 |
 | move / point | a vector is a move, a point is a place; both are bold | Part 0.1 |
 
 - A new word is **bold** where it is defined, and explained right there, in
@@ -110,6 +110,26 @@ convention, add it here in the same commit.
   `### Beyond the coins: …` section after the part's coins, with its answers
   in the teacher guide and checked in its "Check the key" cell.
 - "Predict, then run": text before a code cell asks for a prediction.
+- "Your turn": an exercise inside a part is followed by its own code cell, the
+  kid's workspace, never an instruction to edit an example further up. In
+  Modules 0 and 1 that cell starts as a copy of the example (the seven-segment
+  cell already draws a 7 to change into a 4); later, a skeleton with `# change me` marks.
+
+### Prose
+
+The lessons are English prose that happens to contain a second language of
+pictures, math and code. Write them the way a good book for kids is written.
+
+- Open each notebook with a sentence that makes a kid want to read on: a
+  question, a puzzle or a surprise, not a rule.
+- Begin each introductory paragraph with a topic sentence that says what the
+  paragraph is about. Close a section with a concluding sentence when it helps
+  the idea land; not every paragraph needs one.
+- Invite, don't command. "Before you run a cell, guess what it will do" is an
+  invitation; "The one rule: predict, then run" is an order. Keep the
+  prediction prompt that comes before code cells, but phrase it as an invitation.
+- Short sentences and plain words, as everywhere in the course; connect them,
+  so that the paragraph reads as one thought and not as a list of facts.
 
 ### Colour
 
