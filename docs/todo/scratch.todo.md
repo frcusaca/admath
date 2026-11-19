@@ -26,7 +26,7 @@ How this list is organised:
   - [x] (5) Write the definition in Part 0.1, bold where defined and explained in plain words (AGENTS.md Style, Words). Likely next to "One list of numbers, two ways to read it".
   - [x] (6) Tie the later uses back to it: Part 0.3's "speed times heading" and Deep 9's heading and facing.
   - [x] (7) Add "heading" to the Words table in AGENTS.md, in the same commit as (5).
-  - [ ] (8) Teacher guide 00: mention the word in the Part 0.1 lesson notes.
+  - [x] (8) Teacher guide 00: mention the word in the Part 0.1 lesson notes.
 
 #### Part 0.2: Adding, subtracting and scaling
 
@@ -45,7 +45,7 @@ How this list is organised:
   - [x] (14) A picture with two or three routes to the same point; a code cell with a prediction before it.
   - [x] (15) The prose that links it to (1): add the moves first and start from $\mathbf{0}$, or walk them one at a time.
   - [x] (16) Decided 2026-11-19: no new Mastery Coin and no "Beyond the coins"; the short Part 0.2 piece with a picture is enough.
-  - [ ] (17) Teacher guide 00: lesson note, and answers if (16) adds a problem.
+  - [x] (17) Teacher guide 00: lesson note, and answers if (16) adds a problem.
 
 ## Style
 
@@ -61,7 +61,7 @@ How this list is organised:
   - [ ] (22) Module 2: prose pass (`02_span_everywhere_the_rover_can_reach`).
   - [ ] (23) Module 3: prose pass (`03_getting_back_home_dependence`).
   - [ ] (24) Module 4: prose pass (`04_basis_and_dimension`).
-  - [ ] (25) Decided 2026-11-19 (default, change if wanted): teacher guide 00 gets the same pass, lighter, since its readers are adults.
+  - [x] (25) Decided 2026-11-19 (default, change if wanted): teacher guide 00 gets the same pass, lighter, since its readers are adults.
 
 ### Words: inner product and dot product
 
@@ -80,7 +80,7 @@ How this list is organised:
   - [x] (31) Module 0: the other "Your turn" cells found by (28).
   - [ ] (32) Modules 1 to 4: the "Your turn" cells found by (28). Decided 2026-11-19 (default): skeleton code that already shows the example's answer in Modules 0 and 1; from Notebook 2 on, `# change me` cells as they are now.
   - [ ] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
-  - [ ] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
+  - [x] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
   - [ ] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
   - [ ] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
     - a line magic for one expression, `%you_predict 1 + 1`. It remembers the expression text in the kernel, so it needs no hash and nothing for make to write. It can only evaluate, not assign, so "Run all" can never leave a name undefined.
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (8), (17), (34), (25): teacher guide 00
+*2026-11-19 14:13* done
+
+Conventions: the three uses of heading, the two magics, and saving a copy in Drive (also in session 1's plan). Part 0.1: heading notes; Part 0.2: Many routes, one place, and the swap's answer; Part 0.3: the heading toward Q, the Your turn answer; Part 0.6: answers for %%your_turn 0.6.1. The car row says "heading" the new way. Prose pass (25): the guide already reads well; only these additions.
 
 ## (20): Module 0 prose pass
 *2026-11-19 14:10* done
