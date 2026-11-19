@@ -163,7 +163,7 @@ strip: ## Remove outputs (and fix Quarto-unsafe rules) in every notebook
 # ---- everything ----------------------------------------------------------------
 
 check: ## Everything that can fail: static checks, all tests, every notebook, both sites
-	@$(MAKE) check-copyright check-agents check-gitignore check-security check-clean check-setup check-coins check-latex
+	@$(MAKE) check-copyright check-agents check-gitignore check-security check-clean check-setup check-coins check-your-turn check-latex
 	@$(MAKE) check-static
 	@$(MAKE) test-python test-tools test-explorer test-e2e
 	@$(MAKE) site teacher

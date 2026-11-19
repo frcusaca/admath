@@ -78,21 +78,21 @@ How this list is organised:
   - [x] (29) Write the convention in AGENTS.md's Style section: a "Your turn" is followed by its own code cell; in the first modules it starts as a copy of the example, with `# change me` marks (the pattern several cells already use).
   - [x] (30) Module 0: the seven-segment cell, already drawing a 7, ready to change into a 4.
   - [x] (31) Module 0: the other "Your turn" cells found by (28).
-  - [ ] (32) Modules 1 to 4: the "Your turn" cells found by (28). Decided 2026-11-19 (default): skeleton code that already shows the example's answer in Modules 0 and 1; from Notebook 2 on, `# change me` cells as they are now.
+  - [x] (32) Modules 1 to 4: the "Your turn" cells found by (28). Decided 2026-11-19 (default): skeleton code that already shows the example's answer in Modules 0 and 1; from Notebook 2 on, `# change me` cells as they are now.
   - [x] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
   - [x] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
-  - [ ] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
+  - [x] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
   - [ ] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
     - a line magic for one expression, `%you_predict 1 + 1`. It remembers the expression text in the kernel, so it needs no hash and nothing for make to write. It can only evaluate, not assign, so "Run all" can never leave a name undefined.
     - a cell magic for a multi-line "Your turn" cell, `%%your_turn 0.0.1`, with no hash (changed 2026-11-19): the first run fingerprints the cell as its original, and the cell runs only once the kid has changed it. Unchanged, it prints a short message instead, along the lines of "Your turn: make a change and answer the question. This cell runs once you have changed something." (wording in (42)). It knows which cell is which by the name on its line (45).
     Decided 2026-11-19: the fingerprint is taken on the first run, so make writes nothing into the cells; authors write the name on the magic line ((39), (45)); the fingerprint ignores leading and trailing whitespace and comments; use the magics only where needed, with no `%%always` for the other cells. The seven-segment cell (30) uses neither, because seeing the 7 is the point. The memory resets with the kernel, so a restart asks again.
     - [x] (37) Put both in their own module, so `__init__.py` stays plain (rule 4); `register_magic_function` needs no decorator. Tests in `python/tests/`. The setup cell loads it as an IPython extension, `%load_ext vecdraw._predict` (the module defines `load_ipython_extension(ipython)`), so nothing new lands in the kids' variables.
     - [x] (38) Cell form: the fingerprint strips whitespace and removes comments with Python's `tokenize`, not by cutting at `#`, which would break strings such as `"#ff0000"`. Decided 2026-11-19 (default): blank lines and trailing spaces do not count either.
-    - [ ] (39) A check in `make check`, like `check-coins`: every `%%your_turn` has a name of the right shape, no name is used twice, and names are not renumbered once published. Tests in `tools/tests/`; AGENTS.md's map and Commands updated if it is a new script.
-    - [ ] (40) Cell form: on a first "Run all" every guarded cell is skipped, so a later cell that uses a name it defines fails with `NameError`. The tool in (39) rejects a guarded cell that defines a name used further down.
+    - [x] (39) A check in `make check`, like `check-coins`: every `%%your_turn` has a name of the right shape, no name is used twice, and names are not renumbered once published. Tests in `tools/tests/`; AGENTS.md's map and Commands updated if it is a new script.
+    - [x] (40) Cell form: on a first "Run all" every guarded cell is skipped, so a later cell that uses a name it defines fails with `NameError`. The tool in (39) rejects a guarded cell that defines a name used further down.
     - [x] (41) Builds: the site, PDF and teacher-guide runs execute each cell once and would publish the prompt in place of the answer. `run_notebooks.py` and `stage_site.py` set an environment variable that makes the magics always run (keep the teacher guide's "All N checks passed").
     - [ ] (42) The names and the messages. Decided 2026-11-19: `%guess_first` (line) and `%%your_turn` (cell). `%%your_turn`'s message says, more gracefully: "Your turn: make a change and answer the question. This cell runs once you have changed something." Add the names to AGENTS.md's Style ("Predict, then run").
-    - [ ] (43) Pick the cells that use each form, from the audit (28).
+    - [x] (43) Pick the cells that use each form, from the audit (28).
     - [x] (44) Hide the magics' memory from the kids (decided 2026-11-19). The set of cells that already asked lives inside the module under a private name (`_asked`), never in the notebook's variables, so a kid cannot see it, overwrite it or trip over it. Watch out: the setup cell runs `from vecdraw import *`, and without `__all__` (rule 4 forbids it) that copies every public name in `vecdraw`, including a loaded submodule. A submodule named `predict` would land in the kids' variables as `predict` once loaded, so give the module a private name such as `_predict`. A test checks that loading the magics adds no name to the notebook's variables.
     - [ ] (45) How `%%your_turn` knows which cell it is after the kid has edited it. Decided 2026-11-19: a human-readable name on the magic line, written by the author, `%%your_turn 0.5.1`: module, part, and which "Your turn" it is in that part (a book's unit, an exercise; not a Jupyter cell number). Counting follows the course: 0-based where the module is. Modules 1 to 4 still number parts from 1 (see (48)); their names follow the parts as they stand until then. No quotes needed; quotes accepted. The magic keeps `{name: first-run fingerprint}` in its private memory (44).
       Why not the editor's cell id: the kernel learns it only if the editor sends it with the run request (`cellId`, passed on as `info.cell_id`). Tested 2026-11-19: sent gives the id, not sent gives `None`. JupyterLab, Notebook 7 and VS Code send it; `nbclient`, which `make` uses, does not; Colab is undocumented and untested. A name on the magic line works everywhere, including a copy saved to Drive.
@@ -109,6 +109,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (32), (35), (39), (40), (43): workspaces in Notebooks 1, 2 and 4; the check joins make check
+*2026-11-19 14:17* done
+
+Notebook 1: Part 3's harder charger and Part 5's robot get copies to change (skeleton code with the example's answer, as decided); Part 6 points at the kid's copy. Notebook 2: Part 4's (0, 0) question gets its own cell. Notebook 4: Part 1's chargers get a cell. %%your_turn is used in Module 0 only (0.2.1, 0.6.1): the other workspaces show nothing that spoils a prediction. check-your-turn now runs in make check.
 
 ## (33): keep your work, on the home page
 *2026-11-19 14:15* done

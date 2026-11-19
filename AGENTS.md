@@ -194,11 +194,10 @@ hover version. Don't put `"` inside the note.
 | `make help` | List the targets. |
 
 `make check` runs, in order: `check-copyright`, `check-agents`, `check-gitignore`,
-`check-security`, `check-clean`, `check-setup`, `check-coins`, `check-latex`,
+`check-security`, `check-clean`, `check-setup`, `check-coins`, `check-your-turn`, `check-latex`,
 `check-static`, `test-python`, `test-tools`, `test-explorer`, `test-e2e`,
 `site`, `teacher`, `test-site`, then `check-clean` again. Other targets:
-`setup-python`, `setup-node`, `setup-quarto`, `audit` (= `check-security`),
-`check-your-turn` (joins `make check` once every notebook passes it).
+`setup-python`, `setup-node`, `setup-quarto`, `audit` (= `check-security`).
 
 Use the repo's tools, not system ones: `.venv/bin/python`, `npm -w explorer`,
 `.tools/quarto/bin/quarto`. The Makefile sets `QUARTO_PYTHON` and puts TinyTeX first on `PATH`.
