@@ -196,7 +196,8 @@ hover version. Don't put `"` inside the note.
 `check-security`, `check-clean`, `check-setup`, `check-coins`, `check-latex`,
 `check-static`, `test-python`, `test-tools`, `test-explorer`, `test-e2e`,
 `site`, `teacher`, `test-site`, then `check-clean` again. Other targets:
-`setup-python`, `setup-node`, `setup-quarto`, `audit` (= `check-security`).
+`setup-python`, `setup-node`, `setup-quarto`, `audit` (= `check-security`),
+`check-your-turn` (joins `make check` once every notebook passes it).
 
 Use the repo's tools, not system ones: `.venv/bin/python`, `npm -w explorer`,
 `.tools/quarto/bin/quarto`. The Makefile sets `QUARTO_PYTHON` and puts TinyTeX first on `PATH`.
@@ -269,6 +270,7 @@ inlined), `lib/angle-explorer.js` (ES module), `lib/angle-explorer.iife.js`, `ty
 | `stage_site.py` | Copy the Quarto project to `.build/site/` and execute the notebooks there; point `<<`/`>>` at the site's pages and turn hover hints into footnotes. | `stage` |
 | `check_clean.py` | No outputs in notebooks; `---` rules followed by a blank line (`--fix`). | `check-clean`, `strip` |
 | `check_coins.py` | Each Mastery Coin has exactly one answer-key row, and the reverse. | `check-coins` |
+| `check_your_turn.py` | Each "Your turn" is followed by a code cell; each `%%your_turn` has a valid, unique name; "Run all" never needs a name only a skipped cell makes. | `check-your-turn` |
 | `check_latex.mjs` | Every `$…$`/`$$…$$` parses with KaTeX (strict). | `check-latex` |
 | `sync_setup.py` | Write the setup cells and the `<<` / `>>` chapter navigation (cells `nav-top`, `nav-bottom`) from `course.toml` (`--check`). | `sync-setup`, `check-setup` |
 | `copyright.py` | Copyright + SPDX license line in every file; syncs license copies with `course.toml`. | `copyright`, `check-copyright` |

@@ -29,7 +29,7 @@ QUIET     := { grep -v --line-buffered "Kernel is running over TCP" || true; }
 
 .PHONY: help setup setup-python setup-node setup-quarto \
         explorer test test-python test-tools test-explorer test-e2e test-site \
-        notebooks check-static check-clean check-setup check-coins check-latex check-copyright check-agents check-gitignore check-security audit copyright \
+        notebooks check-static check-clean check-setup check-coins check-your-turn check-latex check-copyright check-agents check-gitignore check-security audit copyright \
         stage site teacher pdf preview preview-teacher colab sync-setup strip check clean distclean
 
 help: ## Show this list
@@ -94,6 +94,9 @@ check-setup: ## Every setup cell and navigation strip matches course.toml
 
 check-coins: ## Every Mastery Coin has exactly one answer-key row, and the reverse
 	cd tools && $(PY) check_coins.py
+
+check-your-turn: ## Every "Your turn" has a workspace cell; every %%your_turn cell is named and safe
+	cd tools && $(PY) check_your_turn.py
 
 check-copyright: ## Every file carries the copyright notice and its license
 	$(PY) tools/copyright.py

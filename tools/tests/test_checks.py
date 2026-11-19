@@ -95,6 +95,51 @@ class TestCoins:
         assert "no teacher guide" in run(course, "check_coins.py").stderr
 
 
+class TestYourTurn:
+    def test_passes_with_workspaces_and_safe_guarded_cells(self, course):
+        write(course, "03_lesson.ipynb", notebook(
+            ("markdown", "**Your turn.** Change it."),
+            ("code", "%%your_turn 3.1.1\nb = 2\nprint(b)"),
+            ("markdown", "## Your turn: name it"),
+            ("code", "x = 1"),
+            ("code", "print(x)"),
+        ))
+        result = run(course, "check_your_turn.py")
+        assert result.returncode == 0, result.stderr
+        assert "1 %%your_turn cells" in result.stdout
+
+    def test_fails_without_a_workspace(self, course):
+        write(course, "03_lesson.ipynb", notebook(("markdown", "**Your turn.** Try three."), ("markdown", "## Part 2")))
+        result = run(course, "check_your_turn.py")
+        assert result.returncode == 1
+        assert "needs its own code cell" in result.stderr
+
+    @pytest.mark.parametrize("line, message", [
+        ("%%your_turn", "needs a name"),
+        ("%%your_turn 3.1", "needs a name"),
+        ("%%your_turn 4.1.1", "belongs in Module 4"),
+    ])
+    def test_fails_on_a_bad_name(self, course, line, message):
+        write(course, "03_lesson.ipynb", notebook(("code", line + "\nb = 1")))
+        result = run(course, "check_your_turn.py")
+        assert message in result.stderr
+
+    def test_fails_on_a_repeated_name(self, course):
+        write(course, "03_lesson.ipynb", notebook(("code", "%%your_turn \"3.1.1\"\nb = 1"), ("code", "%%your_turn 3.1.1\nc = 1")))
+        assert "used 2 times" in run(course, "check_your_turn.py").stderr
+
+    def test_fails_when_run_all_would_hit_a_name_error(self, course):
+        write(course, "03_lesson.ipynb", notebook(("code", "%%your_turn 3.1.1\nb = 1"), ("code", "print(b)")))
+        assert "`b` is made only in %%your_turn 3.1.1" in run(course, "check_your_turn.py").stderr
+
+    def test_a_name_made_elsewhere_too_is_fine(self, course):
+        write(course, "03_lesson.ipynb", notebook(
+            ("code", "b = 0"), ("code", "%%your_turn 3.1.1\nb = 1"), ("code", "print(b)"),
+            ("code", "%%your_turn 3.1.2\nc = 1"), ("code", "c = 5\nprint(c)"),
+        ))
+        assert run(course, "check_your_turn.py").returncode == 0
+
+
 class TestClean:
     def test_fails_on_outputs_and_fix_removes_them(self, course):
         nb = notebook(("code", "print(1)"))
