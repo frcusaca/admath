@@ -106,9 +106,14 @@ How this list is organised:
 
 - [ ] (49) Module 4, Deep 1 points to "Notebook 0, Part 5" for what is special about $\mathbf{p}$ and $\mathbf{q}$ (they are perpendicular). Perpendicular and the sign rule are Part 0.4 today.
 
-- [ ] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
+- [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (26) the coin count in teacher guide 00
+*2026-11-19 13:37* done
+
+The opening now says 71 Mastery Coins, like the "What changed" list and the notebook.
 
 ## decisions for step 1; (47), (48), (49) created
 *2026-11-19 13:35* planning
