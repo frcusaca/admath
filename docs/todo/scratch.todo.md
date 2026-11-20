@@ -71,7 +71,7 @@ How this list is organised:
 
 - [ ] (47) Rescoped 2026-11-20: the course says **inner product** only, written $\langle \mathbf{u}, \mathbf{v} \rangle$. ("dot product" appears once, in the blurb of (54); `np.dot` stays in code.) Replaces the 2026-11-19 rule of one name per chapter.
   - [ ] (54) Module 0, Part 0.4: a short blurb. "Dot product" is another name people use for the inner product on ordinary grid coordinates (a slight simplification). Other books write it with a centered dot, $\mathbf{u} \cdot \mathbf{v}$ (rendered, bold vectors); we write $\langle \mathbf{u}, \mathbf{v} \rangle$ so it is never confused with multiplication. Likewise the times sign of "$3 \times 4$" gets a new job later, the cross product, so be ready for a few new symbols and meanings. Fold in Part 0.4's current sentence and the cheat sheet's.
-  - [ ] (55) `check-latex` fails on `\cdot` and `\times` everywhere. The blurb in (54) needs them once, on purpose: add a narrow, explicit exception (for example a marked cell or span that the check skips), with a test, and say so in AGENTS.md's Symbols section.
+  - [ ] (55) `check-latex` fails on `\cdot` and `\times` everywhere. Decided 2026-11-20: permit them only in the blurb of (54), and use the conventional commands everywhere else ($\langle \mathbf{u}, \mathbf{v} \rangle$ for the inner product). Mechanism: an explicit marker on that one markdown cell (for example a first line `<!-- check-latex: product signs shown on purpose -->`) that `check-latex` honours for that cell only; tests that the marker works and that the signs still fail in every other cell; AGENTS.md's Symbols section names the exception. (The `physics` package's `\vdot`, `\cross`, `\ip` were considered: KaTeX, which the site and the check use, has none of them; tested 2026-11-20.)
   - [ ] (56) AGENTS.md: put the Words row back to "inner product only", noting the one blurb; fix the 2026-11-19 wording in Style.
   - [ ] (57) Notebooks 1 and 4 say "dot product" (Notebook 1's warm-up and Deep 5, Notebook 4's Deep 1 "The dot-product shortcut"): change to inner product, written $\langle \cdot, \cdot \rangle$ in LaTeX. Do it in the same pass as (50).
   - [ ] (58) Teacher guide 00, Conventions ("Many books call it the dot product ..."): match (54).
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (55) decided: one marked exception for the dot-product blurb
+*2026-11-20 06:05* changed
+
+Only the (54) blurb may show the centered dot and the times sign, through a marker on its cell; everywhere else the conventional commands. The physics package was ruled out: KaTeX does not know \vdot, \cross or \ip.
 
 ## (51)-(59): openings that inform, inner product only, the notebook's magics; (50) approved
 *2026-11-20 05:47* planning
