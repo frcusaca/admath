@@ -80,7 +80,7 @@ How this list is organised:
 
 ### "Your turn": room to work
 
-- [ ] (27) Every "Your turn" exercise gets its own place to work, with skeleton code in the early modules
+- [x] (27) Every "Your turn" exercise gets its own place to work, with skeleton code in the early modules
   A "Your turn" inside a chapter should be followed by a code cell that is the kid's own workspace, not an instruction to edit a cell further up. In the first few modules that cell starts with skeleton code to change: for the seven-segment display, the cell already draws a 7 and the kid changes it into a 4.
   The hope: kids save their copy of the notebook and can come back to see their own work.
   - [x] (28) Audit every "Your turn" in all modules (done 2026-11-19). No workspace cell of their own: Module 0 Part 0.0's seven-segment digit (the next cell is the pizza orders), Notebook 1 Part 5's "Change the charger", Notebook 4 Part 1's "Try three other chargers". They send the kid back to edit an example: Module 0 Part 0.0's "Change `speed` and `time` in the cell above", Part 0.2's "draw `b` first ... in the cell above", Part 0.6's "Go back to the cell where `v` and `f` are made" (four cells to re-run). Partial skeletons already there: Part 0.3 (length, no length-1 line), Part 0.3's L-p tests, Part 0.4's "two more pairs". Fine as they are: Notebook 2's and 3's "Your turn" sections and Notebook 4's slanted paper and basis check, which have `# change me` cells.
@@ -91,7 +91,7 @@ How this list is organised:
   - [x] (33) Tell kids how to keep their work. A notebook opened in Colab from the course link is not saved unless they make a copy (File, then "Save a copy in Drive"). Say so in Module 0's introduction and on the home page, and add a note to the teacher guide.
   - [x] (34) Teacher guide 00: answers or notes for any "Your turn" whose cell changes.
   - [x] (35) Maybe a check in `make check` (with a test in `tools/tests/`) that every "Your turn" cell is followed by a code cell.
-  - [ ] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
+  - [x] (36) Predict-then-run magics: the first run asks for a prediction, the second run shows the answer. Two forms, both tested in the repo's IPython on 2026-11-19:
     - a line magic for one expression, `%you_predict 1 + 1`. It remembers the expression text in the kernel, so it needs no hash and nothing for make to write. It can only evaluate, not assign, so "Run all" can never leave a name undefined.
     - a cell magic for a multi-line "Your turn" cell, `%%your_turn 0.0.1`, with no hash (changed 2026-11-19): the first run fingerprints the cell as its original, and the cell runs only once the kid has changed it. Unchanged, it prints a short message instead, along the lines of "Your turn: make a change and answer the question. This cell runs once you have changed something." (wording in (42)). It knows which cell is which by the name on its line (45).
     Decided 2026-11-19: the fingerprint is taken on the first run, so make writes nothing into the cells; authors write the name on the magic line ((39), (45)); the fingerprint ignores leading and trailing whitespace and comments; use the magics only where needed, with no `%%always` for the other cells. The seven-segment cell (30) uses neither, because seeing the 7 is the point. The memory resets with the kernel, so a restart asks again.
@@ -105,7 +105,7 @@ How this list is organised:
     - [x] (44) Hide the magics' memory from the kids (decided 2026-11-19). The set of cells that already asked lives inside the module under a private name (`_asked`), never in the notebook's variables, so a kid cannot see it, overwrite it or trip over it. Watch out: the setup cell runs `from vecdraw import *`, and without `__all__` (rule 4 forbids it) that copies every public name in `vecdraw`, including a loaded submodule. A submodule named `predict` would land in the kids' variables as `predict` once loaded, so give the module a private name such as `_predict`. A test checks that loading the magics adds no name to the notebook's variables.
     - [x] (45) How `%%your_turn` knows which cell it is after the kid has edited it. Decided 2026-11-19: a human-readable name on the magic line, written by the author, `%%your_turn 0.5.1`: module, part, and which "Your turn" it is in that part (a book's unit, an exercise; not a Jupyter cell number). Counting follows the course: 0-based where the module is. Modules 1 to 4 still number parts from 1 (see (48)); their names follow the parts as they stand until then. No quotes needed; quotes accepted. The magic keeps `{name: first-run fingerprint}` in its private memory (44).
       Why not the editor's cell id: the kernel learns it only if the editor sends it with the run request (`cellId`, passed on as `info.cell_id`). Tested 2026-11-19: sent gives the id, not sent gives `None`. JupyterLab, Notebook 7 and VS Code send it; `nbclient`, which `make` uses, does not; Colab is undocumented and untested. A name on the magic line works everywhere, including a copy saved to Drive.
-      - [ ] (46) Optional, for curiosity: in Colab, run `print(get_ipython().kernel.get_parent()["metadata"])` and see whether Colab sends a cell id. It changes nothing above.
+      - [x] (46) Optional, for curiosity: in Colab, run `print(get_ipython().kernel.get_parent()["metadata"])` and see whether Colab sends a cell id. It changes nothing above. Result 2026-11-20 (run by the user): `{'colab': {'cell_id': '9hbZNSFOYCxh'}}`. Colab does send one, under `metadata["colab"]["cell_id"]`, not under Jupyter's `cellId`. The names on the magic line stay: they work in every editor and in builds, and a kernel restart forgets the memory either way.
 
 ### Getting to know the notebook
 
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (46), and with it (36) and (27): Colab sends a cell id
+*2026-11-20 06:34* done
+
+Colab puts it at metadata["colab"]["cell_id"] (seen: 9hbZNSFOYCxh). Nothing changes: %%your_turn keeps its written names. Every item on the scratch list is now done.
 
 ## a letter read as a unit, where 5x first appears
 *2026-11-20 06:30* done
