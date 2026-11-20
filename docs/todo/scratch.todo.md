@@ -128,6 +128,11 @@ How this list is organised:
 
 # Log
 
+## (50), (57) progress: Module 1 in LaTeX, inner product only
+*2026-11-20 06:35* changed
+
+Module 1's math is LaTeX (bold vectors, $c\mathbf{a} + d\mathbf{b}$, $\langle \cdot, \cdot \rangle$); code spans now hold only Python names. Deep 5 says inner product. Its opening already says what is coming (53). Modules 2 to 4 remain.
+
 ## (48): every module counts from 0
 *2026-11-20 06:18* done
 
