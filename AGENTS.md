@@ -87,6 +87,10 @@ convention, add it here in the same commit.
   where code first scales a vector (`2 * a`).
 - Lists of slot names are written in parentheses, the same shape as the numbers
   they name: (strength, stealth, armor, magic, luck) next to $(9, 3, 8, 1, 5)$.
+- One exception, on purpose: Part 0.4's note "Another name, and other symbols"
+  shows $\mathbf{u} \cdot \mathbf{v}$ and $3 \times 4$ to say what other books do.
+  Its cell starts with `<!-- check-latex: product signs shown on purpose -->`,
+  which `check-latex` honours for that cell only. Don't use the marker anywhere else.
 - The explorer writes products the same way: `⟨a, b⟩ = (4)(3) + (0)(3)`,
   `12 ÷ ((4)(4.24))`.
 
@@ -98,7 +102,7 @@ convention, add it here in the same commit.
 | element | the number in a slot; the math word | Part 0.0 |
 | element-wise | adjective: one element at a time, each with its partner in the same slot (adding, subtracting, scaling) | Part 0.0, "A new word" |
 | dimension | the number of slots; not "space" | Part 0.0 |
-| inner product, dot product | $\langle \mathbf{a}, \mathbf{b} \rangle$; two names for one thing (`np.dot`). A chapter uses one of them throughout and mentions the other once; across the course both are used about equally | Part 0.4 |
+| inner product | $\langle \mathbf{a}, \mathbf{b} \rangle$; the only name the course uses. "Dot product", the centered dot and the times sign appear once, in Part 0.4's note on other books' names and symbols (`np.dot` stays in code) | Part 0.4 |
 | move / point | a vector is a move, a point is a place; both are bold | Part 0.1 |
 | heading | always say which: **heading in the direction of** $\mathbf{v}$ (any length); **heading toward** a point $\mathbf{Q}$ (from $\mathbf{P}$, the direction of $\mathbf{Q} - \mathbf{P}$); **the heading**, the length-1 vector for a direction, $\frac{\mathbf{Q} - \mathbf{P}}{\lVert \mathbf{Q} - \mathbf{P} \rVert}$ when heading toward $\mathbf{Q}$. Say once that a captain's heading is a compass angle and that people also call a velocity a heading; never call a vector that may be shorter than 1 "the heading" (Deep 9 calls it `go`) | Part 0.1, Part 0.3 |
 

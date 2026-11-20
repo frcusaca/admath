@@ -10,6 +10,8 @@
 // Also rejects the raised dot and the times cross (\\cdot, \\times, ·, ×) in
 // math and text: this course writes products as (3)(4), 2a or 2(3, 4), because
 // both symbols get new meanings later (dot and cross products). See AGENTS.md.
+// One exception, on purpose: a markdown cell whose first line is SHOWN_ON_PURPOSE
+// may show the signs (Module 0's note on how other books write the inner product).
 // Exit status 1 if anything is wrong.
 //
 // Ported from the original tools/check_latex.js; the checks are the same, and
@@ -39,6 +41,8 @@ if (args.length === 0) {
 let total = 0;
 let bad = 0;
 const NO_PRODUCT_SIGNS = /\\(cdot|times|cdotp|ast)(?![A-Za-z])|[×·∙⋅]/;
+const SHOWN_ON_PURPOSE = "<!-- check-latex: product signs shown on purpose -->";
+let shown = 0;
 const escapeHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 for (const f of args) {
@@ -65,9 +69,12 @@ for (const f of args) {
       const at = t.indexOf("$");
       console.log("STRAY $ in", f, ":", t.slice(Math.max(0, at - 40), at + 40).replace(/\n/g, " "));
     }
-    // no dot or cross for multiplication, in math or in text (code spans are fine)
+    // no dot or cross for multiplication, in math or in text (code spans are fine),
+    // except in a cell marked as showing them on purpose
+    const onPurpose = src.split("\n")[0].trim() === SHOWN_ON_PURPOSE;
+    if (onPurpose) shown++;
     for (const piece of [t, ...store.filter((s) => s.k !== "code").map((s) => s.v)]) {
-      const hit = piece.match(NO_PRODUCT_SIGNS);
+      const hit = onPurpose ? null : piece.match(NO_PRODUCT_SIGNS);
       if (hit) {
         bad++;
         console.log("PRODUCT SIGN in", f, ":", JSON.stringify(hit[0]), "in", piece.slice(Math.max(0, hit.index - 40), hit.index + 30).replace(/\n/g, " "));
@@ -111,5 +118,6 @@ for (const f of args) {
     );
   }
 }
-console.log(`latex: ${total} math snippets in ${args.length} notebooks, ${bad} problems`);
+const note = shown ? `, ${shown} cell${shown === 1 ? "" : "s"} showing product signs on purpose` : "";
+console.log(`latex: ${total} math snippets in ${args.length} notebooks, ${bad} problems${note}`);
 process.exit(bad ? 1 : 0);

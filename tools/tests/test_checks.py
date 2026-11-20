@@ -264,6 +264,22 @@ class TestLatex:
         assert result.returncode == 0, result.stdout
 
 
+    def test_a_marked_cell_may_show_product_signs_and_only_that_cell(self, course):
+        marker = "<!-- check-latex: product signs shown on purpose -->"
+        write(course, "01_x.ipynb", notebook(
+            ("markdown", marker + "\nOther books write $\\mathbf{u} \\cdot \\mathbf{v}$ and $\\mathbf{u} \\times \\mathbf{v}$."),
+            ("markdown", "But here $3 \\times 4$ is still wrong."),
+            ("markdown", "Not first line:\n" + marker + "\n$\\mathbf{u} \\cdot \\mathbf{v}$"),
+        ))
+        result = subprocess.run(
+            ["node", str(ROOT / "tools" / "check_latex.mjs"), str(course / "notebooks" / "01_x.ipynb")],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        assert result.returncode == 1
+        assert result.stdout.count("PRODUCT SIGN") == 2
+        assert "1 cell showing product signs on purpose" in result.stdout
+
+
 class TestQuartoYamlLookalike:
     def test_rule_followed_by_text_is_reported_and_fixed(self, course):
         write(course, "01_x.ipynb", notebook(("markdown", "---\n## Part 1\ntext"), ("markdown", "---\n\n## Part 2")))
