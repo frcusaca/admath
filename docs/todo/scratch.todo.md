@@ -109,7 +109,7 @@ How this list is organised:
 
 ### Getting to know the notebook
 
-- [ ] (59) Module 0, near the setup cells, where the reader is getting used to notebooks: a small section on the notebook itself (2026-11-20).
+- [x] (59) Module 0, near the setup cells, where the reader is getting used to notebooks: a small section on the notebook itself (2026-11-20).
   - Colab and Jupyter, simply: Colab is a Google product that runs notebooks on the web; Jupyter runs them on your own computer or server. The same notebook works in both.
   - Use the proper name: `%guess_first` and `%%your_turn` are **notebook magic commands** (one `%` for a line, two for a whole cell), not Python. Let the reader try each one right there ("here, try this and that with it").
   - Move the `%guess_first` introduction from Part 0.0's calculator section into this section, and mention `%%your_turn` before its first use in Part 0.2. Also the "Keep your work" note may move here. Update teacher guide 00's Conventions to match.
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (59): About this notebook
+*2026-11-20 06:11* done
+
+Right after the setup cells: what a notebook is, Colab (Google, on the web) and Jupyter (your own computer or server), and %guess_first and %%your_turn by their proper name, notebook magic commands, with a try-it cell for each (%%your_turn 0.0.1). The %guess_first introduction moved here from Part 0.0; the Keep your work note stays in the opening. Teacher guide's Conventions mention it.
 
 ## (52): AGENTS.md's Prose rule
 *2026-11-20 06:10* done
