@@ -1,6 +1,6 @@
 <!-- Copyright © 2026-present CAehi.us -->
 <!-- SPDX-License-Identifier: LicenseRef-Prosperity-3.0.0 -->
-# Open (51)
+# Open (60)
 
 <!--
 How this list is organised:
@@ -63,9 +63,18 @@ How this list is organised:
   - [x] (24) Module 4: prose pass (`04_basis_and_dimension`).
   - [x] (25) Decided 2026-11-19 (default, change if wanted): teacher guide 00 gets the same pass, lighter, since its readers are adults.
 
+- [ ] (51) Rethink what an opening does (2026-11-20). A topic sentence works best when it tells the reader what the coming section is about; grabbing attention is one strategy, not the definition of an introductory sentence or paragraph. Good English composition has many practices that make reading faster, communication clearer and the reading pleasant (an attention grabber helps with the last).
+  - [ ] (52) Rewrite AGENTS.md's Prose subsection: openings and topic sentences first inform (what this section is about, what you will be able to do); an attention grabber is one tool among several; list the other practices worth keeping (one idea per paragraph, given-before-new, signposts between sections, parallel structure in lists, concluding sentences that say what was learned).
+  - [ ] (53) Re-read the openings written on 2026-11-19 (Module 0's introduction and the openings of Notebooks 1 to 4, and the Part openings of Module 0) against (52): each should also tell the reader what is coming. Do it in the same pass as (50), so each notebook is opened once.
+
 ### Words: inner product and dot product
 
-- [ ] (47) Decided 2026-11-19: a chapter may say "inner product" or "dot product", but each chapter uses one consistently. Change the Words row in AGENTS.md (today: "dot product" only as the name other books and `np.dot` use). Then use the two about equally across the course, or alternate by chapter; list which chapter uses which. As of 2026-11-19: Module 0 says "inner product" (and mentions "dot product" in Part 0.4 and the cheat sheet); Notebooks 1 and 4 say "dot product"; Notebooks 2 and 3 use neither.
+- [ ] (47) Rescoped 2026-11-20: the course says **inner product** only, written $\langle \mathbf{u}, \mathbf{v} \rangle$. ("dot product" appears once, in the blurb of (54); `np.dot` stays in code.) Replaces the 2026-11-19 rule of one name per chapter.
+  - [ ] (54) Module 0, Part 0.4: a short blurb. "Dot product" is another name people use for the inner product on ordinary grid coordinates (a slight simplification). Other books write it with a centered dot, $\mathbf{u} \cdot \mathbf{v}$ (rendered, bold vectors); we write $\langle \mathbf{u}, \mathbf{v} \rangle$ so it is never confused with multiplication. Likewise the times sign of "$3 \times 4$" gets a new job later, the cross product, so be ready for a few new symbols and meanings. Fold in Part 0.4's current sentence and the cheat sheet's.
+  - [ ] (55) `check-latex` fails on `\cdot` and `\times` everywhere. The blurb in (54) needs them once, on purpose: add a narrow, explicit exception (for example a marked cell or span that the check skips), with a test, and say so in AGENTS.md's Symbols section.
+  - [ ] (56) AGENTS.md: put the Words row back to "inner product only", noting the one blurb; fix the 2026-11-19 wording in Style.
+  - [ ] (57) Notebooks 1 and 4 say "dot product" (Notebook 1's warm-up and Deep 5, Notebook 4's Deep 1 "The dot-product shortcut"): change to inner product, written $\langle \cdot, \cdot \rangle$ in LaTeX. Do it in the same pass as (50).
+  - [ ] (58) Teacher guide 00, Conventions ("Many books call it the dot product ..."): match (54).
 
 ## Kid Comfort
 
@@ -98,11 +107,18 @@ How this list is organised:
       Why not the editor's cell id: the kernel learns it only if the editor sends it with the run request (`cellId`, passed on as `info.cell_id`). Tested 2026-11-19: sent gives the id, not sent gives `None`. JupyterLab, Notebook 7 and VS Code send it; `nbclient`, which `make` uses, does not; Colab is undocumented and untested. A name on the magic line works everywhere, including a copy saved to Drive.
       - [ ] (46) Optional, for curiosity: in Colab, run `print(get_ipython().kernel.get_parent()["metadata"])` and see whether Colab sends a cell id. It changes nothing above.
 
+### Getting to know the notebook
+
+- [ ] (59) Module 0, near the setup cells, where the reader is getting used to notebooks: a small section on the notebook itself (2026-11-20).
+  - Colab and Jupyter, simply: Colab is a Google product that runs notebooks on the web; Jupyter runs them on your own computer or server. The same notebook works in both.
+  - Use the proper name: `%guess_first` and `%%your_turn` are **notebook magic commands** (one `%` for a line, two for a whole cell), not Python. Let the reader try each one right there ("here, try this and that with it").
+  - Move the `%guess_first` introduction from Part 0.0's calculator section into this section, and mention `%%your_turn` before its first use in Part 0.2. Also the "Keep your work" note may move here. Update teacher guide 00's Conventions to match.
+
 ## Structure
 
 - [ ] (48) Renumber every module to count from 0, like Module 0: "Module N" titles, parts N.0, N.1, ...; today Modules 1 to 4 are titled "Notebook N" with Part 1, Part 2, .... Update the chapter navigation, `index.qmd`, every cross-reference ("Part 6 of Notebook 1"), and the `%%your_turn` names (45).
 
-- [ ] (50) Notebooks 1 to 4 still write math as code, in the old style: `3 * (2, -1) + 2 * (1, 4)`, `c * a + d * b`, `1*c + 3*d = 107`, `(2, -1)` dot `(3, 6)`. AGENTS.md's Style wants LaTeX with bold vectors, `2\mathbf{a}` for scaling and no `*` outside code (Lesson 0 was converted on 2026-11-18). Converting changes lesson wording everywhere in those notebooks: ask first, and do it together with (48), and with a deeper prose pass (21) to (24), so each notebook is opened once.
+- [ ] (50) Notebooks 1 to 4 still write math as code, in the old style: `3 * (2, -1) + 2 * (1, 4)`, `c * a + d * b`, `1*c + 3*d = 107`, `(2, -1)` dot `(3, 6)`. AGENTS.md's Style wants LaTeX with bold vectors, `2\mathbf{a}` for scaling and no `*` outside code (Lesson 0 was converted on 2026-11-18). Converting changes lesson wording everywhere in those notebooks. Decided 2026-11-20: yes, LaTeX is better; do it together with (48), and with a deeper prose pass (21) to (24), so each notebook is opened once.
 
 ## Fixes
 
@@ -111,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (51)-(59): openings that inform, inner product only, the notebook's magics; (50) approved
+*2026-11-20 05:47* planning
+
+(51)-(53): a topic sentence should tell what is coming; grabbing attention is one strategy among good composition practices. (47) rescoped to "inner product" only, with one blurb on "dot product", the centered dot and the times sign (54)-(58); the blurb needs a narrow exception in check-latex (55). (59): a section near setup on notebook magic commands and on Colab against Jupyter. (50): LaTeX for Notebooks 1 to 4 approved, with (48) and (53).
 
 ## (21)-(24), and the finished parents (0), (1), (2), (3), (9), (13), (42), (45)
 *2026-11-19 14:21* done
