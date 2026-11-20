@@ -64,7 +64,7 @@ NAV_IDS = ("nav-top", "nav-bottom")
 
 
 def chapter_title(path):
-    """'# Notebook 1: The Rover's Moves (...)' -> ("Notebook 1", "Notebook 1: The Rover's Moves (...)")."""
+    """'# Module 1: The Rover's Moves (...)' -> ("Module 1", "Module 1: The Rover's Moves (...)")."""
     full = text(load(path)["cells"][0]).splitlines()[0].lstrip("# ").strip()
     return full.split(":")[0], full
 

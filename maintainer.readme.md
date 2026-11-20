@@ -320,7 +320,7 @@ this machine):
 6. Deep 6: `COLORS[0] = "black"`, then redraw the angle gallery; arrow `a` turns black.
 7. Run the setup cell again: it should skip the install and be instant.
 8. *Runtime → Restart session*, then run the setup and import cells again. Everything works.
-9. Under the title, click `Notebook 1 >>`: notebook 1 opens in Colab in a **new tab**.
+9. Under the title, click `Module 1 >>`: Module 1 opens in Colab in a **new tab**.
    Hover over it first: a tooltip names the notebook. The `>>` is purple-ish, a
    `<<` green-ish (if Colab strips the colours, the links still work). Scroll to
    the bottom: the same strip is above the copyright line.

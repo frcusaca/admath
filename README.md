@@ -33,7 +33,7 @@ stay fixed. A starting list:
 
 | Who | What is likely in the way now | Where |
 | --- | --- | --- |
-| Colour-blind kids | Some pictures carry meaning by colour; the colour-mixing lessons (Notebook 01 Deep 2, Notebook 02 Deep 4) are plain RGB by decision | notebooks, `vecdraw`, explorer |
+| Colour-blind kids | Some pictures carry meaning by colour; the colour-mixing lessons (Module 1 Deep 2, Module 2 Deep 4) are plain RGB by decision | notebooks, `vecdraw`, explorer |
 | Blind kids, screen-reader users | Plots are images with no text alternative; math needs to be readable aloud; the PDFs are not tagged | `vecdraw`, site, PDFs |
 | Low-vision kids | Contrast and zoom not checked everywhere; small text in plots | site, plots, explorer |
 | Keyboard-only and switch users | The explorer has keyboard support, but nothing else is tested | explorer, site |

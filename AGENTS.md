@@ -160,7 +160,7 @@ easy to read quickly, clear about what it is saying, and pleasant to read.
   stays distinct for colour-blind viewers. They only tell arrows apart.
 - The `<<` / `>>` navigation colours are decoration; the arrows and names carry it.
 - Exception, by decision (2026-11-18): lessons about colour itself (mixing
-  light: Notebook 01 Deep 2, Notebook 02 Deep 4) stay as they are, in plain RGB,
+  light: Module 1 Deep 2, Module 2 Deep 4) stay as they are, in plain RGB,
   made for most kids. Don't add colour-blind variants to them unless asked.
 - Accessibility (Section 508, WCAG) is a big open TO-DO; see the README. Don't
   call the course accessible or 508 compliant. New work should not make it harder.

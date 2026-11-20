@@ -116,7 +116,7 @@ How this list is organised:
 
 ## Structure
 
-- [ ] (48) Renumber every module to count from 0, like Module 0: "Module N" titles, parts N.0, N.1, ...; today Modules 1 to 4 are titled "Notebook N" with Part 1, Part 2, .... Update the chapter navigation, `index.qmd`, every cross-reference ("Part 6 of Notebook 1"), and the `%%your_turn` names (45).
+- [x] (48) Renumber every module to count from 0, like Module 0: "Module N" titles, parts N.0, N.1, ...; today Modules 1 to 4 are titled "Notebook N" with Part 1, Part 2, .... Update the chapter navigation, `index.qmd`, every cross-reference ("Part 6 of Notebook 1"), and the `%%your_turn` names (45).
 
 - [ ] (50) Notebooks 1 to 4 still write math as code, in the old style: `3 * (2, -1) + 2 * (1, 4)`, `c * a + d * b`, `1*c + 3*d = 107`, `(2, -1)` dot `(3, 6)`. AGENTS.md's Style wants LaTeX with bold vectors, `2\mathbf{a}` for scaling and no `*` outside code (Lesson 0 was converted on 2026-11-18). Converting changes lesson wording everywhere in those notebooks. Decided 2026-11-20: yes, LaTeX is better; do it together with (48), and with a deeper prose pass (21) to (24), so each notebook is opened once.
 
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (48): every module counts from 0
+*2026-11-20 06:18* done
+
+Notebooks 1 to 4 are titled "Module N" and their parts are N.0, N.1, ...; the navigation strips were regenerated; Part 6 of Notebook 1 became Part 1.5 of Module 1; README, AGENTS.md and the maintainer's manual name Modules. No %%your_turn names outside Module 0 needed changing.
 
 ## (59): About this notebook
 *2026-11-20 06:11* done
