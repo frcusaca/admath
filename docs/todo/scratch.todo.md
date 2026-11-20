@@ -63,17 +63,17 @@ How this list is organised:
   - [x] (24) Module 4: prose pass (`04_basis_and_dimension`).
   - [x] (25) Decided 2026-11-19 (default, change if wanted): teacher guide 00 gets the same pass, lighter, since its readers are adults.
 
-- [ ] (51) Rethink what an opening does (2026-11-20). A topic sentence works best when it tells the reader what the coming section is about; grabbing attention is one strategy, not the definition of an introductory sentence or paragraph. Good English composition has many practices that make reading faster, communication clearer and the reading pleasant (an attention grabber helps with the last).
+- [x] (51) Rethink what an opening does (2026-11-20). A topic sentence works best when it tells the reader what the coming section is about; grabbing attention is one strategy, not the definition of an introductory sentence or paragraph. Good English composition has many practices that make reading faster, communication clearer and the reading pleasant (an attention grabber helps with the last).
   - [x] (52) Rewrite AGENTS.md's Prose subsection: openings and topic sentences first inform (what this section is about, what you will be able to do); an attention grabber is one tool among several; list the other practices worth keeping (one idea per paragraph, given-before-new, signposts between sections, parallel structure in lists, concluding sentences that say what was learned).
-  - [ ] (53) Re-read the openings written on 2026-11-19 (Module 0's introduction and the openings of Notebooks 1 to 4, and the Part openings of Module 0) against (52): each should also tell the reader what is coming. Do it in the same pass as (50), so each notebook is opened once.
+  - [x] (53) Re-read the openings written on 2026-11-19 (Module 0's introduction and the openings of Notebooks 1 to 4, and the Part openings of Module 0) against (52): each should also tell the reader what is coming. Do it in the same pass as (50), so each notebook is opened once.
 
 ### Words: inner product and dot product
 
-- [ ] (47) Rescoped 2026-11-20: the course says **inner product** only, written $\langle \mathbf{u}, \mathbf{v} \rangle$. ("dot product" appears once, in the blurb of (54); `np.dot` stays in code.) Replaces the 2026-11-19 rule of one name per chapter.
+- [x] (47) Rescoped 2026-11-20: the course says **inner product** only, written $\langle \mathbf{u}, \mathbf{v} \rangle$. ("dot product" appears once, in the blurb of (54); `np.dot` stays in code.) Replaces the 2026-11-19 rule of one name per chapter.
   - [x] (54) Module 0, Part 0.4: a short blurb. "Dot product" is another name people use for the inner product on ordinary grid coordinates (a slight simplification). Other books write it with a centered dot, $\mathbf{u} \cdot \mathbf{v}$ (rendered, bold vectors); we write $\langle \mathbf{u}, \mathbf{v} \rangle$ so it is never confused with multiplication. Likewise the times sign of "$3 \times 4$" gets a new job later, the cross product, so be ready for a few new symbols and meanings. Fold in Part 0.4's current sentence and the cheat sheet's.
   - [x] (55) `check-latex` fails on `\cdot` and `\times` everywhere. Decided 2026-11-20: permit them only in the blurb of (54), and use the conventional commands everywhere else ($\langle \mathbf{u}, \mathbf{v} \rangle$ for the inner product). Mechanism: an explicit marker on that one markdown cell (for example a first line `<!-- check-latex: product signs shown on purpose -->`) that `check-latex` honours for that cell only; tests that the marker works and that the signs still fail in every other cell; AGENTS.md's Symbols section names the exception. (The `physics` package's `\vdot`, `\cross`, `\ip` were considered: KaTeX, which the site and the check use, has none of them; tested 2026-11-20.)
   - [x] (56) AGENTS.md: put the Words row back to "inner product only", noting the one blurb; fix the 2026-11-19 wording in Style.
-  - [ ] (57) Notebooks 1 and 4 say "dot product" (Notebook 1's warm-up and Deep 5, Notebook 4's Deep 1 "The dot-product shortcut"): change to inner product, written $\langle \cdot, \cdot \rangle$ in LaTeX. Do it in the same pass as (50).
+  - [x] (57) Notebooks 1 and 4 say "dot product" (Notebook 1's warm-up and Deep 5, Notebook 4's Deep 1 "The dot-product shortcut"): change to inner product, written $\langle \cdot, \cdot \rangle$ in LaTeX. Do it in the same pass as (50).
   - [x] (58) Teacher guide 00, Conventions ("Many books call it the dot product ..."): match (54).
 
 ## Kid Comfort
@@ -118,7 +118,7 @@ How this list is organised:
 
 - [x] (48) Renumber every module to count from 0, like Module 0: "Module N" titles, parts N.0, N.1, ...; today Modules 1 to 4 are titled "Notebook N" with Part 1, Part 2, .... Update the chapter navigation, `index.qmd`, every cross-reference ("Part 6 of Notebook 1"), and the `%%your_turn` names (45).
 
-- [ ] (50) Notebooks 1 to 4 still write math as code, in the old style: `3 * (2, -1) + 2 * (1, 4)`, `c * a + d * b`, `1*c + 3*d = 107`, `(2, -1)` dot `(3, 6)`. AGENTS.md's Style wants LaTeX with bold vectors, `2\mathbf{a}` for scaling and no `*` outside code (Lesson 0 was converted on 2026-11-18). Converting changes lesson wording everywhere in those notebooks. Decided 2026-11-20: yes, LaTeX is better; do it together with (48), and with a deeper prose pass (21) to (24), so each notebook is opened once.
+- [x] (50) Notebooks 1 to 4 still write math as code, in the old style: `3 * (2, -1) + 2 * (1, 4)`, `c * a + d * b`, `1*c + 3*d = 107`, `(2, -1)` dot `(3, 6)`. AGENTS.md's Style wants LaTeX with bold vectors, `2\mathbf{a}` for scaling and no `*` outside code (Lesson 0 was converted on 2026-11-18). Converting changes lesson wording everywhere in those notebooks. Decided 2026-11-20: yes, LaTeX is better; do it together with (48), and with a deeper prose pass (21) to (24), so each notebook is opened once.
 
 ## Fixes
 
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (50), (53), (57), (47): Modules 2 to 4 in LaTeX, inner product only
+*2026-11-20 06:25* done
+
+Modules 2 to 4: points, vectors and sums are LaTeX (bold vector names, $2\mathbf{a} - \mathbf{b}$, $4x + 6y$, $\mathbf{k}_2$); code spans keep only Python names. Module 4's Deep 1 is "The inner-product shortcut", with the formula. The openings of Modules 0 to 4 already say what is coming (53). Nothing says "dot product" now except Part 0.4's note, so (47) is done.
 
 ## (50), (57) progress: Module 1 in LaTeX, inner product only
 *2026-11-20 06:35* changed
