@@ -128,13 +128,19 @@ convention, add it here in the same commit.
 ### Prose
 
 The lessons are English prose that happens to contain a second language of
-pictures, math and code. Write them the way a good book for kids is written.
+pictures, math and code. Write them the way a good book for kids is written:
+easy to read quickly, clear about what it is saying, and pleasant to read.
 
-- Open each notebook with a sentence that makes a kid want to read on: a
-  question, a puzzle or a surprise, not a rule.
-- Begin each introductory paragraph with a topic sentence that says what the
-  paragraph is about. Close a section with a concluding sentence when it helps
-  the idea land; not every paragraph needs one.
+- An opening or topic sentence first tells the reader what is coming: what the
+  notebook, section or paragraph is about, or what they will be able to do.
+  Grabbing attention (a question, a puzzle, a surprise) is one good way to do
+  that, not the only one and not a must.
+- One idea per paragraph. Start from what the reader already knows and then add
+  the new thing (given before new).
+- Signpost the way: say how a section connects to the last one ("In Part 0.1 ...,
+  now ..."), and keep the items of a list in the same grammatical shape.
+- Close a section with a concluding sentence when it helps the idea land: say
+  what was learned, or where it leads. Not every paragraph needs one.
 - Invite, don't command. "Before you run a cell, guess what it will do" is an
   invitation; "The one rule: predict, then run" is an order. Keep the
   prediction prompt that comes before code cells, but phrase it as an invitation.

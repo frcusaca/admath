@@ -64,7 +64,7 @@ How this list is organised:
   - [x] (25) Decided 2026-11-19 (default, change if wanted): teacher guide 00 gets the same pass, lighter, since its readers are adults.
 
 - [ ] (51) Rethink what an opening does (2026-11-20). A topic sentence works best when it tells the reader what the coming section is about; grabbing attention is one strategy, not the definition of an introductory sentence or paragraph. Good English composition has many practices that make reading faster, communication clearer and the reading pleasant (an attention grabber helps with the last).
-  - [ ] (52) Rewrite AGENTS.md's Prose subsection: openings and topic sentences first inform (what this section is about, what you will be able to do); an attention grabber is one tool among several; list the other practices worth keeping (one idea per paragraph, given-before-new, signposts between sections, parallel structure in lists, concluding sentences that say what was learned).
+  - [x] (52) Rewrite AGENTS.md's Prose subsection: openings and topic sentences first inform (what this section is about, what you will be able to do); an attention grabber is one tool among several; list the other practices worth keeping (one idea per paragraph, given-before-new, signposts between sections, parallel structure in lists, concluding sentences that say what was learned).
   - [ ] (53) Re-read the openings written on 2026-11-19 (Module 0's introduction and the openings of Notebooks 1 to 4, and the Part openings of Module 0) against (52): each should also tell the reader what is coming. Do it in the same pass as (50), so each notebook is opened once.
 
 ### Words: inner product and dot product
@@ -127,6 +127,11 @@ How this list is organised:
 - [x] (26) Teacher guide 00 says "the answer key for all 70 Mastery Coins" in its opening paragraph, but its "What changed" list says "There are now 71 coins", and the student notebook has 71. Make the opening say 71.
 
 # Log
+
+## (52): AGENTS.md's Prose rule
+*2026-11-20 06:10* done
+
+Openings and topic sentences first say what is coming; an attention grabber is one way, not a must. Added: one idea per paragraph, given before new, signposts, parallel lists, concluding sentences that say what was learned. (53), re-reading the openings, goes with the LaTeX pass (50).
 
 ## (54), (55), (56), (58): inner product only, with one note on other names and symbols
 *2026-11-20 06:08* done
