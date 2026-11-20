@@ -128,6 +128,11 @@ How this list is organised:
 
 # Log
 
+## a letter read as a unit, where 5x first appears
+*2026-11-20 06:30* done
+
+The user noted that kids read "1 of a" in different ways ("1 count of a", or just "1 of a"); a unit smooths it: "5p" reads like "5 stacks of paper". Added to Part 0.2's "Counting copies", where 5x is introduced. (Only there, as the user meant.)
+
 ## (50), (53), (57), (47): Modules 2 to 4 in LaTeX, inner product only
 *2026-11-20 06:25* done
 
